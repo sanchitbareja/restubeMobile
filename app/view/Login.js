@@ -1,0 +1,47 @@
+Ext.define("ResTube.view.Login", {
+	extend: "Ext.form.Panel",
+	requires: "Ext.form.FieldSet",
+	alias: "widget.logincontainer",
+
+	config: {
+        items:[{
+                xtype: "toolbar",
+                docked: "top",
+                title: "Login",
+            }, {
+                xtype: 'fieldset',
+                margin: "10px",
+                items: [
+                    {
+                        xtype: 'textfield',
+                        placeHolder: 'Username',
+                        id: 'username_field',
+                    },
+                    {
+                        xtype: 'passwordfield',
+                        placeHolder: 'Password',
+                        id: 'password_field',
+                    }
+                ]
+            }, {
+                xtype: 'button',
+                margin: "10px",
+                text: "Login",
+                ui: "action",
+                itemId: "loginButton",
+            }
+        ],
+		listeners: [{
+				delegate: "#loginButton",
+				event: "tap",
+				fn: "onLoginButtonTap",
+			}
+		],
+	},
+
+	// handlers
+	onLoginButtonTap: function() {
+		console.log("onLoginButtonTap");
+		this.fireEvent("loginButtonCommand", this, Ext.getCmp('username_field')._value, Ext.getCmp('password_field')._value);
+	},
+});
