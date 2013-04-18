@@ -43,6 +43,7 @@ Ext.define("ResTube.controller.SearchController",{
 		console.log("searchProductCommand2");
 
 		var searchList = this.getSearchResults();
+		var restubeSearchView = this.getRestubeSearch();
 		console.log(searchList);
 
 		var myRequest = Ext.Ajax.request({
@@ -61,6 +62,7 @@ Ext.define("ResTube.controller.SearchController",{
 		        console.log(jsondecoded.objects);
 		        searchList.setData(jsondecoded.objects);
 				Ext.Viewport.animateActiveItem(searchList, { type: "slide", direction: "left" });
+				restubeSearchView.setMasked(false);
 		    },
 
 		    failure: function(response) {

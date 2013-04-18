@@ -29,8 +29,10 @@ Ext.define("ResTube.controller.LoginController",{
 		var encoded_authorization = this.base64_encode(username+":"+password);
 		console.log(encoded_authorization);
 		var main_container = this.getMainContainer();
+		var loginContainerView = this.getLoginContainer();
+
 		var myRequest = Ext.Ajax.request({
-		    url: 'http://restube.herokuapp.com/api/v1/user/1/?format=json',
+		    url: 'http://restube.herokuapp.com/api/v1/user/?format=json',
 		    method: 'GET',
 		    disableCaching: false,
 		    // withCredentials: true,
@@ -39,13 +41,38 @@ Ext.define("ResTube.controller.LoginController",{
 		    	"Authorization": "Basic "+encoded_authorization,
 		    },
 
+		    params: {
+		    	username__exact: username,
+		    },
+
 		    success: function(response) {
 		        console.log("Spiffing, everything worked");
+		        console.log(response);
 		        var jsondecoded = Ext.JSON.decode(response.responseText);
 		        console.log(jsondecoded);
-		        Ext.Viewport.removeAll();
-		        Ext.Viewport.add([{xtype:'maincontainer'}]);
-				Ext.Viewport.animateActiveItem(main_container, { type: "slide", direction: "left" });
+		        if(jsondecoded['meta']['total_count'] == 1){
+		        	var newLogin = Ext.create("ResTube.model.Login", {
+		        		id: jsondecoded['objects'][0]['id'],
+		        		username: username,
+		        		password: password,
+		        		authentication: encoded_authorization,
+		        		resource_uri: jsondecoded['objects'][0]['resource_uri'],
+		        	});
+		        	console.log("newLogin:");
+		        	console.log(newLogin);
+		        	var loginStore = Ext.getStore("Logins");
+		        	console.log(loginStore);
+		        	if(loginStore.findRecord('id', newLogin.data.id) == null){
+		        		loginStore.add(newLogin);
+		        		console.log("adding newLogin");
+		        	}
+		        	console.log(loginStore.sync());
+
+		        	loginContainerView.setMasked(false);
+			        Ext.Viewport.removeAll();
+			        Ext.Viewport.add([{xtype:'maincontainer'}]);
+					Ext.Viewport.animateActiveItem(main_container, { type: "slide", direction: "left" });
+		        }
 		    },
 
 		    failure: function(response) {

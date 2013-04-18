@@ -4,6 +4,12 @@ Ext.define("ResTube.view.Search", {
 	alias: "widget.restubesearch",
 
 	config: {
+        masked: {
+            xtype: 'loadmask',
+            message: 'Searching...',
+            
+        },
+
         items:[{
                 xtype: "toolbar",
                 docked: "top",
@@ -30,13 +36,22 @@ Ext.define("ResTube.view.Search", {
 				delegate: "#searchButton",
 				event: "tap",
 				fn: "onSearchButtonTap",
-			}
+			},{
+                event: "show",
+                fn: "onShow",
+            }
 		],
 	},
+
+    //function to run on show
+    onShow: function() {
+        this.setMasked(false);
+    },
 
 	// handlers
 	onSearchButtonTap: function() {
 		console.log("onSearchButtonTap");
+        this.setMasked(true);
 		this.fireEvent("searchButtonCommand", this, Ext.getCmp('searchText')._value);
 	},
 });

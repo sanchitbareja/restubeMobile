@@ -3,10 +3,33 @@ Ext.define("ResTube.view.Contacts", {
 	alias: "widget.restubecontacts",
 
 	config: {
-
 		loadingText: "Loading Contacts...",
 		emptyText: '<pre><div>No contacts :(</div></pre>',
-		itemTpl: '<pre><div id="contactItem-{id}">{user.username}</div><pre>',
+        masked: {
+        	xtype: "loadmask",
+        	message: "Loading Contacts...",
+        },
+
+        plugins: [
+	        {
+	            xclass: 'Ext.plugin.PullRefresh',
+	            pullRefreshText: 'Pull down to refresh!',
+	            refreshFn: function(plugin) {
+	            	plugin.parent.parent.fireEvent("loadContactsDataCommand");
+	            },
+	        }
+	    ],
+
+		itemTpl:'<div id="contactItem-{id}" class="row">'+
+					'<div class="small-4 columns" id="contactItem-{id}">'+
+						'<img src="{thumbnail_photo}" class="thumbnail_photo_list" id="contactItem-{id}">'+
+					'</div>'+
+					'<div class="small-8 columns" id="contactItem-{id}">'+
+						'<strong id="contactItem-{id}">{user.first_name} {user.last_name}</strong>'+
+						'<br />'+
+						'<i id="contactItem-{id}">{job_title}</i>'+
+					'</div>'+
+				'</div>',
 
 		items: [{
 			xtype: "toolbar",
@@ -22,7 +45,8 @@ Ext.define("ResTube.view.Contacts", {
 
 	onItemTap: function(nestedList, index, target, record, e, eOpts){
 		console.log("An item was tapped!");
-		var contactID = Ext.get(Ext.get(index).parent().query('div[id^=contactItem]')[0]).id.slice(12);
+		console.log(Ext.get(index));
+		var contactID = Ext.get(index).id.slice(12);
 		this.fireEvent("contactInfoCommand", this, contactID);
 	},
 

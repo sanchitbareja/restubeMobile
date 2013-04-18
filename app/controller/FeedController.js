@@ -55,6 +55,10 @@ Ext.define("ResTube.controller.FeedController",{
 		        console.log(jsondecoded);
 		        console.log(restube_feed);
 		    	restube_feed.setData(jsondecoded.objects);
+		    	console.log("Getting data from localstorage");
+		    	var myStore = Ext.getStore("Logins");
+		    	console.log(myStore.getData());
+		    	restube_feed.setMasked(false);
 		    },
 
 		    failure: function(response) {

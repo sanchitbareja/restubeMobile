@@ -5,7 +5,25 @@ Ext.define('ResTube.view.ContactDetail', {
 	config: {
 		styleHtmlContent: true,
         scrollable: true,
-        tpl: "<div><ul><li>Name: {user.username}</li><li>Phone No: {phone_no}</li><li>email: {user.email}</li></ul></div>",
+        tpl:"<div class='row'>"+
+        		"<div class='small-5 columns'>"+
+        			"<img src='{thumbnail_photo}' class='thumbnail_photo'>"+
+        		"</div>"+
+        		"<div class='small-7 columns'>"+
+        			"<strong>{user.first_name} {user.last_name}</strong><br />"+
+        			"<i>{job_title}</i>"+
+        		"</div>"+
+    		"</div>"+
+    		"<div class='row'>"+
+				"<div class='small-12 columns'>"+
+					"<a href='tel:{phone_no}'><div id='actionButton'>Call</div></a>"+
+					"<a href='mailto:{user.email}'><div id='actionButton'>Email</div></a>"+
+					'<a href="https://plus.google.com/hangouts/_?gid=856453701131">'+
+						'<div id="actionButton">Video Chat</div>'+
+						'</a>'+
+					'</p>'+
+				"</div>"+
+			"</div>",
 
 		items: [{
 			xtype: "toolbar",

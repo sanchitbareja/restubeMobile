@@ -5,7 +5,7 @@ Ext.define('ResTube.view.Product',{
 	config: {
 		styleHtmlContent: true,
         scrollable: true,
-        tpl: "<div><ul><li>Name: {name}</li><li>Description: {description}</li><li>Model No: {model_no}</li><li>Serial No: {serial_no}</li></ul></div>",
+        tpl: "	<div><ul><li>Name: {name}</li><li>Model No: {model_no}</li><li>Serial No: {serial_no}</li></ul></div>",
 		items: [{
 			xtype: "toolbar",
 			title: "Product Information",

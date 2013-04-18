@@ -8,8 +8,10 @@ Ext.Loader.setPath({
 Ext.application({
     name: 'ResTube',
 
-    views: ['Login','Main','Feed','Search', 'Contacts','SearchResults','Product','FeedDetail','ContactDetail'],
-    controllers: ['LoginController','SearchController','FeedController','ContactsController'],
+    models: ['Login'],
+    stores: ['Logins'],
+    views: ['Login','Main','Feed','Search', 'Contacts','SearchResults','Product','FeedDetail','ContactDetail','QuestionFeed','QuestionDetail'],
+    controllers: ['LoginController','SearchController','FeedController','ContactsController','QuestionController'],
 
     icon: {
         '57': 'resources/icons/Icon.png',

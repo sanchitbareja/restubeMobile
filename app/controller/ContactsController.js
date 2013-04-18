@@ -55,6 +55,7 @@ Ext.define("ResTube.controller.ContactsController",{
 		        console.log(jsondecoded);
 		        console.log(contactsList);
 		    	contactsList.setData(jsondecoded.objects);
+		    	contactsList.setMasked(false);
 		    },
 
 		    failure: function(response) {

@@ -5,7 +5,21 @@ Ext.define("ResTube.view.SearchResults", {
 	config: {
 		loadingText: "Loading Products...",
 		emptyText: '<pre><div>No products found.</div></pre>',
-		itemTpl: '<pre><div id="productItem-{id}">{name}</div><pre>',
+
+		itemTpl:'<div id="productItem-{id}" class="row">'+
+					'<div class="small-4 columns" id="productItem-{id}">'+
+					'<tpl for="media">'+
+						'<tpl if="id == 1">'+
+							'<img src="{url}" class="thumbnail_photo_list" id="productItem-{[parent.id]}">'+
+						'</tpl>'+
+    				'</tpl></p>'+						
+					'</div>'+
+					'<div class="small-8 columns" id="productItem-{id}">'+
+						'<strong id="productItem-{id}">{name}</strong>'+
+						'<br />'+
+						'<i id="productItem-{id}"><i>Model No.:</i>{model_no}</i>'+
+					'</div>'+
+				'</div>',
 
 		items: [{
 			xtype: "toolbar",
@@ -28,7 +42,7 @@ Ext.define("ResTube.view.SearchResults", {
 
 	onItemTap: function(nestedList, index, target, record, e, eOpts){
 		console.log("An item was tapped!");
-		var productID = Ext.get(Ext.get(index).parent().query('div[id^=productItem]')[0]).id.slice(12);
+		var productID = Ext.get(index).id.slice(12);
 		this.fireEvent("productInfoCommand", this, productID);
 	},
 

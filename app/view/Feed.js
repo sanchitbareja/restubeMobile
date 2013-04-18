@@ -5,8 +5,22 @@ Ext.define("ResTube.view.Feed", {
 	config: {
 
 		loadingText: "Loading Feed...",
-		emptyText: '<pre><div>No news :(</div></pre>',
+		emptyText: '<pre><div>No feed :(</div></pre>',
 		itemTpl: '<pre><div id="repairItem-{id}">{name}</div><pre>',
+		masked: {
+        	xtype: "loadmask",
+        	message: "Loading Feed...",
+        },
+
+        plugins: [
+	        {
+	            xclass: 'Ext.plugin.PullRefresh',
+	            pullRefreshText: 'Pull down to refresh!',
+	            refreshFn: function(plugin) {
+	            	plugin.parent.parent.fireEvent("loadDataCommand");
+	            },
+	        }
+	    ],
 
 		items: [{
 			xtype: "toolbar",
