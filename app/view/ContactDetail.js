@@ -16,12 +16,11 @@ Ext.define('ResTube.view.ContactDetail', {
     		"</div>"+
     		"<div class='row'>"+
 				"<div class='small-12 columns'>"+
-					"<a href='tel:{phone_no}'><div id='actionButton'>Call</div></a>"+
-					"<a href='mailto:{user.email}'><div id='actionButton'>Email</div></a>"+
-					'<a href="https://plus.google.com/hangouts/_?gid=856453701131">'+
-						'<div id="actionButton">Video Chat</div>'+
-						'</a>'+
-					'</p>'+
+					"<a href='tel:{phone_no}'><div class='actionButton'>Call</div></a>"+
+					"<a href='mailto:{user.email}'><div class='actionButton'>Email</div></a>"+
+					'<a href="skype:arnav.anand?call&video=true">'+
+						'<div class="actionButton">Video Chat</div>'+
+					'</a>'+
 				"</div>"+
 			"</div>",
 

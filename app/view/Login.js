@@ -11,10 +11,11 @@ Ext.define("ResTube.view.Login", {
             
         },
         items:[{
-                xtype: "toolbar",
-                docked: "top",
-                title: "Login",
-            }, {
+                xtype: "panel",
+                styleHtmlContent: true,
+                html: "<h1 style='text-align:center;'><img src='resources/images/Trane-ResolutionTube.png' style='height:80px;'/></h1>",
+            },
+            {
                 xtype: 'fieldset',
                 margin: "10px",
                 items: [
@@ -51,12 +52,17 @@ Ext.define("ResTube.view.Login", {
     // hide mask onShow
     onShow: function() {
         this.setMasked(false);
+        this.fireEvent("onLoginShow", this);
     },
 
 	// handlers
 	onLoginButtonTap: function() {
 		console.log("onLoginButtonTap");
-        this.setMasked(true);
+        this.setMasked({
+            xtype: 'loadmask',
+            message: 'Logging In...',
+            indicator: true,
+        });
 		this.fireEvent("loginButtonCommand", this, Ext.getCmp('username_field')._value, Ext.getCmp('password_field')._value);
 	},
 });

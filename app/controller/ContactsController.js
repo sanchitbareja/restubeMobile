@@ -40,6 +40,11 @@ Ext.define("ResTube.controller.ContactsController",{
 		console.log("loading contacts...");
 
 		var contactsList = this.getRestubeContacts();
+		contactsList.setMasked({
+        	xtype: "loadmask",
+        	message: "Loading Contacts...",
+        });
+
 		var myRequest = Ext.Ajax.request({
 		    url: 'http://restube.herokuapp.com/api/v1/userprofile/?format=json',
 		    method: 'GET',

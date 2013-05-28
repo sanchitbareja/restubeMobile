@@ -47,7 +47,16 @@
             "path": "app.js",
             "bundle": true,  /* Indicates that all class dependencies are concatenated into this file when build */
             "update": "delta"
-        }
+        },
+        {
+            "path": "resources/js/jquery-1.5.1.min.js",
+            "update": "delta"
+        },
+        {
+            "path": "resources/js/responsiveslides.js",
+            "update": "delta"
+        },
+
     ],
 
     /**

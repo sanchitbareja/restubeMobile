@@ -9,12 +9,13 @@ Ext.define('ResTube.view.Main', {
             type: 'card',
         },
         items: [
-            {
-                title: 'Home',
-                iconCls: 'home',
+            // {
+            //     title: 'Home',
+            //     iconCls: 'home',
 
-                xtype: 'restubefeed',
-            }, {
+            //     xtype: 'restubefeed',
+            // },
+            {
                 title: 'Questions',
                 iconCls: 'bookmarks',
 
@@ -29,6 +30,11 @@ Ext.define('ResTube.view.Main', {
                 iconCls: 'team',
 
                 xtype: 'restubecontacts',
+            },{  
+                title: 'Feedback',
+                iconCls: 'action',
+
+                xtype: 'restubefeedback',                
             }
         ],
     },

@@ -1,3 +1,17 @@
+//general ui scheme
+$base-color: #EB0D00; //red
+$base-gradient: 'flat';
+
+//buttons
+$include-button-uis: true;
+$include-button-highlights: false;
+
+//tabbar
+$tabs-dark: #333333;
+$tabs-dark-active-color: #444444;
+// $tabs-light: #222222;
+// $tabs-light-active: #333333;
+
 @import 'sencha-touch/default/all';
 
 // You may remove any of the following modules that you
@@ -19,3 +33,5 @@
 @include sencha-loading-spinner;
 
 // Your custom code goes here...
+
+@include sencha-button-ui('action', #317981);

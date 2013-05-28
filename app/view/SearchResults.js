@@ -12,12 +12,12 @@ Ext.define("ResTube.view.SearchResults", {
 						'<tpl if="id == 1">'+
 							'<img src="{url}" class="thumbnail_photo_list" id="productItem-{[parent.id]}">'+
 						'</tpl>'+
-    				'</tpl></p>'+						
+    				'</tpl>'+						
 					'</div>'+
 					'<div class="small-8 columns" id="productItem-{id}">'+
 						'<strong id="productItem-{id}">{name}</strong>'+
 						'<br />'+
-						'<i id="productItem-{id}"><i>Model No.:</i>{model_no}</i>'+
+						'<i id="productItem-{id}">Model No.:{model_no}</i>'+
 					'</div>'+
 				'</div>',
 

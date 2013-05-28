@@ -5,12 +5,18 @@ Ext.define("ResTube.controller.LoginController",{
 			//lookup our views by xtype
 			mainContainer: "maincontainer",
 			loginContainer: "logincontainer",
+			restubeQuestionFeed: "restubequestionfeed",
 		},
 		control: {
 			loginContainer: {
 				//commands fired by logincontainer
 				loginButtonCommand: "onLoginCommand",
+				onLoginShow: "onLoginShowCommand",
+				
 			},
+			restubeQuestionFeed: {
+				logoutCommand: "onLogoutButtonCommand",
+			}
 		}
 	},
 
@@ -57,16 +63,19 @@ Ext.define("ResTube.controller.LoginController",{
 		        		password: password,
 		        		authentication: encoded_authorization,
 		        		resource_uri: jsondecoded['objects'][0]['resource_uri'],
+		        		user_image: "https://resolutiontube.s3.amazonaws.com/"+jsondecoded['objects'][0]['user_image'],
 		        	});
 		        	console.log("newLogin:");
 		        	console.log(newLogin);
 		        	var loginStore = Ext.getStore("Logins");
 		        	console.log(loginStore);
 		        	if(loginStore.findRecord('id', newLogin.data.id) == null){
-		        		loginStore.add(newLogin);
+		        		Ext.getStore("Logins").add(newLogin);
+		        		newLogin.save();
 		        		console.log("adding newLogin");
 		        	}
-		        	console.log(loginStore.sync());
+		        	Ext.getStore('Logins').sync();
+		        	console.log(Ext.getStore('Logins'));
 
 		        	loginContainerView.setMasked(false);
 			        Ext.Viewport.removeAll();
@@ -78,9 +87,44 @@ Ext.define("ResTube.controller.LoginController",{
 		    failure: function(response) {
 		    	console.log(response);
 		        console.log("Curses, something terrible happened");
+
+		        loginContainerView.setMasked({
+				    xtype: 'loadmask',
+				    message: 'Login failed. Please check your username or password.',
+				    indicator: false,
+				});
+
+		        //create the delayed task instance with our callback
+				var task = Ext.create('Ext.util.DelayedTask', function() {
+					loginContainerView.setMasked(false);
+				});
+				task.delay(2000); //the callback function will now be called after 1000ms
+
 		    },
+
+		    callback: function(response) {
+		    	console.log("callback from ajax request!");
+		    }
 		});
 
+	},
+
+	onLoginShowCommand: function(view){
+		if(Ext.getStore("Logins").data.all.length == 1) {
+			this.getLoginContainer().setMasked(false);
+	        Ext.Viewport.removeAll();
+	        Ext.Viewport.add([{xtype:'maincontainer'}]);
+			Ext.Viewport.animateActiveItem(this.getMainContainer(), { type: "slide", direction: "left" });
+		}
+	},
+
+	onLogoutButtonCommand: function(view){
+		console.log("onLogoutButtonCommand");
+		Ext.getStore("Logins").removeAll();
+		Ext.getStore("Logins").sync();
+		Ext.Viewport.removeAll();
+        Ext.Viewport.add([{xtype:'logincontainer'}]);
+		// Ext.Viewport.animateActiveItem(, { type: "slide", direction: "left" });
 	},
 
 	//helper functions

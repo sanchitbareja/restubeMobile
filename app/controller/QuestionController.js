@@ -12,19 +12,30 @@ Ext.define("ResTube.controller.QuestionController",{
 			questionDetail: {
 				selector: "questiondetail",
 				xtype: "questiondetail",
-				autoCreate: true
+				autoCreate: true,
+			},
+			questionForm: {
+				selector: "addquestionform",
+				xtype: "addquestionform",
+				autoCreate: true,
 			},
 		},
 		control: {
 			restubeQuestionFeed: {
-				//commands by restubeFeed
+				//commands by restubeQuestionFeed
 				questionInfoCommand: "onQuestionInfoCommand",
 				loadQuestionsDataCommand: "loadQuestionsData",
-				addQuestionCommand: "onAddQuestionCommand",
+				launchQuestionFormCommand: "onLaunchQuestionFormCommand",
 			},
 			questionDetail: {
-				//commands by feedDetail
+				//commands by questionDetail
 				backToQuestionFeedCommand: "onBackToQuestionFeedCommand",
+				addCommentToQuestionCommand: "onAddCommentToQuestionCommand",
+			},
+			questionForm: {
+				//commands by questionForm
+				postButtonCommand: "onPostQuestionCommand",
+				backToFeedCommand: "onBackToQuestionFeedCommand",
 			}
 		},
 	},
@@ -55,6 +66,9 @@ Ext.define("ResTube.controller.QuestionController",{
 		        var jsondecoded = Ext.JSON.decode(response.responseText);
 		        console.log(jsondecoded);
 		        console.log(restube_questions);
+		        if(restube_questions.getStore()){
+			        restube_questions.getStore().removeAll();
+			    }
 		    	restube_questions.setData(jsondecoded.objects);
 		    	restube_questions.setMasked(false);
 		    },
@@ -89,6 +103,7 @@ Ext.define("ResTube.controller.QuestionController",{
 		        console.log(jsondecoded);
 		        questionDetailView.setData(jsondecoded);
 				Ext.Viewport.animateActiveItem(questionDetailView, { type: "slide", direction: "left" });
+				view.setMasked(false);
 		    },
 
 		    failure: function(response) {
@@ -97,8 +112,22 @@ Ext.define("ResTube.controller.QuestionController",{
 		});
 	},
 
-	onAddQuestionCommand: function(view) {
-		console.log("onAddQuestionCommand!");
+	onPostQuestionCommand: function(view, question, details) {
+		console.log("onPostQuestionCommand!");
+
+		console.log(question);
+		console.log(details);
+
+		//get user credentials
+		var loginStore = Ext.getStore("Logins");
+		var user = loginStore.data.all[0].data;
+		console.log(user);
+
+		//form
+		var addQuestionForm = this.getQuestionForm();
+		var questionFeedView = this.getMainContainer();
+
+		var selfref = this;
 
 		var myRequest = Ext.Ajax.request({
 			url: 'http://restube.herokuapp.com/api/v1/question/',
@@ -113,20 +142,144 @@ Ext.define("ResTube.controller.QuestionController",{
 
 			jsonData: {
 				// "comments": [],
-				"posted_by": "/api/v1/user/1/",
-				"question": "How do you add a question via POST?",
+				"posted_by": user.resource_uri,
+				"question": question,
+				"details": details,
 			},
 
 			success: function(response) {
 				console.log(response);
 				console.log("Spiffing, everything worked! Added a new question!");
+				addQuestionForm.setMasked({
+				    xtype: 'loadmask',
+				    message: 'Successfully Posted!',
+				    indicator: false,
+				});
+
+				//create the delayed task instance with our callback
+				var task = Ext.create('Ext.util.DelayedTask', function() {
+				    console.log('callback!');
+				    addQuestionForm.setMasked({
+					    xtype: 'loadmask',
+					    message: 'Posting',
+					    indicator: true,
+					});
+					addQuestionForm.setMasked(false);
+
+					addQuestionForm.reset();
+					Ext.Viewport.animateActiveItem(questionFeedView, { type: "slide", direction: "right" });
+
+					selfref.loadQuestionsData();
+				});
+				task.delay(1000); //the callback function will now be called after 1000ms
 			},
 
 			failure: function(response) {
 				console.log(response);
 				console.log("Curses, something terrible happened when trying to add Question");
+
+				addQuestionForm.setMasked({
+				    xtype: 'loadmask',
+				    message: 'An error occurred. Please try posting again :(',
+				    indicator: false,
+				});
+
+				//create the delayed task instance with our callback
+				var task = Ext.create('Ext.util.DelayedTask', function() {
+				    console.log('callback!');
+				    addQuestionForm.setMasked({
+					    xtype: 'loadmask',
+					    message: 'Posting',
+					    indicator: true,
+					});
+					addQuestionForm.setMasked(false);
+				});
+				task.delay(2000); //the callback function will now be called after 1000ms
 			},
 		});
+	},
+
+	onAddCommentToQuestionCommand: function(view ,commentText, questionId, questionResourceUri, questionStatus){
+
+		//get user credentials
+		var loginStore = Ext.getStore("Logins");
+		var user = loginStore.data.all[0].data;
+		console.log(user);
+
+		//form
+		var questionDetailView = this.getQuestionDetail();
+
+		var selfref = this;
+
+		var myRequest = Ext.Ajax.request({
+			url: 'http://restube.herokuapp.com/api/v1/comment/',
+			method: 'POST',
+			disableCaching: false,
+			// withCredentials: true,
+			useDefaultXhrHeader: false,
+
+			headers: {
+		    	"Content-Type": "application/json",
+		    },
+
+			jsonData: {
+				"comment": commentText,
+				"answer_to": questionResourceUri,
+				"posted_by": user.resource_uri,
+			},
+
+			success: function(response) {
+				console.log(response);
+				console.log("Spiffing, everything worked! Added a new question!");
+				questionDetailView.setMasked({
+				    xtype: 'loadmask',
+				    message: 'Successfully Commented!',
+				    indicator: false,
+				});
+
+				//create the delayed task instance with our callback
+				var task = Ext.create('Ext.util.DelayedTask', function() {
+				    console.log('callback!');
+				    questionDetailView.setMasked({
+					    xtype: 'loadmask',
+					    message: 'Commenting',
+					    indicator: true,
+					});
+					questionDetailView.setMasked(false);
+
+					selfref.onQuestionInfoCommand(view, questionId);
+				});
+				task.delay(1000); //the callback function will now be called after 1000ms
+			},
+
+			failure: function(response) {
+				console.log(response);
+				console.log("Curses, something terrible happened when trying to add Question");
+
+				questionDetailView.setMasked({
+				    xtype: 'loadmask',
+				    message: 'An error occurred. Please try commenting again :(',
+				    indicator: false,
+				});
+
+				//create the delayed task instance with our callback
+				var task = Ext.create('Ext.util.DelayedTask', function() {
+				    console.log('callback!');
+				    questionDetailView.setMasked({
+					    xtype: 'loadmask',
+					    message: 'Posting',
+					    indicator: true,
+					});
+					questionDetailView.setMasked(false);
+				});
+				task.delay(2000); //the callback function will now be called after 1000ms
+			},
+		});
+	},
+
+	onLaunchQuestionFormCommand: function(view) {
+		console.log("onLaunchQuestionFormCommand");
+		this.activateQuestionFormView();
 	},
 
 	onBackToQuestionFeedCommand: function() {
@@ -137,5 +290,9 @@ Ext.define("ResTube.controller.QuestionController",{
 	//helper functions
 	activateQuestionFeedView: function () {
 		Ext.Viewport.animateActiveItem(this.getMainContainer(), { type: "slide", direction: "right" });
+	},
+
+	activateQuestionFormView: function() {
+		Ext.Viewport.animateActiveItem(this.getQuestionForm(), { type: "slide", direction: "left" });
 	},
 });

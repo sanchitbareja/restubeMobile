@@ -3,15 +3,21 @@ Ext.Loader.setPath({
     'Ext': 'touch/src',
     'ResTube': 'app'
 });
+
+Ext.Loader.setPath({
+    'Ext.ux': 'src/ux'
+});
+
 //</debug>
 
 Ext.application({
     name: 'ResTube',
+    requires: ['Ext.ux.Fileup'],
 
     models: ['Login'],
     stores: ['Logins'],
-    views: ['Login','Main','Feed','Search', 'Contacts','SearchResults','Product','FeedDetail','ContactDetail','QuestionFeed','QuestionDetail'],
-    controllers: ['LoginController','SearchController','FeedController','ContactsController','QuestionController'],
+    views: ['Login','Main','Feed','Search', 'Contacts','SearchResults','Product','FeedDetail','ContactDetail','QuestionFeed','QuestionDetail','AddQuestionForm','PDFViewer','Feedback'],
+    controllers: ['LoginController','SearchController','FeedController','ContactsController','QuestionController','FeedbackController'],
 
     icon: {
         '57': 'resources/icons/Icon.png',

@@ -15,6 +15,11 @@ Ext.define("ResTube.controller.SearchController",{
 				xtype: "restubeproduct",
 				autoCreate: true,
 			},
+			googlePdfViewer: {
+				selector: "googlepdfviewer",
+				xtype: 'googlepdfviewer',
+				autoCreate: true,
+			}
 		},
 		control: {
 			restubeSearch: {
@@ -29,7 +34,12 @@ Ext.define("ResTube.controller.SearchController",{
 			restubeProduct: {
 				//commands fired by restubeProduct
 				backToResultsCommand: "onBackToResultsCommand",
+				loadPdfViewerCommand: "onLoadPdfViewerCommand",
 			},
+			googlePdfViewer: {
+				//comands fired by googlePdfViewer
+				backToProductCommand: "onBackToProductCommand",	
+			}
 		}
 	},
 
@@ -77,6 +87,11 @@ Ext.define("ResTube.controller.SearchController",{
 		this.activateProductSearch();
 	},
 
+	onBackToProductCommand: function() {
+		console.log("onBackToProductCommand");
+		this.activateProductInfo();
+	},
+
 	onProductInfoCommand: function(view, productId) {
 		console.log("onProductInfoCommand");
 		console.log(productId);
@@ -114,6 +129,16 @@ Ext.define("ResTube.controller.SearchController",{
 		this.activateProductResults();
 	},
 
+	onLoadPdfViewerCommand: function(view, link) {
+		console.log("onLoadPdfViewerCommand");
+		var encoded_url = encodeURIComponent(link);
+		console.log(encoded_url);
+
+		var pdfViewerView = this.getGooglePdfViewer();
+		pdfViewerView.setData({'encoded_pdf_url':encoded_url});
+		Ext.Viewport.animateActiveItem(pdfViewerView, { type: "slide", direction: "left" });
+	},
+
 	//helper functions
 	activateProductSearch: function () {
 	    Ext.Viewport.animateActiveItem(this.getMainContainer(), { type: "slide", direction: "right" });
@@ -126,7 +151,6 @@ Ext.define("ResTube.controller.SearchController",{
 	activateProductInfo: function () {
 		console.log("activateProductInfo");
 		console.log(this.getRestubeProduct());
-		Ext.Viewport.animateActiveItem(this.getRestubeProduct(), { type: "slide", direction: "left" });
+		Ext.Viewport.animateActiveItem(this.getRestubeProduct(), { type: "slide", direction: "right" });
 	},
-
 });

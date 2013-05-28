@@ -5,10 +5,6 @@ Ext.define("ResTube.view.Contacts", {
 	config: {
 		loadingText: "Loading Contacts...",
 		emptyText: '<pre><div>No contacts :(</div></pre>',
-        masked: {
-        	xtype: "loadmask",
-        	message: "Loading Contacts...",
-        },
 
         plugins: [
 	        {
@@ -27,7 +23,9 @@ Ext.define("ResTube.view.Contacts", {
 					'<div class="small-8 columns" id="contactItem-{id}">'+
 						'<strong id="contactItem-{id}">{user.first_name} {user.last_name}</strong>'+
 						'<br />'+
-						'<i id="contactItem-{id}">{job_title}</i>'+
+						"<tpl for='skills'>"+
+							"<span class='label'><i>{name}</i></span>"+
+						"</tpl>"+
 					'</div>'+
 				'</div>',
 

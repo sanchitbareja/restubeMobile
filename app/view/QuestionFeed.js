@@ -5,11 +5,71 @@ Ext.define("ResTube.view.QuestionFeed", {
 	config: {
 
 		loadingText: "Loading Questions...",
-		emptyText: '<pre><div>No question :(</div></pre>',
-		itemTpl: '<pre><div id="questionItem-{id}">{question}</div><pre>',
+		emptyText: '<pre><div>No questions :(</div></pre>',
+		useSimpleItems: true,
+		itemTpl:[
+				'<tpl if="values.status==\'U\'">'+
+					'<div id="questionItem-{id}" class="questionrow unresolved">'+
+       			"</tpl>"+
+       			'<tpl if="values.status==\'R\'">'+
+       				'<div id="questionItem-{id}" class="questionrow resolved">'+
+       			"</tpl>"+
+       				'<div class="row">'+
+       					'<div class="small-2 columns" id="questionItem-{id}">'+
+       						'<img src="https://resolutiontube.s3.amazonaws.com/{questioner_image}" class="item_thumbnail">'+
+       					'</div>'+
+						'<div class="small-10 columns" id="questionItem-{id}">'+
+							'<strong id="questionItem-{id}">{question} </strong>'+						
+							'<br />'+
+							'<p id="questionItem-{id}" class="dateText">{[this.convertDate(values.posted_at)]} by {posted_by.username}</p>'+
+						'</div>'+
+					'</div>'+
+				'</div>',{
+					convertDate: function(json_date){
+						js_now = new Date();
+						js_date = new Date(json_date);
+						js_diff = js_now.getTime() - js_date.getTime();
+						js_now_time = js_now.getTime();
+						js_date_time = js_date.getTime();
+						if(js_now_time - js_date_time < 60000){ // 0 - 60 secs
+							return new String(Math.floor((js_now_time - js_date_time)/1000)) + " secs ago";
+						} else if(js_now_time - js_date_time < 3600000) { // 1- 59 minutes
+							minutes_ago = Math.floor((js_now_time - js_date_time)/60000);
+							if(minutes_ago == 1){
+								return new String(minutes_ago) + " min ago";
+							} else {
+								return new String(minutes_ago) + " mins ago";
+							}
+						} else if(js_now_time - js_date_time < 86400000) { // 1-23 hours
+							hours_ago = Math.floor((js_now_time - js_date_time)/3600000);
+							if(hours_ago == 1){
+								return new String(hours_ago) + " hour ago";
+							} else {
+								return new String(hours_ago) + " hours ago";
+							}
+						} else if(js_now_time - js_date_time < 518400000) { // 1-6 days
+							days_ago = Math.floor((js_now_time - js_date_time)/86400000);
+							if(days_ago == 1){
+								return new String(days_ago) + " day ago";
+							} else {
+								return new String(days_ago) + " days ago";
+							}
+						} else if(js_now_time - js_date_time < 2073600000) { // 1-4 weeks
+							weeks_ago = Math.floor((js_now_time - js_date_time)/518400000);
+							if(weeks_ago == 1){
+								return new String(weeks_ago) + " week ago";
+							} else {
+								return new String(weeks_ago) + " weeks ago";
+							}
+						} else {
+							return js_date.toDateString();
+						}
+					},
+				}],
+
 		masked: {
         	xtype: "loadmask",
-        	message: "Loading Questions...",
+        	message: "Loading...",
         },
 
         plugins: [
@@ -27,28 +87,28 @@ Ext.define("ResTube.view.QuestionFeed", {
             docked: "top",
             title: "TechConnect",
             items: [{
-	            xtype: "button",
-	            ui: "refresh",
-	            text: "Refresh",
-	            id: "refreshQuestionFeedButton"
-	        }, {
+            	xtype: "button",
+            	ui: "action",
+            	text: "Logout",
+            	id: "logoutButton",
+            },{
 	        	xtype: "spacer",
 	        }, {
 	        	xtype: "button",
 	        	ui: "action",
-	        	text: "New",
-	        	id: "addQuestionButton",
+	        	text: "Post",
+	        	id: "launchQuestionFormButton",
 	        }],
 		}],
 
 		listeners: [{
-			delegate: "#refreshQuestionFeedButton",
+			delegate: "#logoutButton",
 			event: "tap",
-			fn: "onRefreshButtonTap",
+			fn: "onLogoutButtonTap",
 		},{
-			delegate: "#addQuestionButton",
+			delegate: "#launchQuestionFormButton",
 			event: "tap",
-			fn: "onAddButtonTap",
+			fn: "onLaunchQuestionFormButtonTap",
 		},{
 			event: "show",
 			fn: "onShow",
@@ -57,7 +117,8 @@ Ext.define("ResTube.view.QuestionFeed", {
 
 	onItemTap: function(nestedList, index, target, record, e, eOpts){
 		console.log("An item was tapped!");
-		var questionID = Ext.get(Ext.get(index).parent().query('div[id^=questionItem]')[0]).id.slice(13);
+		var questionID = Ext.get(index).id.slice(13);
+		this.setMasked(true);
 		this.fireEvent("questionInfoCommand", this, questionID);
 	},
 
@@ -66,13 +127,13 @@ Ext.define("ResTube.view.QuestionFeed", {
 		this.fireEvent('loadQuestionsDataCommand');
 	},
 
-	onRefreshButtonTap: function(){
-		console.log("Refresh questions data!");
-		this.fireEvent('loadQuestionsDataCommand');
+	onLaunchQuestionFormButtonTap: function(){
+		console.log("Adding questions data!");
+		this.fireEvent('launchQuestionFormCommand');
 	},
 
-	onAddButtonTap: function(){
-		console.log("Adding questions data!");
-		this.fireEvent('addQuestionCommand');
+	onLogoutButtonTap: function(){
+		console.log("Logout button pressed!");
+		this.fireEvent('logoutCommand');
 	},
 });
