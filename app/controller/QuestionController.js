@@ -19,6 +19,7 @@ Ext.define("ResTube.controller.QuestionController",{
 				xtype: "addquestionform",
 				autoCreate: true,
 			},
+			fileBtn: 'addquestionform #fileBtn',
 		},
 		control: {
 			restubeQuestionFeed: {
@@ -36,7 +37,11 @@ Ext.define("ResTube.controller.QuestionController",{
 				//commands by questionForm
 				postButtonCommand: "onPostQuestionCommand",
 				backToFeedCommand: "onBackToQuestionFeedCommand",
-			}
+			},
+			fileBtn: {
+                success: 'onFileUploadSuccess',
+                failure: 'onFileUploadFailure'
+            }
 		},
 	},
 
@@ -81,6 +86,31 @@ Ext.define("ResTube.controller.QuestionController",{
 
 	},
 
+	onFileUploadSuccess: function(response, xhrlink, successevent) {
+        console.log('Success upload');
+        console.log(response);
+        console.log(xhrlink);
+        console.log(successevent);
+
+        var addQuestionForm = this.getQuestionForm();
+        var mediaURLComponent = addQuestionForm.getComponent('addquestionfieldset').getComponent('mediaURL');
+        var uploadButtonComponent = addQuestionForm.getComponent('addquestionfieldset').getComponent('fileBtn');
+
+        mediaURLComponent.setValue(response.url);
+        mediaURLComponent.disable();
+        mediaURLComponent.setHidden(false);
+
+        uploadButtonComponent.setHidden(true);
+    },
+    
+    onFileUploadFailure: function(message, response, xhrlink, failureevent) {
+        console.log('Failure upload');
+        console.log(message);
+        console.log(response);
+        console.log(xhrlink);
+        console.log(failureevent);
+    },
+
 	//Commands fired by the view
 	onQuestionInfoCommand: function(view, questionId){
 		console.log("onQuestionInfoCommand!");
@@ -112,11 +142,12 @@ Ext.define("ResTube.controller.QuestionController",{
 		});
 	},
 
-	onPostQuestionCommand: function(view, question, details) {
+	onPostQuestionCommand: function(view, question, details, mediaURL) {
 		console.log("onPostQuestionCommand!");
 
 		console.log(question);
 		console.log(details);
+		console.log(mediaURL);
 
 		//get user credentials
 		var loginStore = Ext.getStore("Logins");
@@ -145,6 +176,7 @@ Ext.define("ResTube.controller.QuestionController",{
 				"posted_by": user.resource_uri,
 				"question": question,
 				"details": details,
+				"media_url": mediaURL,
 			},
 
 			success: function(response) {
@@ -167,6 +199,13 @@ Ext.define("ResTube.controller.QuestionController",{
 					addQuestionForm.setMasked(false);
 
 					addQuestionForm.reset();
+					var mediaURLComponent = addQuestionForm.getComponent('addquestionfieldset').getComponent('mediaURL');
+			        var uploadButtonComponent = addQuestionForm.getComponent('addquestionfieldset').getComponent('fileBtn');
+			        mediaURLComponent.setValue(response.url);
+			        mediaURLComponent.disable();
+			        mediaURLComponent.setHidden(true);
+			        uploadButtonComponent.setHidden(false);
+
 					Ext.Viewport.animateActiveItem(questionFeedView, { type: "slide", direction: "right" });
 
 					selfref.loadQuestionsData();

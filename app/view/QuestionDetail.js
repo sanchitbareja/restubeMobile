@@ -16,6 +16,7 @@ Ext.define('ResTube.view.QuestionDetail',{
 	       			'<tpl if="values.status==\'R\'">'+
 	       				"<p class='label radius success'>Resolved</p>"+
 	       			"</tpl>"+
+	       			"<p><br /><img src='{media_url}' style='width:100%;'></p>"+
 	        	"</div>"+
         	"</div>"+
         	"<div class='row'id='question_detail_comment_header'>"+

@@ -18,7 +18,7 @@ Ext.define('ResTube.view.ContactDetail', {
 				"<div class='small-12 columns'>"+
 					"<a href='tel:{phone_no}'><div class='actionButton'>Call</div></a>"+
 					"<a href='mailto:{user.email}'><div class='actionButton'>Email</div></a>"+
-					'<a href="skype:arnav.anand?call&video=true">'+
+					'<a href="skype:{skype_id}?call&video=true">'+
 						'<div class="actionButton">Video Chat</div>'+
 					'</a>'+
 				"</div>"+

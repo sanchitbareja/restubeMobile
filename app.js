@@ -5,7 +5,7 @@ Ext.Loader.setPath({
 });
 
 Ext.Loader.setPath({
-    'Ext.ux': 'src/ux'
+    'Ext.ux': 'touch/src/ux'
 });
 
 //</debug>

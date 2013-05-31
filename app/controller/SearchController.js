@@ -57,14 +57,12 @@ Ext.define("ResTube.controller.SearchController",{
 		console.log(searchList);
 
 		var myRequest = Ext.Ajax.request({
-		    url: 'http://restube.herokuapp.com/api/v1/product/?format=json',
+		    url: 'http://restube.herokuapp.com/api/v1/product/search/?format=json&models=products.product&q='.concat(searchValue),
 		    method: 'GET',
 		    disableCaching: false,
 		    // withCredentials: true,
 		    useDefaultXhrHeader: false,
-		    params: {
-		    	name__contains: searchValue
-		    },
+		    params: {},
 
 		    success: function(response) {
 		        console.log("Spiffing, everything worked");

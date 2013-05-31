@@ -23,6 +23,7 @@ Ext.define("ResTube.view.AddQuestionForm", {
             }, {
                 xtype: 'fieldset',
                 margin: "10px",
+                itemId: 'addquestionfieldset',
                 items: [
                     {
                         xtype: 'textfield',
@@ -34,12 +35,31 @@ Ext.define("ResTube.view.AddQuestionForm", {
                         placeHolder: 'Details (Optional)',
                         id: 'detailsText',
                     },
+                    {
+                        xtype: 'textfield',
+                        id: 'mediaURL',
+                        hidden: true,
+                    },
                     //Fileup configuration for "Upload file" mode
                     {
                         itemId: 'fileBtn',
                         xtype: 'fileupload',
                         autoUpload: false,
-                        url: 'http://127.0.0.1:8000/upload/file/'
+                        url: 'http://restube.herokuapp.com/upload/file/',
+                        // loadAsDataUrl: true,
+                        states: {
+                            browse: {
+                                text: 'Browse and upload'
+                            },
+                            ready: {
+                                text: 'Upload!'
+                            },
+
+                            uploading: {
+                                text: 'Uploading',
+                                loading: true// Enable loading spinner on button
+                            }
+                        }
                     }
                 ]
             }, {
@@ -74,7 +94,7 @@ Ext.define("ResTube.view.AddQuestionForm", {
 	onPostButtonTap: function() {
 		console.log("onPostButtonTap");
         this.setMasked(true);
-		this.fireEvent("postButtonCommand", this, Ext.getCmp('questionText')._value, Ext.getCmp('detailsText')._value);
+		this.fireEvent("postButtonCommand", this, Ext.getCmp('questionText')._value, Ext.getCmp('detailsText')._value, Ext.getCmp('mediaURL')._value);
 	},
 
     onBackButtonTap: function() {
@@ -82,6 +102,9 @@ Ext.define("ResTube.view.AddQuestionForm", {
         //clear text in the form before going back
         Ext.getCmp('questionText').reset();
         Ext.getCmp('detailsText').reset();
+        Ext.getCmp('mediaURL').reset();
+        Ext.getCmp('mediaURL').setHidden(true);
+        this.getComponent('addquestionfieldset').getComponent('fileBtn').setHidden(false);
         
         this.fireEvent("backToFeedCommand", this);
     },
