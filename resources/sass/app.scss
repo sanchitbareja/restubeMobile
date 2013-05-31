@@ -35,3 +35,22 @@ $tabs-dark-active-color: #444444;
 // Your custom code goes here...
 
 @include sencha-button-ui('action', #317981);
+@include sencha-toolbar-ui('searchtoolbar', #FFFFFF);
+//searchbar
+.x-toolbar-searchtoolbar {
+    padding: .2em;
+
+
+    .x-field {
+        width: auto;
+        min-height: 0;
+        padding: 0 .1em 0 .2em;
+        @include border-radius(.5em);
+
+
+        input {
+            margin: .2em;
+            width: 80%;
+        }
+    }
+}

@@ -99,7 +99,25 @@ Ext.define("ResTube.view.QuestionFeed", {
 	        	text: "Post",
 	        	id: "launchQuestionFormButton",
 	        }],
-		}],
+		},{
+            xtype: 'toolbar',
+            docked: 'top',
+            cls: 'searchtoolbar',
+            ui: 'searchtoolbar',
+            items: [
+                { xtype: 'spacer' },
+                {
+                    xtype: 'searchfield',
+                    placeHolder: 'Search...',
+                    id: 'questionsearchfield',
+                },{
+	                xtype: "button",
+	                text: "Search",
+	                id: "questionSearchButton",
+	            },
+                { xtype: 'spacer' }
+            ]
+        },],
 
 		listeners: [{
 			delegate: "#logoutButton",
@@ -112,6 +130,10 @@ Ext.define("ResTube.view.QuestionFeed", {
 		},{
 			event: "show",
 			fn: "onShow",
+		},{
+			delegate: "#questionSearchButton",
+			event: "tap",
+			fn: "onQuestionSearchButtonTap",
 		}],
 	},
 
@@ -135,5 +157,10 @@ Ext.define("ResTube.view.QuestionFeed", {
 	onLogoutButtonTap: function(){
 		console.log("Logout button pressed!");
 		this.fireEvent('logoutCommand');
+	},
+
+	onQuestionSearchButtonTap: function(){
+		console.log("questionSearchButton pressed!");
+		this.fireEvent("questionSearchCommand",Ext.getCmp('questionsearchfield')._value);
 	},
 });

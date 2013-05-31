@@ -27,6 +27,7 @@ Ext.define("ResTube.controller.QuestionController",{
 				questionInfoCommand: "onQuestionInfoCommand",
 				loadQuestionsDataCommand: "loadQuestionsData",
 				launchQuestionFormCommand: "onLaunchQuestionFormCommand",
+				questionSearchCommand : "onQuestionSearchCommand",
 			},
 			questionDetail: {
 				//commands by questionDetail
@@ -313,6 +314,41 @@ Ext.define("ResTube.controller.QuestionController",{
 				});
 				task.delay(2000); //the callback function will now be called after 1000ms
 			},
+		});
+	},
+
+	onQuestionSearchCommand: function(searchText) {
+		console.log("onQuestionSearchCommand");
+		console.log(searchText);
+
+		var restube_questions = this.getRestubeQuestionFeed();
+		restube_questions.setMasked(true);
+		var myRequest = Ext.Ajax.request({
+		    url: 'http://restube.herokuapp.com/api/v1/question/search/?format=json&models=questions.question&q='.concat(searchText),
+		    method: 'GET',
+		    disableCaching: false,
+		    // withCredentials: true,
+		    useDefaultXhrHeader: false,
+		    params: {
+		    },
+
+		    success: function(response) {
+		        console.log("Spiffing, everything worked");
+		        var jsondecoded = Ext.JSON.decode(response.responseText);
+		        console.log(jsondecoded);
+		        console.log(restube_questions);
+		        if(restube_questions.getStore()){
+			        restube_questions.getStore().removeAll();
+			    }
+		    	restube_questions.setData(jsondecoded.objects);
+		    	restube_questions.setMasked(false);
+		    },
+
+		    failure: function(response) {
+		    	console.log(response);
+		        console.log("Curses, something terrible happened");
+		        restube_questions.setMasked(true);
+		    },
 		});
 	},
 

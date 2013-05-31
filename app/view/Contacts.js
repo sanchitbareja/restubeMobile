@@ -33,11 +33,33 @@ Ext.define("ResTube.view.Contacts", {
 			xtype: "toolbar",
             docked: "top",
             title: "Contacts",
-		}],
+		},{
+            xtype: 'toolbar',
+            docked: 'top',
+            id: 'contactsearchtoolbar',
+            ui: 'searchtoolbar',
+            items: [
+                { xtype: 'spacer' },
+                {
+                    xtype: 'searchfield',
+                    placeHolder: 'Search...',
+                    id: 'contactsearchfield',
+                }, {
+	                xtype: "button",
+	                text: "Search",
+	                id: "contactSearchButton",
+	            },
+                { xtype: 'spacer' }
+            ]
+        }],
 
 		listeners: [{
 			event: "show",
 			fn: "onShow",
+		},{
+			delegate: "#contactSearchButton",
+			event: "tap",
+			fn: "onContactSearchButtonTap",
 		}],
 	},
 
@@ -51,5 +73,10 @@ Ext.define("ResTube.view.Contacts", {
 	onShow: function(){
 		console.log("Initialize contacts data!");
 		this.fireEvent('loadContactsDataCommand');
+	},
+
+	onContactSearchButtonTap: function(){
+		console.log("contactSearchButton pressed!");
+		this.fireEvent("contactSearchCommand", Ext.getCmp('contactsearchfield')._value)
 	},
 });
