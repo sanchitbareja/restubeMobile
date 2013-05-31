@@ -16,10 +16,10 @@ Ext.define("ResTube.view.QuestionFeed", {
        			"</tpl>"+
        				'<div class="row">'+
        					'<div class="small-2 columns" id="questionItem-{id}">'+
-       						'<img src="https://resolutiontube.s3.amazonaws.com/{questioner_image}" class="item_thumbnail">'+
+       						'<img src="{questioner_image}" class="item_thumbnail">'+
        					'</div>'+
 						'<div class="small-10 columns" id="questionItem-{id}">'+
-							'<strong id="questionItem-{id}">{question} </strong>'+						
+							'<strong id="questionItem-{id}">{question} {comments.length}</strong>'+						
 							'<br />'+
 							'<p id="questionItem-{id}" class="dateText">{[this.convertDate(values.posted_at)]} by {posted_by.username}</p>'+
 						'</div>'+
