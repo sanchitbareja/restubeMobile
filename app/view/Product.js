@@ -9,7 +9,7 @@ Ext.define('ResTube.view.Product',{
         		"<div class='small-12 columns'>"+
 	        		'<ul class="rslides">'+
 		        		'<tpl for="media">'+
-							'<li><img src="{url}"></li>'+
+							'<li><embed src="{url}"></li>'+
 	    				'</tpl>'+
 					'</div>'+
 	        	"</div>"+
