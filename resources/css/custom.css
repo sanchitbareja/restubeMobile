@@ -73,11 +73,23 @@
   margin: 0px;
 }
 
+/* Question Feed View */
+
+#questionSearchButton {
+  margin: 0px;
+  padding: 0.3em;
+}
+
+#contactSearchButton {
+  margin: 0px;
+  padding: 0.3em;
+}
+
 /* Question Detail View */
 
 #nomargin {
 
-  padding: 0px;
+  padding: 0.1em;
   margin: 0px;
 }
 

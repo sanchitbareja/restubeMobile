@@ -112,7 +112,7 @@ Ext.define("ResTube.view.QuestionFeed", {
                     id: 'questionsearchfield',
                 },{
 	                xtype: "button",
-	                text: "Search",
+	                text: "Go",
 	                id: "questionSearchButton",
 	            },
                 { xtype: 'spacer' }
