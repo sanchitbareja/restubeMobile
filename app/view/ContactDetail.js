@@ -26,7 +26,7 @@ Ext.define('ResTube.view.ContactDetail', {
 
 		items: [{
 			xtype: "toolbar",
-			title: "Contact Information",
+			title: "Contact Info",
 			docked: "top",
 			items: {
 	            xtype: "button",

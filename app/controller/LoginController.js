@@ -6,15 +6,26 @@ Ext.define("ResTube.controller.LoginController",{
 			mainContainer: "maincontainer",
 			loginContainer: "logincontainer",
 			restubeQuestionFeed: "restubequestionfeed",
+			restubeSearch: "restubesearch",
+			restubeContacts: "restubecontacts",
+			restubeFeedback: "restubefeedback",
 		},
 		control: {
 			loginContainer: {
 				//commands fired by logincontainer
 				loginButtonCommand: "onLoginCommand",
 				onLoginShow: "onLoginShowCommand",
-				
 			},
 			restubeQuestionFeed: {
+				logoutCommand: "onLogoutButtonCommand",
+			},
+			restubeSearch: {
+				logoutCommand: "onLogoutButtonCommand",
+			},
+			restubeContacts: {
+				logoutCommand: "onLogoutButtonCommand",
+			},
+			restubeFeedback: {
 				logoutCommand: "onLogoutButtonCommand",
 			}
 		}

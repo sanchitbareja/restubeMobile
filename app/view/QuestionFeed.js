@@ -8,20 +8,28 @@ Ext.define("ResTube.view.QuestionFeed", {
 		emptyText: '<pre><div>No questions :(</div></pre>',
 		useSimpleItems: true,
 		itemTpl:[
-				'<tpl if="values.status==\'U\'">'+
-					'<div id="questionItem-{id}" class="questionrow unresolved">'+
-       			"</tpl>"+
-       			'<tpl if="values.status==\'R\'">'+
-       				'<div id="questionItem-{id}" class="questionrow resolved">'+
-       			"</tpl>"+
+				// '<tpl if="values.status==\'U\'">'+
+				// 	'<div id="questionItem-{id}" class="questionrow unresolved">'+
+    //    			"</tpl>"+
+    //    			'<tpl if="values.status==\'R\'">'+
+       				'<div id="questionItem-{id}" class="questionrow">'+
+       			// "</tpl>"+
        				'<div class="row">'+
-       					'<div class="small-2 columns" id="questionItem-{id}">'+
+       					/*'<div class="small-2 columns" id="questionItem-{id}">'+
        						'<img src="https://resolutiontube.s3.amazonaws.com/{questioner_image}" class="item_thumbnail">'+
-       					'</div>'+
-						'<div class="small-10 columns" id="questionItem-{id}">'+
-							'<strong id="questionItem-{id}">{question} </strong>'+						
+       					'</div>'+*/
+						'<div class="small-11 columns" id="questionItem-{id}">'+
+							'<div class="description"><text id="questionItem-{id}">{question} {comments.length}</text></div>'+						
 							'<br />'+
 							'<p id="questionItem-{id}" class="dateText">{[this.convertDate(values.posted_at)]} by {posted_by.username}</p>'+
+						'</div>'+
+						'<div class="small-1 columns" id="questionItem-{id}">'+
+							'<tpl if="values.status==\'U\'">'+
+								'<div class="item_thumbnail_box"><img src="resources/icons/exclamation.png" class="item_thumbnail"></div>'+
+							'</tpl>'+
+							'<tpl if="values.status==\'R\'">'+
+								'<div class="item_thumbnail_box"><img src="resources/icons/exclamationOff.png" class="item_thumbnail"></div>'+
+							'</tpl>'+
 						'</div>'+
 					'</div>'+
 				'</div>',{
