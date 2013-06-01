@@ -16,11 +16,11 @@ Ext.define("ResTube.view.Contacts", {
 	        }
 	    ],
 
-		itemTpl:'<div id="contactItem-{id}" class="row">'+
-					'<div class="small-4 columns" id="contactItem-{id}">'+
+		itemTpl:'<div id="contactItem-{id}" class="row contactrow">'+
+					'<div class="small-2 columns" id="contactItem-{id}">'+
 						'<img src="{thumbnail_photo}" class="thumbnail_photo_list" id="contactItem-{id}">'+
 					'</div>'+
-					'<div class="small-8 columns" id="contactItem-{id}">'+
+					'<div class="small-10 columns" id="contactItem-{id}">'+
 						'<strong id="contactItem-{id}">{user.first_name} {user.last_name}</strong>'+
 						'<br />'+
 						"<tpl for='skills'>"+
@@ -33,6 +33,12 @@ Ext.define("ResTube.view.Contacts", {
 			xtype: "toolbar",
             docked: "top",
             title: "Contacts",
+            items:[{
+                    xtype: "button",
+                    ui: "action",
+                    text: "Logout",
+                    id: "logoutButton",
+                }],
 		},{
             xtype: 'toolbar',
             docked: 'top',
@@ -54,6 +60,10 @@ Ext.define("ResTube.view.Contacts", {
         }],
 
 		listeners: [{
+			delegate: "#logoutButton",
+            event: "tap",
+            fn: "onLogoutButtonTap",
+        },{
 			event: "show",
 			fn: "onShow",
 		},{
@@ -69,6 +79,10 @@ Ext.define("ResTube.view.Contacts", {
 		var contactID = Ext.get(index).id.slice(12);
 		this.fireEvent("contactInfoCommand", this, contactID);
 	},
+	onLogoutButtonTap: function(){
+        console.log("Logout button pressed!");
+        this.fireEvent('logoutCommand');
+    },
 
 	onShow: function(){
 		console.log("Initialize contacts data!");

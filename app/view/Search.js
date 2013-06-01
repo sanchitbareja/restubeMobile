@@ -14,6 +14,12 @@ Ext.define("ResTube.view.Search", {
                 xtype: "toolbar",
                 docked: "top",
                 title: "Search",
+                items:[{
+                    xtype: "button",
+                    ui: "action",
+                    text: "Logout",
+                    id: "logoutButton",
+                }]
             }, {
                 xtype: 'fieldset',
                 margin: "10px",
@@ -33,6 +39,10 @@ Ext.define("ResTube.view.Search", {
             }
         ],
 		listeners: [{
+                delegate: "#logoutButton",
+                event: "tap",
+                fn: "onLogoutButtonTap",
+            },{
 				delegate: "#searchButton",
 				event: "tap",
 				fn: "onSearchButtonTap",
@@ -54,4 +64,9 @@ Ext.define("ResTube.view.Search", {
         this.setMasked(true);
 		this.fireEvent("searchButtonCommand", this, Ext.getCmp('searchText')._value);
 	},
+    
+    onLogoutButtonTap: function(){
+        console.log("Logout button pressed!");
+        this.fireEvent('logoutCommand');
+    },
 });

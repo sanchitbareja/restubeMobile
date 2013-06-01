@@ -14,6 +14,12 @@ Ext.define("ResTube.view.Feedback", {
                 xtype: "toolbar",
                 docked: "top",
                 title: "Feedback",
+                items:[{
+                    xtype: "button",
+                    ui: "action",
+                    text: "Logout",
+                    id: "logoutButton",
+                }],
             }, {
                 xtype: 'fieldset',
                 margin: "10px",
@@ -34,6 +40,10 @@ Ext.define("ResTube.view.Feedback", {
             }
         ],
 		listeners: [{
+                delegate: "#logoutButton",
+                event: "tap",
+                fn: "onLogoutButtonTap",
+            },{
 				delegate: "#feedbackButton",
 				event: "tap",
 				fn: "onFeedbackButtonTap",
@@ -59,4 +69,9 @@ Ext.define("ResTube.view.Feedback", {
         });
 		this.fireEvent("feedbackButtonCommand", this, Ext.getCmp('feedbackText')._value);
 	},
+    
+    onLogoutButtonTap: function(){
+        console.log("Logout button pressed!");
+        this.fireEvent('logoutCommand');
+    },
 });

@@ -1,4 +1,9 @@
 /* General and Misc */
+.row .columns a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
 .x-list-item-body {  /*  */
   padding: 0px;
 }
@@ -19,25 +24,68 @@
 
 .questionrow {
   margin: -15px -15px 0px -15px !important;
-  padding: 10px !important;
-  border-top: 1px solid #8F8F8F;
+  margin-right: -20px;
+  height: 4em;
+  padding: 5px;
+  border-bottom: 1px solid #bbb;
+  background-color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.row .columns .description { /* why you no work!?? */
+  height: 2.5em !important;
+  margin-bottom: -25px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: lighter !important;
+} 
+
+.row .columns .item_thumbnail_box {
+  max-width: 100%;
+  vertical-align: text-top;
+  position: absolute;
+  top: -2.75em;
+  left: 0px;
 }
 
-.item_thumbnail {
-  max-height: 100px;
+.row .columns .item_thumbnail {
+  height: 2em;
   max-width: 100%;
+}
+
+.x-toolbar .x-button.x-button-action {
+  background-color: #ac0b02;
+}
+
+.x-button.x-button-action {
+  background-color: #AAB3B6;
+  border: solid 1px #CCC;
+}
+
+#ext-button-1, #ext-button-4 {
+  background-color: #b80a00;
 }
 
 /* Call Detail */
 
 .thumbnail_photo {
 	max-width:100%;
-	max-height: 200px;
+	height: 60px;
 }
 
 .thumbnail_photo_list {
 	max-width:100%;
-	max-height: 200px;
+	height: 60px;
+}
+
+.contactrow {
+  margin: 0px !important;
+  max-width: none !important;
+  height: 4em;
+  border-bottom: 1px solid #bbb;
+  background-color: #eee;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .actionButton {
@@ -45,12 +93,12 @@
   text-align: center;
   margin-top: 10px;
   padding: 5px 15px;
-    background: #4479BA;
+    background: #AAB3B6;
     color: #FFF;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
-    border: solid 1px #20538D;
+    border: solid 1px #CCC;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
     -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
     -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
@@ -61,7 +109,7 @@
     -webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
     box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
-    background: #2E5481;
+    background: #940800; /*940800*/
     border: solid 1px #203E5F;
 }
 
@@ -154,9 +202,9 @@
   margin-left: auto;
   margin-right: auto;
   margin-top: 0;
-  margin-bottom: 0;
+  margin-bottom: 10px;
   max-width: 62.5em;
-  *zoom: 1; }
+  *zoom: 1;}
   .row:before, .row:after {
     content: " ";
     display: table; }
@@ -165,8 +213,8 @@
   .row .column,
   .row .columns {
     position: relative;
-    padding-left: 0.9375em;
-    padding-right: 0.9375em;
+    /*padding-left: 0.9375em;
+    padding-right: 0.9375em;*/
     width: 100%;
     float: left; }
   .row.collapse .column,
@@ -715,7 +763,6 @@
 
 /* Labels */
 .label {
-  font-weight: bold;
   text-align: center;
   text-decoration: none;
   line-height: 1;
@@ -724,9 +771,10 @@
   position: relative;
   padding: 0.1875em 0.625em 0.25em;
   font-size: 0.875em;
-  background-color: #2ba6cb;
-  color: #fff; 
+  background-color: #fff;
+  color: #333; 
   margin-right: 1px;
+  border-radius: 8px;
 }
   .label.radius {
     -webkit-border-radius: 3px;

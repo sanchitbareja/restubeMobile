@@ -1,4 +1,88 @@
+/*------------------------------------------
+Code to fix mismatched id's in localstorage
+------------------------------------------*/
+
+Ext.define('TP.extend.override.WebStorage', {
+override: 'Ext.data.proxy.WebStorage',
+
+
+read: function(operation, callback, scope) {
+var records = [],
+ids = this.getIds(),
+model = this.getModel(),
+idProperty = model.getIdProperty(),
+params = operation.getParams() || {},
+sorters = operation.getSorters(),
+filters = operation.getFilters(),
+start = operation.getStart(),
+limit = operation.getLimit(),
+length = ids.length,
+i, record, collection;
+
+
+//read a single record
+if (params[idProperty] !== undefined) {
+record = this.getRecord(params[idProperty]);
+if (record) {
+records.push(record);
+operation.setSuccessful();
+}
+} else {
+for (i = 0; i < length; i++) {
+//OVERRIDE: Add check here to make sure previous versions of sencha did not leave bogus IDs
+record = this.getRecord(ids[i]);
+if(record){
+records.push(record);
+}
+}
+
+
+collection = Ext.create('Ext.util.Collection');
+
+
+// First we comply to filters
+if (filters && filters.length) {
+collection.setFilters(filters);
+}
+// Then we comply to sorters
+if (sorters && sorters.length) {
+collection.setSorters(sorters);
+}
+
+
+collection.addAll(records);
+
+
+if (this.getEnablePagingParams() && start !== undefined && limit !== undefined) {
+records = collection.items.slice(start, start + limit);
+} else {
+records = collection.items.slice();
+}
+
+
+operation.setSuccessful();
+}
+
+
+operation.setCompleted();
+
+
+operation.setResultSet(Ext.create('Ext.data.ResultSet', {
+records: records,
+total : records.length,
+loaded : true
+}));
+operation.setRecords(records);
+
+
+if (typeof callback == 'function') {
+callback.call(scope || this, operation);
+}
+}
+});
+
 //<debug>
+
 Ext.Loader.setPath({
     'Ext': 'touch/src',
     'ResTube': 'app'
@@ -15,9 +99,10 @@ Ext.application({
     requires: ['Ext.ux.Fileup'],
 
     models: ['Login'],
+    views: ['Login','Main','Search', 'Contacts','SearchResults','Product','FeedDetail','ContactDetail','QuestionFeed','QuestionDetail','AddQuestionForm','PDFViewer','Feedback'],
+    controllers: ['LoginController','SearchController','ContactsController','QuestionController','FeedbackController'],
     stores: ['Logins'],
-    views: ['Login','Main','Feed','Search', 'Contacts','SearchResults','Product','FeedDetail','ContactDetail','QuestionFeed','QuestionDetail','AddQuestionForm','PDFViewer','Feedback'],
-    controllers: ['LoginController','SearchController','FeedController','ContactsController','QuestionController','FeedbackController'],
+    
 
     icon: {
         '57': 'resources/icons/Icon.png',
