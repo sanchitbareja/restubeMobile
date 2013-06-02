@@ -7,6 +7,7 @@ Ext.define('ResTube.view.Product',{
         scrollable: true,
         tpl:"<div class='row'>"+
         		"<div class='small-12 columns'>"+
+        			'<strong class="header">{name}</strong>'+
 	        		'<ul class="rslides">'+
 		        		'<tpl for="media">'+
 							'<li><embed src="{url}"></li>'+
@@ -16,7 +17,7 @@ Ext.define('ResTube.view.Product',{
         	"</div>"+
         	"<div class='row'>"+
         		"<div class='small-12 columns'>"+
-					'<img src="{parts_link}" style="width:100%;">'+
+					// '<img src="{parts_link}" style="width:100%;">'+
 					'<i>Model No: {model_no}</i><br />'+
 					'<i>Serial No: {serial_no}</i><br />'+
 	        	"</div>"+
@@ -80,7 +81,7 @@ Ext.define('ResTube.view.Product',{
 	onShow: function(){
 		this.getDockedItems()[0].setTitle((this.getData()).name);
 		$(".rslides").responsiveSlides({
-		  auto: true,             // Boolean: Animate automatically, true or false
+		  auto: false,             // Boolean: Animate automatically, true or false
 		  speed: 500,            // Integer: Speed of the transition, in milliseconds
 		  timeout: 4000,          // Integer: Time between slide transitions, in milliseconds
 		  pager: true,           // Boolean: Show pager, true or false

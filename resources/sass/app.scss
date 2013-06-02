@@ -36,16 +36,23 @@ $tabs-dark-active-color: #444444;
 
 @include sencha-button-ui('action', #940800);
 @include sencha-toolbar-ui('searchtoolbar', #FFFFFF);
+
+// default list background color
+.x-list .x-list-inner {
+    background-color: #eeeeee;
+}
+
 //searchbar
 .x-toolbar-searchtoolbar {
     padding: .1em;
-
+    background-color: #eeeeee;
 
     .x-field {
         width: auto;
         min-height: 0;
         padding: 0 .1em 0 .1em;
         @include border-radius(.3em);
+        background-color: #ffffff;
 
 
         input {
@@ -53,4 +60,8 @@ $tabs-dark-active-color: #444444;
             width: 70%;
         }
     }
+}
+.x-toolbar .x-field-search .x-component-outer {
+    -webkit-border-radius: 0.3em;
+    border-radius: 0.3em;
 }

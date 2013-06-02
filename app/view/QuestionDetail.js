@@ -7,15 +7,15 @@ Ext.define('ResTube.view.QuestionDetail',{
         scrollable: true,
         styleHtmlCls: 'nomargin',
        	tpl:"<div class='row' id='question_detail_question'>"+
-        		"<div class='small-12 columns'>"+
-	        		"<p>{question}</p>"+
-	        		"<p>{details}</p>"+
+        		"<div class='small-12 columns page'>"+
+	        		"<p><strong>{question}</strong></p>"+
 	        		'<tpl if="values.status==\'U\'">'+
-	       				"<p class='label radius'>Unresolved</p>"+
+	       				"<p class='label radius alert'>Unresolved</p>"+
 	       			"</tpl>"+
 	       			'<tpl if="values.status==\'R\'">'+
 	       				"<p class='label radius success'>Resolved</p>"+
 	       			"</tpl>"+
+	        		"<p>{details}</p>"+
 	       			"<p><br /><embed src='{media_url}' style='width:100%;'></p>"+
 	        	"</div>"+
         	"</div>"+

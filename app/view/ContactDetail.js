@@ -6,10 +6,10 @@ Ext.define('ResTube.view.ContactDetail', {
 		styleHtmlContent: true,
         scrollable: true,
         tpl:"<div class='row'>"+
-        		"<div class='small-5 columns'>"+
+        		"<div class='small-3 columns'>"+
         			"<img src='{thumbnail_photo}' class='thumbnail_photo'>"+
         		"</div>"+
-        		"<div class='small-7 columns'>"+
+        		"<div class='small-9 columns'>"+
         			"<strong>{user.first_name} {user.last_name}</strong><br />"+
         			"<i>{job_title}</i>"+
         		"</div>"+

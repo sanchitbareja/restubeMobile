@@ -26,7 +26,7 @@ Ext.define("ResTube.view.Search", {
                 items: [
                     {
                         xtype: 'textfield',
-                        placeHolder: 'Search by Product name',
+                        placeHolder: 'product name, model number',
                         id: 'searchText',
                     }
                 ]

@@ -11,9 +11,9 @@ Ext.define("ResTube.view.QuestionFeed", {
    				'<div id="questionItem-{id}" class="questionrow">'+
        				'<div class="row">'+
 						'<div class="small-11 columns" id="questionItem-{id}">'+
-							'<div class="description"><text id="questionItem-{id}">{question} {comments.length}</text></div>'+						
+							'<div class="description"><text id="questionItem-{id}">{question}</text></div>'+						
 							'<br />'+
-							'<p id="questionItem-{id}" class="dateText">{[this.convertDate(values.posted_at)]} by {posted_by.username}</p>'+
+							'<p id="questionItem-{id}" class="dateText">{[this.convertDate(values.posted_at)]} by {posted_by.username} &nbsp;&nbsp;{comments.length} comments</p>'+
 						'</div>'+
 						'<div class="small-1 columns" id="questionItem-{id}">'+
 							'<tpl if="values.status==\'U\'">'+
@@ -108,7 +108,7 @@ Ext.define("ResTube.view.QuestionFeed", {
                 { xtype: 'spacer' },
                 {
                     xtype: 'searchfield',
-                    placeHolder: 'Search...',
+                    placeHolder: ' search posts',
                     id: 'questionsearchfield',
                 },{
 	                xtype: "button",

@@ -48,7 +48,7 @@ Ext.define("ResTube.view.Contacts", {
                 { xtype: 'spacer' },
                 {
                     xtype: 'searchfield',
-                    placeHolder: 'Search...',
+                    placeHolder: ' search contacts',
                     id: 'contactsearchfield',
                 }, {
 	                xtype: "button",

@@ -6,18 +6,18 @@ Ext.define("ResTube.view.SearchResults", {
 		loadingText: "Loading Products...",
 		emptyText: '<pre><div>No products found.</div></pre>',
 
-		itemTpl:'<div id="productItem-{id}" class="row">'+
-					'<div class="small-4 columns" id="productItem-{id}">'+
+		itemTpl:'<div id="productItem-{id}" class="row contactrow">'+
+					'<div class="small-3 columns" id="productItem-{id}">'+
 					'<tpl for="media">'+
 						'<tpl if="id == 1">'+
 							'<img src="{url}" class="thumbnail_photo_list" id="productItem-{[parent.id]}">'+
 						'</tpl>'+
     				'</tpl>'+						
 					'</div>'+
-					'<div class="small-8 columns" id="productItem-{id}">'+
+					'<div class="small-9 columns" id="productItem-{id}">'+
 						'<strong id="productItem-{id}">{name}</strong>'+
 						'<br />'+
-						'<i id="productItem-{id}">Model No.:{model_no}</i>'+
+						'<i class="modelnum" id="productItem-{id}">MN: {model_no}</i>'+
 					'</div>'+
 				'</div>',
 
