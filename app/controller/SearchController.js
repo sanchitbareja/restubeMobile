@@ -30,6 +30,7 @@ Ext.define("ResTube.controller.SearchController",{
 				//commands fired by searchResults
 				backButtonCommand: "onBackButtonCommand",
 				productInfoCommand: "onProductInfoCommand",
+				loadNextPageCommand: "onLoadNextPageCommand",
 			},
 			restubeProduct: {
 				//commands fired by restubeProduct

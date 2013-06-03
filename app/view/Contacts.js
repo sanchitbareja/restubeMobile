@@ -13,6 +13,24 @@ Ext.define("ResTube.view.Contacts", {
 	            refreshFn: function(plugin) {
 	            	plugin.parent.parent.fireEvent("loadContactsDataCommand");
 	            },
+	        },{
+	            xclass: 'Ext.plugin.ListPaging',
+	            loadMoreText: "Fetching more contacts...",
+	            autoPaging: true,
+	            // loadMoreCmp is a private config method. not recommended to use and new solution needs to be found
+	            loadMoreCmp: {
+	            	xtype: 'component', 
+	            	baseCls: Ext.baseCSSPrefix + 'list-paging', 
+	            	scrollDock: 'bottom',
+	            	id: 'getMoreContactsCmp',
+	            	hidden: true,
+	            	listeners: {
+			        	painted: function(){
+					    	this.parent.parent.parent.fireEvent("loadNextPageCommand");
+					    	console.log("LOAD MORE DATA NOW!");
+					    },
+			        },	
+	            },
 	        }
 	    ],
 
