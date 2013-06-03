@@ -32,7 +32,7 @@ Ext.define("ResTube.view.SearchResults", {
 	            id: "backButton"
 	        },
 		}],
-
+		
 		listeners: [{
 			delegate: "#backButton",
 			event: "tap",

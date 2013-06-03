@@ -21,6 +21,7 @@ Ext.define("ResTube.controller.ContactsController",{
 				contactInfoCommand: "onContactInfoCommand",
 				loadContactsDataCommand: "loadContactsData",
 				contactSearchCommand: "onContactSearchCommand",
+				loadNextPageCommand: "onLoadNextPageCommand",
 			},
 			contactDetail: {
 				//commands by feedDetail
@@ -70,6 +71,43 @@ Ext.define("ResTube.controller.ContactsController",{
 		    },
 		});
 
+	},
+
+	onLoadNextPageCommand: function(){
+		console.log("onLoadNextPageCommand");
+
+		var contactsList = this.getRestubeContacts();
+		var contactsList_offset = contactsList.getStore().getCount();
+
+		console.log(contactsList_offset);
+
+		var myRequest = Ext.Ajax.request({
+		    url: 'http://restube.herokuapp.com/api/v1/userprofile/?format=json&offset='.concat(contactsList_offset),
+		    method: 'GET',
+		    disableCaching: false,
+		    // withCredentials: true,
+		    useDefaultXhrHeader: false,
+		    params: {
+		    },
+
+		    success: function(response) {
+		        console.log("Spiffing, everything worked");
+		        var jsondecoded = Ext.JSON.decode(response.responseText);
+		        console.log(jsondecoded);
+		        console.log(contactsList);
+		    	contactsList.getStore().add(jsondecoded.objects);
+		    	contactsList.setMasked(false);
+		    	if(!jsondecoded.meta.next){
+		    		var moreContactCmp = Ext.getCmp('getMoreContactsCmp');
+		    		moreContactCmp.hide();
+		    	}
+		    },
+
+		    failure: function(response) {
+		    	console.log(response);
+		        console.log("Curses, something terrible happened");
+		    },
+		});
 	},
 
 	//Commands fired by the view
