@@ -80,8 +80,9 @@ strong {
 
 
 
-#ext-button-1, #ext-button-4 {
+#ext-button-1, #ext-button-4 { /* just login buttons */
   background-color: #b80a00;
+  color: #fff;
 }
 
 /* Call Detail */
