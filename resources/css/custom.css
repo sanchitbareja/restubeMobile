@@ -834,7 +834,7 @@ strong {
   margin-top: .25em; 
   margin-right: 1px;
   border-radius: 5px;
-  float: left;
+  float: right;
 }
   .label.radius {
     -webkit-border-radius: 3px;
@@ -851,6 +851,12 @@ strong {
   .label.secondary {
     background-color: #e9e9e9;
     color: #333; }
+  .label.left {
+    float: left; }
+  .label.upperright {
+    top: -0.5em;
+    margin-bottom: -0.5em;
+  }
 
 /*! http://responsiveslides.com v1.54 by @viljamis */
 

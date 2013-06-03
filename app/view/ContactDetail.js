@@ -28,7 +28,7 @@ Ext.define('ResTube.view.ContactDetail', {
 					'<span class="header" id="specialties">Specialties:</span>'+
 					'<br/>'+
 					"<tpl for='skills'>"+
-						"<span class='label'><i>{name}</i></span>"+
+						"<span class='label left'><i>{name}</i></span>"+
 					"</tpl>"+
 				"</div>"+
 			"</div>",

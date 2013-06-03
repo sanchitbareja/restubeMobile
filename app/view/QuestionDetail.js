@@ -8,13 +8,14 @@ Ext.define('ResTube.view.QuestionDetail',{
         styleHtmlCls: 'nomargin',
        	tpl:"<div class='row' id='question_detail_question'>"+
         		"<div class='small-12 columns page'>"+
-	        		"<p><strong>{question}</strong></p>"+
-	        		'<tpl if="values.status==\'U\'">'+
-	       				"<p class='label radius alert'>Unresolved</p>"+
+        			'<tpl if="values.status==\'U\'">'+
+	       				"<p class='label radius alert upperright'>Unresolved</p>"+
 	       			"</tpl>"+
 	       			'<tpl if="values.status==\'R\'">'+
-	       				"<p class='label radius success'>Resolved</p>"+
+	       				"<p class='label radius success upperright'>Resolved</p>"+
 	       			"</tpl>"+
+	       			'<br/>'+
+	        		"<p><strong>{question}</strong></p>"+
 	        		"<p>{details}</p>"+
 	       			'<tpl if="values.media_url">'+
 	       				"<p><br /><embed src='{media_url}' style='width:100%;'></p>"+
