@@ -79,7 +79,7 @@ Ext.define('ResTube.view.Product',{
 	},
 
 	onShow: function(){
-		this.getDockedItems()[0].setTitle((this.getData()).name);
+		this.getDockedItems()[0].setTitle((this.getData()).name.slice(0,12)+"...");
 		$(".rslides").responsiveSlides({
 		  auto: false,             // Boolean: Animate automatically, true or false
 		  speed: 500,            // Integer: Speed of the transition, in milliseconds

@@ -40,12 +40,20 @@ Ext.define('ResTube.view.ContactDetail', {
 			delegate: "#backButton4",
 			event: "tap",
 			fn: "onBackButtonTap4",
-		}],
+		},{
+            event: "show",
+            fn: "onShow",
+        }],
 	},
 
 	onBackButtonTap4: function() {
 		console.log("onBackButtonTapped4!");
 		this.fireEvent("backToContactsCommand", this);
+	},
+
+	onShow: function() {
+		var full_name = this.getData().user.first_name+" "+this.getData().user.last_name;
+		this.getDockedItems()[0].setTitle(full_name.slice(0,12)+"...");
 	},
 
 });
