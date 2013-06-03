@@ -14,8 +14,13 @@ strong {
 
 .dateText {
   font-size: 8pt;
-  color: #999999;
+  color: #999;
   font-style: italic;
+  text-align: right;
+}
+
+.dateLeft {
+  float: left;
 }
 
 .resolved {
@@ -75,8 +80,9 @@ strong {
 
 
 
-#ext-button-1, #ext-button-4 {
+#ext-button-1, #ext-button-4 { /* just login buttons */
   background-color: #b80a00;
+  color: #fff;
 }
 
 /* Call Detail */
@@ -127,6 +133,10 @@ strong {
     box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
     background: #940800; /*940800*/
     color: #fff;
+}
+
+#specialties {
+  font-weight: lighter !important;
 }
 
 /* PDF Viewer */
@@ -794,6 +804,22 @@ strong {
   [class*="small-block-grid-"] > li {
     clear: none !important; } }
 
+/* Contact List */
+
+.subtitle {
+  font-size: 90%;
+  font-weight: lighter;
+  position: relative;
+  top: -2px;
+}
+.subsubtitle {
+  font-size: 70%;
+  font-style: italic;
+  color: #999;
+  position: relative;
+  top: -2px;
+}
+
 /* Labels */
 .label {
   text-align: center;
@@ -803,9 +829,10 @@ strong {
   display: inline-block;
   position: relative;
   padding: 0.125em 0.625em 0.1875em;
-  font-size: 0.875em;
-  background-color: #eee;
-  color: #333; 
+  font-size: 1em;
+  background-color: #fff;
+  color: #333;
+  margin-top: .25em; 
   margin-right: 1px;
   border-radius: 5px;
   float: right;
@@ -825,6 +852,12 @@ strong {
   .label.secondary {
     background-color: #e9e9e9;
     color: #333; }
+  .label.left {
+    float: left; }
+  .label.upperright {
+    top: -0.5em;
+    margin-bottom: -0.5em;
+  }
 
 /*! http://responsiveslides.com v1.54 by @viljamis */
 
@@ -933,5 +966,5 @@ margin: 1em 1.5em 1.5em 0 !important;
 
 .row .columns .header {
   font-size: 114%;
-  margin-bottom: 
+  margin-bottom: 1em;
 }

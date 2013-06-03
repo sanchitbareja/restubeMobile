@@ -40,10 +40,12 @@ Ext.define("ResTube.view.Contacts", {
 					'</div>'+
 					'<div class="small-10 columns" id="contactItem-{id}">'+
 						'<strong id="contactItem-{id}">{user.first_name} {user.last_name}</strong>'+
-						'<br />'+
-						"<tpl for='skills'>"+
-							"<span class='label'><i>{name}</i></span>"+
-						"</tpl>"+
+						'<br/>'+
+						"<span class='subtitle'>{job_title}</span>"+
+						'<br/>'+
+						'<p class="subsubtitle">'+
+							'<span class="dateLeft">Specialist in {skills.length} machines</span>'+
+						'</p>'+
 					'</div>'+
 				'</div>',
 
