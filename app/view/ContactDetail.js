@@ -22,6 +22,15 @@ Ext.define('ResTube.view.ContactDetail', {
 						'<div class="actionButton">Video Chat</div>'+
 					'</a>'+
 				"</div>"+
+			"</div>"+
+			"<div class='row'>"+
+				"<div class='small-12 columns'>"+
+					'<span class="header" id="specialties">Specialties:</span>'+
+					'<br/>'+
+					"<tpl for='skills'>"+
+						"<span class='label'><i>{name}</i></span>"+
+					"</tpl>"+
+				"</div>"+
 			"</div>",
 
 		items: [{

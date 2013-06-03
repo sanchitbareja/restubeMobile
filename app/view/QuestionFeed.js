@@ -13,7 +13,10 @@ Ext.define("ResTube.view.QuestionFeed", {
 						'<div class="small-11 columns" id="questionItem-{id}">'+
 							'<div class="description"><text id="questionItem-{id}">{question}</text></div>'+						
 							'<br />'+
-							'<p id="questionItem-{id}" class="dateText">{[this.convertDate(values.posted_at)]} by {posted_by.username} &nbsp;&nbsp;{comments.length} comments</p>'+
+							'<p id="questionItem-{id}" class="dateText">'+
+								'<span class="dateLeft">{[this.convertDate(values.posted_at)]} by {posted_by.username}</span>'+
+								'{comments.length} comments'+
+							'</p>'+
 						'</div>'+
 						'<div class="small-1 columns" id="questionItem-{id}">'+
 							'<tpl if="values.status==\'U\'">'+
