@@ -28,6 +28,7 @@ Ext.define("ResTube.controller.QuestionController",{
 				loadQuestionsDataCommand: "loadQuestionsData",
 				launchQuestionFormCommand: "onLaunchQuestionFormCommand",
 				questionSearchCommand : "onQuestionSearchCommand",
+				loadNextPageCommand: "onLoadNextPageCommand",
 			},
 			questionDetail: {
 				//commands by questionDetail
@@ -85,6 +86,43 @@ Ext.define("ResTube.controller.QuestionController",{
 		    },
 		});
 
+	},
+
+	onLoadNextPageCommand: function(){
+		console.log("onLoadNextPageCommand");
+
+		var restube_questions = this.getRestubeQuestionFeed();
+		var restube_question_offset = restube_questions.getStore().getCount();
+
+		console.log(restube_question_offset);
+
+		var myRequest = Ext.Ajax.request({
+		    url: 'http://restube.herokuapp.com/api/v1/question/?format=json&offset='.concat(restube_question_offset),
+		    method: 'GET',
+		    disableCaching: false,
+		    // withCredentials: true,
+		    useDefaultXhrHeader: false,
+		    params: {
+		    },
+
+		    success: function(response) {
+		        console.log("Spiffing, everything worked");
+		        var jsondecoded = Ext.JSON.decode(response.responseText);
+		        console.log(jsondecoded);
+		        console.log(restube_questions);
+		    	restube_questions.getStore().add(jsondecoded.objects);
+		    	restube_questions.setMasked(false);
+		    	if(!jsondecoded.meta.next){
+		    		var moreQuestionCmp = Ext.getCmp('getMoreQuestionsCmp');
+		    		moreQuestionCmp.hide();
+		    	}
+		    },
+
+		    failure: function(response) {
+		    	console.log(response);
+		        console.log("Curses, something terrible happened");
+		    },
+		});
 	},
 
 	onFileUploadSuccess: function(response, xhrlink, successevent) {

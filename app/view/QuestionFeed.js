@@ -6,7 +6,6 @@ Ext.define("ResTube.view.QuestionFeed", {
 
 		loadingText: "Loading Questions...",
 		emptyText: '<pre><div>No questions :(</div></pre>',
-		useSimpleItems: true,
 		itemTpl:[
    				'<div id="questionItem-{id}" class="questionrow">'+
        				'<div class="row">'+
@@ -79,6 +78,24 @@ Ext.define("ResTube.view.QuestionFeed", {
 	            refreshFn: function(plugin) {
 	            	plugin.parent.parent.fireEvent("loadQuestionsDataCommand");
 	            },
+	        },{
+	            xclass: 'Ext.plugin.ListPaging',
+	            loadMoreText: "Fetching more questions...",
+	            autoPaging: true,
+	            // loadMoreCmp is a private config method. not recommended to use and new solution needs to be found
+	            loadMoreCmp: {
+	            	xtype: 'component', 
+	            	baseCls: Ext.baseCSSPrefix + 'list-paging', 
+	            	scrollDock: 'bottom',
+	            	id: 'getMoreQuestionsCmp',
+	            	hidden: true,
+	            	listeners: {
+			        	painted: function(){
+					    	this.parent.parent.parent.fireEvent("loadNextPageCommand");
+					    	console.log("LOAD MORE DATA NOW!");
+					    },
+			        },	
+	            },
 	        }
 	    ],
 
@@ -134,6 +151,11 @@ Ext.define("ResTube.view.QuestionFeed", {
 			delegate: "#questionSearchButton",
 			event: "tap",
 			fn: "onQuestionSearchButtonTap",
+		}, {
+			event: "Initialize",
+			fn: function() {
+				console.log("LOAD MORE DATA");
+			},
 		}],
 	},
 
