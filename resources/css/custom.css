@@ -78,13 +78,19 @@ strong {
   font-weight: lighter;
 }
 
-.x-html h1 img {
+#login_logo { /* targeted towards the login logo */
   margin-bottom: -25px;
 }
 
 #login_button { /* just login buttons */
   background-color: #b80a00;
   color: #fff;
+  padding-top: .4em;
+  padding-bottom: .4em;
+}
+
+.x-toolbar-searchtoolbar .x-field { /* adjusting search field */
+  width: 80%;
 }
 
 /* Call Detail */

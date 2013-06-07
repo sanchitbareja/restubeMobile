@@ -14,6 +14,7 @@ Ext.define("ResTube.view.Login", {
                 xtype: "panel",
                 styleHtmlContent: true,
                 html: "<h1 style='text-align:center;'><img src='resources/images/Trane-ResolutionTube.png' style='height:120px;'/></h1>",
+                id: 'login_logo'
             },
             {
                 xtype: 'fieldset',
