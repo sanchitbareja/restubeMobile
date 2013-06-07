@@ -99,7 +99,7 @@ Ext.application({
     requires: ['Ext.ux.Fileup'],
 
     models: ['Login', 'Media', 'Product', 'Question', 'Comment', 'User', 'UserProfile'],
-    views: ['Login','Main','Search', 'Contacts','SearchResults','Product','FeedDetail','ContactDetail','QuestionFeed','QuestionDetail','AddQuestionForm','PDFViewer','Feedback'],
+    views: ['Login','Main','Search', 'Contacts','SearchResults','Product','ContactDetail','QuestionFeed','QuestionDetail','AddQuestionForm','PDFViewer','Feedback'],
     controllers: ['LoginController','SearchController','ContactsController','QuestionController','FeedbackController'],
     stores: ['Logins', 'Products', 'Questions', 'UserProfiles'],
     
