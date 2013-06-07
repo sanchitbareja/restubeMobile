@@ -6,6 +6,8 @@ Ext.define("ResTube.view.SearchResults", {
 		loadingText: "Loading Products...",
 		emptyText: '<pre><div>No products found.</div></pre>',
 
+		store: { xclass: 'ResTube.store.Products' },
+
 		itemTpl:'<div id="productItem-{id}" class="row contactrow">'+
 					'<div class="small-3 columns" id="productItem-{id}">'+
 					'<tpl for="media">'+

@@ -15,22 +15,22 @@ Ext.define('ResTube.view.Main', {
 
             //     xtype: 'restubefeed',
             // },
-            {
-                title: 'Questions',
-                iconCls: 'bookmarks',
-
-                xtype: 'restubequestionfeed'
-            },{  
+            {  
                 title: 'Search',
                 iconCls: 'search',
 
                 xtype: 'restubesearch',                
             }, {
+                title: 'Questions',
+                iconCls: 'bookmarks',
+
+                xtype: 'restubequestionfeed'
+            }, {
                 title: 'Contacts',
                 iconCls: 'team',
 
                 xtype: 'restubecontacts',
-            },{  
+            }, {  
                 title: 'Feedback',
                 iconCls: 'action',
 
