@@ -5,6 +5,7 @@ Ext.define('ResTube.view.Main', {
         fullscreen: true,
         tabBarPosition: 'bottom',
         showAnimation: "fadeIn",
+        ui: 'dark',
         layout: {
             type: 'card',
         },
