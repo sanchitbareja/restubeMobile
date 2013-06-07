@@ -5,7 +5,7 @@ Ext.define("ResTube.view.Contacts", {
 	config: {
 		loadingText: "Loading Contacts...",
 		emptyText: '<pre><div>No contacts :(</div></pre>',
-
+		store: { xclass: 'ResTube.store.UserProfiles' },
         plugins: [
 	        {
 	            xclass: 'Ext.plugin.PullRefresh',

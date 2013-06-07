@@ -6,6 +6,7 @@ Ext.define("ResTube.view.QuestionFeed", {
 
 		loadingText: "Loading Questions...",
 		emptyText: '<pre><div>No questions :(</div></pre>',
+		store: { xclass: 'ResTube.store.Questions' },
 		itemTpl:[
    				'<div id="questionItem-{id}" class="questionrow">'+
        				'<div class="row">'+

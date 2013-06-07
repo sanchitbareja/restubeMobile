@@ -98,10 +98,10 @@ Ext.application({
     name: 'ResTube',
     requires: ['Ext.ux.Fileup'],
 
-    models: ['Login', 'Media', 'Product'],
+    models: ['Login', 'Media', 'Product', 'Question', 'Comment', 'User', 'UserProfile'],
     views: ['Login','Main','Search', 'Contacts','SearchResults','Product','FeedDetail','ContactDetail','QuestionFeed','QuestionDetail','AddQuestionForm','PDFViewer','Feedback'],
     controllers: ['LoginController','SearchController','ContactsController','QuestionController','FeedbackController'],
-    stores: ['Logins', 'Products'],
+    stores: ['Logins', 'Products', 'Questions', 'UserProfiles'],
     
 
     icon: {
