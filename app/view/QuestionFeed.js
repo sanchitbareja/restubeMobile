@@ -8,17 +8,17 @@ Ext.define("ResTube.view.QuestionFeed", {
 		emptyText: '<pre><div>No questions :(</div></pre>',
 		store: { xclass: 'ResTube.store.Questions' },
 		itemTpl:[
-   				'<div id="questionItem-{id}" class="questionrow">'+
+   				'<div class="questionrow">'+
        				'<div class="row">'+
-						'<div class="small-11 columns" id="questionItem-{id}">'+
-							'<div class="description"><text id="questionItem-{id}">{question}</text></div>'+						
+						'<div class="small-11 columns">'+
+							'<div class="description"><text>{question}</text></div>'+						
 							'<br />'+
-							'<p id="questionItem-{id}" class="dateText">'+
+							'<p class="dateText">'+
 								'<span class="dateLeft">{[this.convertDate(values.posted_at)]} by {posted_by.username}</span>'+
 								'{comments.length} comments'+
 							'</p>'+
 						'</div>'+
-						'<div class="small-1 columns" id="questionItem-{id}">'+
+						'<div class="small-1 columns">'+
 							'<tpl if="values.status==\'U\'">'+
 								'<div class="item_thumbnail_box"><img src="resources/icons/exclamation.png" class="item_thumbnail"></div>'+
 							'</tpl>'+
@@ -152,27 +152,29 @@ Ext.define("ResTube.view.QuestionFeed", {
 			event: "show",
 			fn: "onShow",
 		},{
+			event: "itemtap",
+			fn: "listItemTap"
+		},{
 			delegate: "#questionSearchButton",
 			event: "tap",
 			fn: "onQuestionSearchButtonTap",
 		}, {
-			event: "Initialize",
+			event: "initialize",
 			fn: function() {
 				console.log("LOAD MORE DATA");
 			},
 		}],
 	},
 
-	onItemTap: function(nestedList, index, target, record, e, eOpts){
-		console.log("An item was tapped!");
-		var questionID = Ext.get(index).id.slice(13);
-		this.setMasked(true);
-		this.fireEvent("questionInfoCommand", this, questionID);
-	},
-
 	onShow: function(){
 		console.log("Initialize questions data!");
 		this.fireEvent('loadQuestionsDataCommand');
+	},
+
+	listItemTap: function(nestedList, index, target, record, e, eOpts){ 
+		console.log("An item was tapped!");
+		this.setMasked(true);
+		this.fireEvent("questionInfoCommand", this, record.data.id);
 	},
 
 	onLaunchQuestionFormButtonTap: function(){

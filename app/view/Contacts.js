@@ -34,12 +34,12 @@ Ext.define("ResTube.view.Contacts", {
 	        }
 	    ],
 
-		itemTpl:'<div id="contactItem-{id}" class="row contactrow">'+
-					'<div class="small-2 columns" id="contactItem-{id}">'+
-						'<img src="{thumbnail_photo}" class="thumbnail_photo_list" id="contactItem-{id}">'+
+		itemTpl:'<div class="row contactrow">'+
+					'<div class="small-2 columns">'+
+						'<img src="{thumbnail_photo}" class="thumbnail_photo_list">'+
 					'</div>'+
-					'<div class="small-10 columns" id="contactItem-{id}">'+
-						'<strong id="contactItem-{id}">{user.first_name} {user.last_name}</strong>'+
+					'<div class="small-10 columns">'+
+						'<strong>{user.first_name} {user.last_name}</strong>'+
 						'<br/>'+
 						"<span class='subtitle'>{job_title}</span>"+
 						'<br/>'+
@@ -87,17 +87,18 @@ Ext.define("ResTube.view.Contacts", {
 			event: "show",
 			fn: "onShow",
 		},{
+			event: "itemtap",
+			fn: "listItemTap",
+		},{
 			delegate: "#contactSearchButton",
 			event: "tap",
 			fn: "onContactSearchButtonTap",
 		}],
 	},
 
-	onItemTap: function(nestedList, index, target, record, e, eOpts){
+	listItemTap: function(nestedList, index, target, record, e, eOpts){
 		console.log("An item was tapped!");
-		console.log(Ext.get(index));
-		var contactID = Ext.get(index).id.slice(12);
-		this.fireEvent("contactInfoCommand", this, contactID);
+		this.fireEvent("contactInfoCommand", this, record.data.id);
 	},
 	onLogoutButtonTap: function(){
         console.log("Logout button pressed!");
