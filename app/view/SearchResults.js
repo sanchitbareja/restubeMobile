@@ -8,18 +8,18 @@ Ext.define("ResTube.view.SearchResults", {
 
 		store: { xclass: 'ResTube.store.Products' },
 
-		itemTpl:'<div id="productItem-{id}" class="row contactrow">'+
-					'<div class="small-3 columns" id="productItem-{id}">'+
+		itemTpl:'<div class="row contactrow">'+
+					'<div class="small-3 columns">'+
 					'<tpl for="media">'+
 						'<tpl if="id == 1">'+
-							'<img src="{url}" class="thumbnail_photo_list" id="productItem-{[parent.id]}">'+
+							'<img src="{url}" class="thumbnail_photo_list">'+
 						'</tpl>'+
     				'</tpl>'+						
 					'</div>'+
-					'<div class="small-9 columns" id="productItem-{id}">'+
-						'<strong id="productItem-{id}">{name}</strong>'+
+					'<div class="small-9 columns">'+
+						'<strong>{name}</strong>'+
 						'<br />'+
-						'<i class="modelnum" id="productItem-{id}">MN: {model_no}</i>'+
+						'<i class="modelnum">MN: {model_no}</i>'+
 					'</div>'+
 				'</div>',
 
@@ -39,13 +39,15 @@ Ext.define("ResTube.view.SearchResults", {
 			delegate: "#backButton",
 			event: "tap",
 			fn: "onBackButtonTap",
+		},{
+			event: "itemtap",
+			fn: "listItemTap",
 		}],
 	},
 
-	onItemTap: function(nestedList, index, target, record, e, eOpts){
+	listItemTap: function(nestedList, index, target, record, e, eOpts){
 		console.log("An item was tapped!");
-		var productID = Ext.get(index).id.slice(12);
-		this.fireEvent("productInfoCommand", this, productID);
+		this.fireEvent("productInfoCommand", this, record.data.id);
 	},
 
 	onBackButtonTap: function() {
