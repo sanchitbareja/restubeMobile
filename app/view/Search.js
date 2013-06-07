@@ -28,6 +28,8 @@ Ext.define("ResTube.view.Search", {
                         xtype: 'textfield',
                         placeHolder: 'product name, model number',
                         id: 'searchText',
+                        autoCapitalize: false,
+
                     }
                 ]
             }, {
@@ -60,13 +62,11 @@ Ext.define("ResTube.view.Search", {
 
 	// handlers
 	onSearchButtonTap: function() {
-		console.log("onSearchButtonTap");
         this.setMasked(true);
-		this.fireEvent("searchButtonCommand", this, Ext.getCmp('searchText')._value);
+		this.fireEvent("searchButtonCommand", this, Ext.getCmp('searchText').getValue());
 	},
     
     onLogoutButtonTap: function(){
-        console.log("Logout button pressed!");
         this.fireEvent('logoutCommand');
     },
 });
