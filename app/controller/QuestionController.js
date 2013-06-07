@@ -59,32 +59,42 @@ Ext.define("ResTube.controller.QuestionController",{
 		console.log("loading questions...");
 
 		var restube_questions = this.getRestubeQuestionFeed();
-		var myRequest = Ext.Ajax.request({
-		    url: 'http://restube.herokuapp.com/api/v1/question/?format=json',
-		    method: 'GET',
-		    disableCaching: false,
-		    // withCredentials: true,
-		    useDefaultXhrHeader: false,
-		    params: {
-		    },
+		var question_store = restube_questions.getStore();
+		try{
+			var myRequest = Ext.Ajax.request({
+			    url: 'http://restube.herokuapp.com/api/v1/question/?format=json',
+			    method: 'GET',
+			    disableCaching: false,
+			    // withCredentials: true,
+			    useDefaultXhrHeader: false,
+			    params: {
+			    },
 
-		    success: function(response) {
-		        console.log("Spiffing, everything worked");
-		        var jsondecoded = Ext.JSON.decode(response.responseText);
-		        console.log(jsondecoded);
-		        console.log(restube_questions);
-		        if(restube_questions.getStore()){
-			        restube_questions.getStore().removeAll();
-			    }
-		    	restube_questions.setData(jsondecoded.objects);
-		    	restube_questions.setMasked(false);
-		    },
+			    success: function(response) {
+			        console.log("Spiffing, everything worked");
+			        var jsondecoded = Ext.JSON.decode(response.responseText);
+			        console.log(jsondecoded);
+			        console.log(restube_questions);
+			        question_store.removeAll();
+			        // question_store.add(jsondecoded.objects);
+			        for (var i = 0; i < jsondecoded.objects.length; i++) {
+			        	var question_object = Ext.create('ResTube.model.Question', jsondecoded.objects[i]);
+			        	question_object.set('posted_by', jsondecoded.objects[i].posted_by);
+			        	question_object.set('comments', jsondecoded.objects[i].comments);
+			        	question_store.add(question_object);
+			        };
+			    	restube_questions.setMasked(false);
+			    },
 
-		    failure: function(response) {
-		    	console.log(response);
-		        console.log("Curses, something terrible happened");
-		    },
-		});
+			    failure: function(response) {
+			    	console.log(response);
+			        console.log("Curses, something terrible happened");
+			    },
+			});
+		} catch(err) {
+
+		}
+		
 
 	},
 
@@ -93,36 +103,45 @@ Ext.define("ResTube.controller.QuestionController",{
 
 		var restube_questions = this.getRestubeQuestionFeed();
 		var restube_question_offset = restube_questions.getStore().getCount();
+		var question_store = restube_questions.getStore();
 
-		console.log(restube_question_offset);
+		try{
+			var myRequest = Ext.Ajax.request({
+			    url: 'http://restube.herokuapp.com/api/v1/question/?format=json&offset='.concat(restube_question_offset),
+			    method: 'GET',
+			    disableCaching: false,
+			    // withCredentials: true,
+			    useDefaultXhrHeader: false,
+			    params: {
+			    },
 
-		var myRequest = Ext.Ajax.request({
-		    url: 'http://restube.herokuapp.com/api/v1/question/?format=json&offset='.concat(restube_question_offset),
-		    method: 'GET',
-		    disableCaching: false,
-		    // withCredentials: true,
-		    useDefaultXhrHeader: false,
-		    params: {
-		    },
+			    success: function(response) {
+			    	console.log("Spiffing, everything worked");
+			        var jsondecoded = Ext.JSON.decode(response.responseText);
+			        console.log(jsondecoded);
+			        console.log(restube_questions);
+			        for (var i = 0; i < jsondecoded.objects.length; i++) {
+			        	var question_object = Ext.create('ResTube.model.Question', jsondecoded.objects[i]);
+			        	question_object.set('posted_by', jsondecoded.objects[i].posted_by);
+			        	question_object.set('comments', jsondecoded.objects[i].comments);
+			        	question_store.add(question_object);
+			        };
+			    	restube_questions.setMasked(false);
+			    	// remove the spinner to not confuse user from thinking that more data is being loaded
+			    	if(!jsondecoded.meta.next){
+			    		var moreQuestionCmp = Ext.getCmp('getMoreQuestionsCmp');
+			    		moreQuestionCmp.hide();
+			    	}
+			    },
 
-		    success: function(response) {
-		        console.log("Spiffing, everything worked");
-		        var jsondecoded = Ext.JSON.decode(response.responseText);
-		        console.log(jsondecoded);
-		        console.log(restube_questions);
-		    	restube_questions.getStore().add(jsondecoded.objects);
-		    	restube_questions.setMasked(false);
-		    	if(!jsondecoded.meta.next){
-		    		var moreQuestionCmp = Ext.getCmp('getMoreQuestionsCmp');
-		    		moreQuestionCmp.hide();
-		    	}
-		    },
+			    failure: function(response) {
+			    	console.log(response);
+			        console.log("Curses, something terrible happened");
+			    },
+			});
+		} catch (err) {
 
-		    failure: function(response) {
-		    	console.log(response);
-		        console.log("Curses, something terrible happened");
-		    },
-		});
+		}
 	},
 
 	onFileUploadSuccess: function(response, xhrlink, successevent) {
@@ -360,34 +379,46 @@ Ext.define("ResTube.controller.QuestionController",{
 		console.log(searchText);
 
 		var restube_questions = this.getRestubeQuestionFeed();
+		var question_store = restube_questions.getStore();
 		restube_questions.setMasked(true);
-		var myRequest = Ext.Ajax.request({
-		    url: 'http://restube.herokuapp.com/api/v1/question/search/?format=json&models=questions.question&q='.concat(searchText),
-		    method: 'GET',
-		    disableCaching: false,
-		    // withCredentials: true,
-		    useDefaultXhrHeader: false,
-		    params: {
-		    },
 
-		    success: function(response) {
-		        console.log("Spiffing, everything worked");
-		        var jsondecoded = Ext.JSON.decode(response.responseText);
-		        console.log(jsondecoded);
-		        console.log(restube_questions);
-		        if(restube_questions.getStore()){
-			        restube_questions.getStore().removeAll();
-			    }
-		    	restube_questions.setData(jsondecoded.objects);
-		    	restube_questions.setMasked(false);
-		    },
+		if(!searchText){
+			console.log("Empty search");
+			this.loadQuestionsData();
+		} else {
+			var myRequest = Ext.Ajax.request({
+			    url: 'http://restube.herokuapp.com/api/v1/question/search/?format=json&models=questions.question&q='.concat(searchText),
+			    method: 'GET',
+			    disableCaching: false,
+			    // withCredentials: true,
+			    useDefaultXhrHeader: false,
+			    params: {
+			    },
 
-		    failure: function(response) {
-		    	console.log(response);
-		        console.log("Curses, something terrible happened");
-		        restube_questions.setMasked(true);
-		    },
-		});
+			    success: function(response) {
+
+			    	console.log("Spiffing, everything worked");
+			        var jsondecoded = Ext.JSON.decode(response.responseText);
+			        console.log(jsondecoded);
+			        console.log(restube_questions);
+			        question_store.removeAll();
+			        // question_store.add(jsondecoded.objects);
+			        for (var i = 0; i < jsondecoded.objects.length; i++) {
+			        	var question_object = Ext.create('ResTube.model.Question', jsondecoded.objects[i]);
+			        	question_object.set('posted_by', jsondecoded.objects[i].posted_by);
+			        	question_object.set('comments', jsondecoded.objects[i].comments);
+			        	question_store.add(question_object);
+			        };
+			    	restube_questions.setMasked(false);
+			    },
+
+			    failure: function(response) {
+			    	console.log(response);
+			        console.log("Curses, something terrible happened");
+			        restube_questions.setMasked(true);
+			    },
+			});
+		}
 	},
 
 	onLaunchQuestionFormCommand: function(view) {

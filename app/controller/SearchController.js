@@ -71,10 +71,11 @@ Ext.define("ResTube.controller.SearchController",{
 			        var productsStore = searchList.getStore();
 			        try{
 			        	searchList.getStore().removeAll();
-			      		for (var i = jsondecoded.objects.length - 1; i >= 0; i--) {
+			      		for (var i = 0; i < jsondecoded.objects.length; i++) {
 			      			var product_object = Ext.create('ResTube.model.Product', jsondecoded.objects[i]);
+			      			product_object.set('media', jsondecoded.objects[i].media);
 			      			var product_media = product_object.media();
-			      			for (var j = jsondecoded.objects[i].media.length - 1; j >= 0; j--) {
+			      			for (var j =  0; j < jsondecoded.objects[i].media.length; j++) {
 			      				var media_object = Ext.create('ResTube.model.Media', {
 			      					id: jsondecoded.objects[i].media[j].id,
 			      					resource_uri: jsondecoded.objects[i].media[j].resource_uri,
@@ -83,8 +84,9 @@ Ext.define("ResTube.controller.SearchController",{
 			      				product_media.add(media_object);
 			      			};
 			      			product_media.sync();
+			      			productsStore.add(product_object);
 			      		};
-			        	searchList.getStore().add(jsondecoded.objects);
+			        	// searchList.getStore().add(jsondecoded.objects);
 			        	console.log(searchList.getStore().getData());
 				        // bring the list into main view
 						Ext.Viewport.animateActiveItem(searchList, { type: "slide", direction: "left" });
