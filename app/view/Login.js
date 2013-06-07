@@ -13,7 +13,7 @@ Ext.define("ResTube.view.Login", {
         items:[{
                 xtype: "panel",
                 styleHtmlContent: true,
-                html: "<h1 style='text-align:center;'><img src='resources/images/Trane-ResolutionTube.png' style='height:80px;'/></h1>",
+                html: "<h1 style='text-align:center;'><img src='resources/images/Trane-ResolutionTube.png' style='height:120px;'/></h1>",
             },
             {
                 xtype: 'fieldset',
@@ -36,6 +36,7 @@ Ext.define("ResTube.view.Login", {
                 text: "Login",
                 ui: "action",
                 itemId: "loginButton",
+                id: 'login_button'
             }
         ],
 		listeners: [{

@@ -78,9 +78,11 @@ strong {
   font-weight: lighter;
 }
 
+.x-html h1 img {
+  margin-bottom: -25px;
+}
 
-
-#ext-button-1, #ext-button-4 { /* just login buttons */
+#login_button { /* just login buttons */
   background-color: #b80a00;
   color: #fff;
 }
