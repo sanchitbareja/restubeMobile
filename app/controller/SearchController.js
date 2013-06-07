@@ -50,77 +50,111 @@ Ext.define("ResTube.controller.SearchController",{
 
 	//Commands fired by the view
 	onSearchProductCommand: function(view, searchValue) {
-		console.log(searchValue);
-		console.log("searchProductCommand2");
-
+		// get references to list that needs to be populated and previous view
 		var searchList = this.getSearchResults();
 		var restubeSearchView = this.getRestubeSearch();
-		console.log(searchList);
 
-		var myRequest = Ext.Ajax.request({
-		    url: 'http://restube.herokuapp.com/api/v1/product/search/?format=json&models=products.product&q='.concat(searchValue),
-		    method: 'GET',
-		    disableCaching: false,
-		    // withCredentials: true,
-		    useDefaultXhrHeader: false,
-		    params: {},
+		try {
+			var myRequest = Ext.Ajax.request({
+			    url: 'http://restube.herokuapp.com/api/v1/product/search/?format=json&models=products.product&q='.concat(searchValue),
+			    method: 'GET',
+			    disableCaching: false,
+			    // withCredentials: true,
+			    useDefaultXhrHeader: false,
+			    params: {},
 
-		    success: function(response) {
-		        console.log("Spiffing, everything worked");
-		        var jsondecoded = Ext.JSON.decode(response.responseText);
-		        console.log(jsondecoded.objects);
-		        searchList.setData(jsondecoded.objects);
-				Ext.Viewport.animateActiveItem(searchList, { type: "slide", direction: "left" });
-				restubeSearchView.setMasked(false);
-		    },
+			    success: function(response) {
+			        var jsondecoded = Ext.JSON.decode(response.responseText);
+			        // reset the search view to remove all old data.
+			        restubeSearchView.reset();
+			        // populate the list data
+			        var productsStore = searchList.getStore();
+			        try{
+			        	searchList.getStore().removeAll();
+			      		for (var i = jsondecoded.objects.length - 1; i >= 0; i--) {
+			      			var product_object = Ext.create('ResTube.model.Product', jsondecoded.objects[i]);
+			      			var product_media = product_object.media();
+			      			for (var j = jsondecoded.objects[i].media.length - 1; j >= 0; j--) {
+			      				var media_object = Ext.create('ResTube.model.Media', {
+			      					id: jsondecoded.objects[i].media[j].id,
+			      					resource_uri: jsondecoded.objects[i].media[j].resource_uri,
+			      					url: jsondecoded.objects[i].media[j].url,
+			      				});
+			      				product_media.add(media_object);
+			      			};
+			      			product_media.sync();
+			      		};
+			        	searchList.getStore().add(jsondecoded.objects);
+			        	console.log(searchList.getStore().getData());
+				        // bring the list into main view
+						Ext.Viewport.animateActiveItem(searchList, { type: "slide", direction: "left" });
+						// turn spinner off
+						restubeSearchView.setMasked(false);
+				    } catch (err) {
+				    	// reset the search view to remove all old data.
+				        restubeSearchView.reset();
+				        // turn spinner off
+				        restubeSearchView.setMasked(false)
+				    }
+			        
+			    },
 
-		    failure: function(response) {
-		        console.log("Curses, something terrible happened");
-		    },
-		});
+			    failure: function(response) {
+			        console.log("Curses, something terrible happened");
+			    },
+			});
+		} catch (err) {
+			// reset the search view to remove all old data.
+	        restubeSearchView.reset();
+	        // turn spinner off
+	        restubeSearchView.setMasked(false)
+	        // bring the search view into main view
+	        Ext.Viewport.animateActiveItem(restubeSearchView, { type: "slide", direction: "right" });
+		}
 
 	},
 
 	onBackButtonCommand: function() {
-		console.log("onBackButtonCommand");
 		this.activateProductSearch();
 	},
 
 	onBackToProductCommand: function() {
-		console.log("onBackToProductCommand");
 		this.activateProductInfo();
 	},
 
 	onProductInfoCommand: function(view, productId) {
-		console.log("onProductInfoCommand");
-		console.log(productId);
 
-		var requestURL = 'http://restube.herokuapp.com/api/v1/product/'+productId+'/?format=json';
 		var productInfo = this.getRestubeProduct();
 
-		var myRequest = Ext.Ajax.request({
-		    url: requestURL,
-		    method: 'GET',
-		    disableCaching: false,
-		    // withCredentials: true,
-		    useDefaultXhrHeader: false,
-		    params: {},
+		try{
+			var myRequest = Ext.Ajax.request({
+			    url: 'http://restube.herokuapp.com/api/v1/product/'.concat(productId).concat('/?format=json'),
+			    method: 'GET',
+			    disableCaching: false,
+			    // withCredentials: true,
+			    useDefaultXhrHeader: false,
+			    params: {},
 
-		    success: function(response) {
-		        console.log("Spiffing, everything worked");
-		        var jsondecoded = Ext.JSON.decode(response.responseText);
-		        console.log(jsondecoded);
-		        console.log(productInfo);
-		        console.log(productInfo.getItems());
-		        // productInfo.setRecord(jsondecoded);
-		        productInfo.setData(jsondecoded);
-				Ext.Viewport.animateActiveItem(productInfo, { type: "slide", direction: "left" });
-		    },
+			    success: function(response) {
+			        var jsondecoded = Ext.JSON.decode(response.responseText);
+			        // productInfo.setRecord(jsondecoded);
+			        productInfo.setData(jsondecoded);
+					Ext.Viewport.animateActiveItem(productInfo, { type: "slide", direction: "left" });
+			    },
 
-		    failure: function(response) {
-		        console.log("Curses, something terrible happened when trying to load Product Info");
-		    },
-		});
+			    failure: function(response) {
+			        console.log("Curses, something terrible happened when trying to load Product Info");
+			    },
+			});
+		} catch(err){
+			var restubeSearchView = this.getRestubeSearch();
+
+			productInfo.reset();
+			restubeSearchView.reset();
+
+			Ext.Viewport.animateActiveItem(restubeSearchView, { type: "slide", direction: "right" });
+		}
+		
 	},
 
 	onBackToResultsCommand: function() {
