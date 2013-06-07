@@ -93,6 +93,31 @@ strong {
   width: 80%;
 }
 
+/* Bottom Bar */
+
+.x-tabbar-dark.x-docked-bottom .x-tab-active { /* active icon container */
+  height: 110%;
+}
+
+.x-tabbar-dark.x-docked-bottom .x-tab-active .x-button-icon { /* clicked tab icon */
+  background-color: #fff;
+}
+
+.x-tabbar-dark.x-docked-bottom .x-tab .x-button-icon { /* unclicked tab icon */
+  background-color: #ddd;
+}
+
+.x-tabbar.x-docked-bottom .x-tab { /* icon containers */
+  -webkit-border-radius: 0em;
+  border-radius: 0em;
+}
+
+.x-tabbar.x-docked-bottom .x-tab .x-button-label { /* icon label font characteristics */
+  font-size: 10px;
+  font-weight: bold;
+}
+
+
 /* Call Detail */
 
 .thumbnail_photo {
