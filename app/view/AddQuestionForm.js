@@ -22,7 +22,7 @@ Ext.define("ResTube.view.AddQuestionForm", {
                 },
             }, {
                 xtype: 'fieldset',
-                margin: "10px",
+                id: 'postForm',
                 itemId: 'addquestionfieldset',
                 items: [
                     {
@@ -46,6 +46,7 @@ Ext.define("ResTube.view.AddQuestionForm", {
                         xtype: 'fileupload',
                         autoUpload: false,
                         url: 'http://restube.herokuapp.com/upload/file/',
+                        id: 'uploadButton',
                         // loadAsDataUrl: true,
                         states: {
                             browse: {
