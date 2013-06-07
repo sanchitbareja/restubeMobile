@@ -11,7 +11,7 @@ Ext.define("ResTube.view.SearchResults", {
 		itemTpl:'<div class="row contactrow">'+
 					'<div class="small-3 columns">'+
 					'<tpl for="media">'+
-						'<tpl if="id == 1">'+
+						'<tpl if="[xindex] == \'1\'">'+
 							'<img src="{url}" class="thumbnail_photo_list">'+
 						'</tpl>'+
     				'</tpl>'+						
