@@ -15,11 +15,6 @@ Ext.define("ResTube.controller.SearchController",{
 				xtype: "restubeproduct",
 				autoCreate: true,
 			},
-			googlePdfViewer: {
-				selector: "googlepdfviewer",
-				xtype: 'googlepdfviewer',
-				autoCreate: true,
-			}
 		},
 		control: {
 			restubeSearch: {
@@ -35,12 +30,7 @@ Ext.define("ResTube.controller.SearchController",{
 			restubeProduct: {
 				//commands fired by restubeProduct
 				backToResultsCommand: "onBackToResultsCommand",
-				loadPdfViewerCommand: "onLoadPdfViewerCommand",
 			},
-			googlePdfViewer: {
-				//comands fired by googlePdfViewer
-				backToProductCommand: "onBackToProductCommand",	
-			}
 		}
 	},
 
@@ -183,16 +173,6 @@ Ext.define("ResTube.controller.SearchController",{
 	onBackToResultsCommand: function() {
 		console.log("onBackToResultsCommand");
 		this.activateProductResults();
-	},
-
-	onLoadPdfViewerCommand: function(view, link) {
-		console.log("onLoadPdfViewerCommand");
-		var encoded_url = encodeURIComponent(link);
-		console.log(encoded_url);
-
-		var pdfViewerView = this.getGooglePdfViewer();
-		pdfViewerView.setData({'encoded_pdf_url':encoded_url});
-		Ext.Viewport.animateActiveItem(pdfViewerView, { type: "slide", direction: "left" });
 	},
 
 	//helper functions
