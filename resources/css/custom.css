@@ -8,7 +8,7 @@ strong {
   font-weight: bold !important;
 }
 
-.x-list-item-body {  /*  */
+.x-list-item-body {
   padding: 0px;
 }
 
@@ -87,21 +87,6 @@ strong {
   color: #fff;
   padding-top: .4em;
   padding-bottom: .4em;
-}
-
-.x-toolbar-searchtoolbar .x-field { /* adjusting search field */
-  width: 80%;
-}
-
-.x-list .x-list-item.x-item-selected .x-dock-horizontal { /* clicked list item */
-  color: #000;
-  text-shadow: none;
-}
-
-.x-list-normal .x-list-item.x-item-selected .x-dock-horizontal { /* taking away clicked item border styling */
-  border-top: none;
-  border-bottom: none;
-  background: none;
 }
 
 /* Bottom Bar */
@@ -193,13 +178,25 @@ strong {
 /* Question Feed View */
 
 #questionSearchButton {
-  margin: 0px;
-  padding: 0.3em;
+  margin: 0% -10% 0% 0%;
+  padding: 0% 7% 0% 6%;
+  border: none;
+  background-color: #fff;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  font-size: 135%;
+  font-weight: bold;
 }
 
 #contactSearchButton {
-  margin: 0px;
-  padding: 0.3em;
+  margin: 0% -10% 0% 0%;
+  padding: 0% 7% 0% 6%;
+  border: none;
+  background-color: #fff;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  font-size: 135%;
+  font-weight: bold;
 }
 
 /* Query Results View */
