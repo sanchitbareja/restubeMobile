@@ -41,6 +41,9 @@ strong {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.questionrow:active{
+  background-color: #eee;
+}
 .row .columns .description {
   height: 2.5em !important;
   margin-bottom: -25px;
