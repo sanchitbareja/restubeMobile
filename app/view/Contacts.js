@@ -57,7 +57,7 @@ Ext.define("ResTube.view.Contacts", {
                     xtype: "button",
                     ui: "action",
                     text: "Logout",
-                    id: "logoutButton",
+                    id: "logoutButtonC",
                 }],
 		},{
             xtype: 'toolbar',
@@ -80,7 +80,7 @@ Ext.define("ResTube.view.Contacts", {
         }],
 
 		listeners: [{
-			delegate: "#logoutButton",
+			delegate: "#logoutButtonC",
             event: "tap",
             fn: "onLogoutButtonTap",
         },{

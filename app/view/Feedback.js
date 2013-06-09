@@ -18,7 +18,7 @@ Ext.define("ResTube.view.Feedback", {
                     xtype: "button",
                     ui: "action",
                     text: "Logout",
-                    id: "logoutButton",
+                    id: "logoutButtonF",
                 }],
             }, {
                 xtype: 'fieldset',
@@ -40,7 +40,7 @@ Ext.define("ResTube.view.Feedback", {
             }
         ],
 		listeners: [{
-                delegate: "#logoutButton",
+                delegate: "#logoutButtonF",
                 event: "tap",
                 fn: "onLogoutButtonTap",
             },{
