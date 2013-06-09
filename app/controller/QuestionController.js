@@ -201,99 +201,123 @@ Ext.define("ResTube.controller.QuestionController",{
 	},
 
 	onPostQuestionCommand: function(view, question, details, mediaURL) {
-		console.log("onPostQuestionCommand!");
-
-		console.log(question);
-		console.log(details);
-		console.log(mediaURL);
-
-		//get user credentials
-		var loginStore = Ext.getStore("Logins");
-		var user = loginStore.data.all[0].data;
-		console.log(user);
-
+		
 		//form
 		var addQuestionForm = this.getQuestionForm();
 		var questionFeedView = this.getMainContainer();
 
 		var selfref = this;
 
-		var myRequest = Ext.Ajax.request({
-			url: 'http://restube.herokuapp.com/api/v1/question/',
-			method: 'POST',
-			disableCaching: false,
-			// withCredentials: true,
-			useDefaultXhrHeader: false,
+		if (question) {
 
-			headers: {
-		    	"Content-Type": "application/json",
-		    },
+			console.log("onPostQuestionCommand!");
 
-			jsonData: {
-				// "comments": [],
-				"posted_by": user.resource_uri,
-				"question": question,
-				"details": details,
-				"media_url": mediaURL,
-			},
+			console.log(question);
+			console.log(details);
+			console.log(mediaURL);
 
-			success: function(response) {
-				console.log(response);
-				console.log("Spiffing, everything worked! Added a new question!");
-				addQuestionForm.setMasked({
-				    xtype: 'loadmask',
-				    message: 'Successfully Posted!',
-				    indicator: false,
-				});
+			//get user credentials
+			var loginStore = Ext.getStore("Logins");
+			var user = loginStore.data.all[0].data;
+			console.log(user);
 
-				//create the delayed task instance with our callback
-				var task = Ext.create('Ext.util.DelayedTask', function() {
-				    console.log('callback!');
-				    addQuestionForm.setMasked({
+			var myRequest = Ext.Ajax.request({
+				url: 'http://restube.herokuapp.com/api/v1/question/',
+				method: 'POST',
+				disableCaching: false,
+				// withCredentials: true,
+				useDefaultXhrHeader: false,
+
+				headers: {
+			    	"Content-Type": "application/json",
+			    },
+
+				jsonData: {
+					// "comments": [],
+					"posted_by": user.resource_uri,
+					"question": question,
+					"details": details,
+					"media_url": mediaURL,
+				},
+
+				success: function(response) {
+					console.log(response);
+					console.log("Spiffing, everything worked! Added a new question!");
+					addQuestionForm.setMasked({
 					    xtype: 'loadmask',
-					    message: 'Posting',
-					    indicator: true,
+					    message: 'Successfully Posted!',
+					    indicator: false,
 					});
-					addQuestionForm.setMasked(false);
 
-					addQuestionForm.reset();
-					var mediaURLComponent = addQuestionForm.getComponent('addquestionfieldset').getComponent('mediaURL');
-			        var uploadButtonComponent = addQuestionForm.getComponent('addquestionfieldset').getComponent('fileBtn');
-			        mediaURLComponent.setValue(response.url);
-			        mediaURLComponent.disable();
-			        mediaURLComponent.setHidden(true);
-			        uploadButtonComponent.setHidden(false);
+					//create the delayed task instance with our callback
+					var task = Ext.create('Ext.util.DelayedTask', function() {
+					    console.log('callback!');
+					    addQuestionForm.setMasked({
+						    xtype: 'loadmask',
+						    message: 'Posting',
+						    indicator: true,
+						});
+						addQuestionForm.setMasked(false);
 
-					Ext.Viewport.animateActiveItem(questionFeedView, { type: "slide", direction: "right" });
+						addQuestionForm.reset();
+						var mediaURLComponent = addQuestionForm.getComponent('addquestionfieldset').getComponent('mediaURL');
+				        var uploadButtonComponent = addQuestionForm.getComponent('addquestionfieldset').getComponent('fileBtn');
+				        mediaURLComponent.setValue(response.url);
+				        mediaURLComponent.disable();
+				        mediaURLComponent.setHidden(true);
+				        uploadButtonComponent.setHidden(false);
 
-					selfref.loadQuestionsData();
-				});
-				task.delay(1000); //the callback function will now be called after 1000ms
-			},
+						Ext.Viewport.animateActiveItem(questionFeedView, { type: "slide", direction: "right" });
 
-			failure: function(response) {
-				console.log(response);
-				console.log("Curses, something terrible happened when trying to add Question");
+						selfref.loadQuestionsData();
+					});
+					task.delay(1000); //the callback function will now be called after 1000ms
+				},
 
-				addQuestionForm.setMasked({
-				    xtype: 'loadmask',
-				    message: 'An error occurred. Please try posting again :(',
-				    indicator: false,
-				});
+				failure: function(response) {
+					console.log(response);
+					console.log("Curses, something terrible happened when trying to add Question");
 
-				//create the delayed task instance with our callback
-				var task = Ext.create('Ext.util.DelayedTask', function() {
-				    console.log('callback!');
-				    addQuestionForm.setMasked({
+					addQuestionForm.setMasked({
 					    xtype: 'loadmask',
-					    message: 'Posting',
-					    indicator: true,
+					    message: 'An error occurred. Please try posting again :(',
+					    indicator: false,
 					});
-					addQuestionForm.setMasked(false);
-				});
-				task.delay(2000); //the callback function will now be called after 1000ms
-			},
-		});
+
+					//create the delayed task instance with our callback
+					var task = Ext.create('Ext.util.DelayedTask', function() {
+					    console.log('callback!');
+					    addQuestionForm.setMasked({
+						    xtype: 'loadmask',
+						    message: 'Posting',
+						    indicator: true,
+						});
+						addQuestionForm.setMasked(false);
+					});
+					task.delay(2000); //the callback function will now be called after 1000ms
+				},
+			});
+		} else {
+			console.log("Invalid Question");
+
+			addQuestionForm.setMasked({
+					    xtype: 'loadmask',
+					    message: 'You have to fill out the Question section!',
+					    indicator: false,
+					});
+
+					//create the delayed task instance with our callback
+					var task = Ext.create('Ext.util.DelayedTask', function() {
+					    console.log('callback!');
+					    addQuestionForm.setMasked({
+						    xtype: 'loadmask',
+						    message: 'Posting',
+						    indicator: true,
+						});
+						addQuestionForm.setMasked(false);
+					});
+					task.delay(2000); //the callback function will now be called after 2000ms
+		}
 	},
 
 	onAddCommentToQuestionCommand: function(view ,commentText, questionId, questionResourceUri, questionStatus){
