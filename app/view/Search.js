@@ -10,6 +10,8 @@ Ext.define("ResTube.view.Search", {
             
         },
 
+        scrollable: false,
+
         items:[{
                 xtype: "toolbar",
                 docked: "top",
