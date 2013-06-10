@@ -42,10 +42,10 @@ $tabs-dark-active-color: #444444;
     background-color: #eeeeee;
 }
 
-//searchbar
+// searchbar
 .x-toolbar-searchtoolbar {
     padding: .1em;
-    background-color: #eeeeee;
+    background-color: #fff;
 
     .x-field {
         width: auto;
@@ -60,7 +60,34 @@ $tabs-dark-active-color: #444444;
         }
     }
 }
+// adjusting search field
+.x-toolbar-searchtoolbar .x-field {
+  width: 80%;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  height: 100%;
+  margin: 0 .5em 0 -8%;
+  padding: 0;
+}
+// input field in relation to search toolbar
+.x-toolbar-searchtoolbar .x-field input {
+  width: 90%;
+  padding-left: .5em;
+}
+// search bar border
 .x-toolbar .x-field-search .x-component-outer {
-    -webkit-border-radius: 0.3em;
-    border-radius: 0.3em;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+// visited list item
+.x-list .x-list-item.x-item-selected .x-dock-horizontal {
+  color: #000;
+  text-shadow: none;
+}
+// taking away visited list item border styling
+.x-list-normal .x-list-item.x-item-selected .x-dock-horizontal {
+  border-top: none;
+  border-bottom: none;
+  background: none;
 }
