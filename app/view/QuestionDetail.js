@@ -38,12 +38,18 @@ Ext.define('ResTube.view.QuestionDetail',{
 			xtype: "toolbar",
 			title: "Question",
 			docked: "top",
-			items: {
+			items: [{
 	            xtype: "button",
 	            ui: "back",
 	            text: "Back",
 	            id: "backButton4"
-	        },
+	        }]
+	    },{
+	        xtype: "button",
+	        text: "Mark Resolved",
+	        ui: "action",
+	        hidden: true,
+	        itemId: "resolveButton"
 		}],
 
         listeners: [{
@@ -55,6 +61,10 @@ Ext.define('ResTube.view.QuestionDetail',{
 			delegate: "button#submitComment",
 			event: "tap",
 			fn: "onSubmitCommentTap",
+		},{
+			delegate: "#resolveButton",
+			event: "tap",
+			fn: "onResolveButtonTap"
 		},{
             event: "show",
             fn: "onShow",
@@ -80,4 +90,10 @@ Ext.define('ResTube.view.QuestionDetail',{
 		this.fireEvent("addCommentToQuestionCommand", this, commentInput, currentRecord.id, currentRecord.resource_uri, currentRecord.status);
 	},
 
+	onResolveButtonTap: function() {
+		console.log("Issue resolved!");
+		var currentRecord = this.getData();
+		
+		this.fireEvent("markResolvedCommand", this, currentRecord.id, currentRecord.resource_uri);
+	},
 });
