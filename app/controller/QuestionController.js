@@ -145,24 +145,29 @@ Ext.define("ResTube.controller.QuestionController",{
 	},
 
 	onFileUploadSuccess: function(response, xhrlink, successevent) {
-        console.log('Success upload');
-        console.log(response);
-        console.log(xhrlink);
-        console.log(successevent);
+		if (xhrlink.statusText == "OK") {
+	        console.log('Successfully uploaded!');
+	        console.log(response);
+	        console.log(xhrlink);
+	        console.log(successevent);
 
-        var addQuestionForm = this.getQuestionForm();
-        var mediaURLComponent = addQuestionForm.getComponent('addquestionfieldset').getComponent('mediaURL');
-        var uploadButtonComponent = addQuestionForm.getComponent('addquestionfieldset').getComponent('fileBtn');
+	        var addQuestionForm = this.getQuestionForm();
+	        var mediaURLComponent = addQuestionForm.getComponent('addquestionfieldset').getComponent('mediaURL');
+	        var uploadButtonComponent = addQuestionForm.getComponent('addquestionfieldset').getComponent('fileBtn');
 
-        mediaURLComponent.setValue(response.url);
-        mediaURLComponent.disable();
-        mediaURLComponent.setHidden(false);
+	        mediaURLComponent.setValue(response.url);
+	        mediaURLComponent.disable();
+	        mediaURLComponent.setHidden(false);
 
-        uploadButtonComponent.setHidden(true);
+	        uploadButtonComponent.setHidden(true);
+    	} else {
+    		console.log('Uh oh, that\'s a weird error!');
+    		console.log(failureevent);
+    	}
     },
     
     onFileUploadFailure: function(message, response, xhrlink, failureevent) {
-        console.log('Failure upload');
+        console.log('Upload failed');
         console.log(message);
         console.log(response);
         console.log(xhrlink);
