@@ -10,7 +10,7 @@ Ext.define('ResTube.view.Product',{
         			'<strong class="header">{name}</strong>'+
 	        		'<ul class="rslides">'+
 		        		'<tpl for="media">'+
-							'<li><embed src="{url}"></li>'+
+							'<li class="no_bullet"><embed src="{url}"></li>'+
 	    				'</tpl>'+
 					'</div>'+
 	        	"</div>"+
@@ -24,11 +24,11 @@ Ext.define('ResTube.view.Product',{
         	"</div>"+
         	"<div class='row'>"+
 				"<div class='small-12 columns'>"+
-					"<tpl if='values.iom_link'><button style='width:100%;' class='actionButton' id='iom_link' name='{iom_link}'>IOM<br /></tpl>"+
-					"<tpl if='values.service_bulletin_link'><button style='width:100%;' class='actionButton' name='{service_bulletin_link}' id='service_bulletin_link'>Service Bulletin<br /></tpl>"+
-					"<tpl if='values.electrical_link'><button style='width:100%;' class='actionButton' name='{electrical_link}' id='electrical_link'>Electrical Schematic<br /></tpl>"+
-					"<tpl if='values.service_history_link'><button style='width:100%;' class='actionButton' name='{service_history_link}' id='service_history_link'>Service History<br /></tpl>"+
-					"<tpl if='values.performance_data_link'><button style='width:100%;' class='actionButton' name='{performance_data_link}' id='performance_data_link'>Performance Data<br /></tpl>"+
+					"<tpl if='values.iom_link'><a class='actionButton' href='{iom_link}' target='_blank'>IOM</a><br /></tpl>"+
+					"<tpl if='values.service_bulletin_link'><a class='actionButton' href='{service_bulletin_link}' target='_blank'>Service Bulletin</a><br /></tpl>"+
+					"<tpl if='values.electrical_link'><a class='actionButton' href='{electrical_link}' target='_blank'>Electrical Schematic</a><br /></tpl>"+
+					"<tpl if='values.service_history_link'><a class='actionButton' href='{service_history_link}' target='_blank'>Service History</a><br /></tpl>"+
+					"<tpl if='values.performance_data_link'><a class='actionButton' href='{performance_data_link}' target='_blank'>Performance Data</a><br /></tpl>"+
 				"</div>"+
 			"</div>",
 		items: [{
@@ -47,75 +47,10 @@ Ext.define('ResTube.view.Product',{
 			delegate: "#backButton2",
 			event: "tap",
 			fn: "onBackButtonTap2",
-		},{
-			element: "element",
-			delegate: "button#iom_link",
-			event: "tap",
-			fn: "onIomLinkTap",
-		},{
-			element: "element",
-			delegate: "button#service_bulletin_link",
-			event: "tap",
-			fn: "onServiceBulletinLinkTap",
-		},{
-			element: "element",
-			delegate: "button#electrical_link",
-			event: "tap",
-			fn: "onElectricalLinkTap",
-		},{
-			element: "element",
-			delegate: "button#service_history_link",
-			event: "tap",
-			fn: "onServiceHistoryLinkTap",
-		},{
-			element: "element",
-			delegate: "button#performance_data_link",
-			event: "tap",
-			fn: "onPerformanceDataLinkTap",
 		}],
 	},
 	onBackButtonTap2: function() {
 		console.log("onBackButtonTapped2!");
 		this.fireEvent("backToResultsCommand", this);
-	},
-
-	onIomLinkTap: function() {
-		console.log("onIomLinkTap");
-		var link = Ext.get("iom_link");
-		console.log(link.dom.name);
-		this.fireEvent("loadPdfViewerCommand", this, link.dom.name);
-		console.log("firedEvent");
-	},
-
-	onServiceBulletinLinkTap: function() {
-		console.log("onServiceBulletinLinkTap");
-		var link = Ext.get("service_bulletin_link");
-		console.log(link.dom.name);
-		this.fireEvent("loadPdfViewerCommand", this, link.dom.name);
-		console.log("firedEvent");
-	},
-
-	onElectricalLinkTap: function() {
-		console.log("onElectricalLinkTap");
-		var link = Ext.get("electrical_link");
-		console.log(link.dom.name);
-		this.fireEvent("loadPdfViewerCommand", this, link.dom.name);
-		console.log("firedEvent");
-	},
-
-	onServiceHistoryLinkTap: function() {
-		console.log("onServiceHistoryLinkTap");
-		var link = Ext.get("service_history_link");
-		console.log(link.dom.name);
-		this.fireEvent("loadPdfViewerCommand", this, link.dom.name);
-		console.log("firedEvent");
-	},
-
-	onPerformanceDataLinkTap: function() {
-		console.log("onPerformanceDataLinkTap");
-		var link = Ext.get("performance_data_link");
-		console.log(link.dom.name);
-		this.fireEvent("loadPdfViewerCommand", this, link.dom.name);
-		console.log("firedEvent");
 	},
 });

@@ -92,6 +92,10 @@ strong {
   padding-bottom: .4em;
 }
 
+.no_bullet {
+  list-style-type: none !important;
+}
+
 /* Bottom Bar */
 
 .x-tabbar-dark.x-docked-bottom .x-tab-active { /* active icon container */

@@ -111,7 +111,7 @@ Ext.define("ResTube.view.QuestionFeed", {
             	xtype: "button",
             	ui: "action",
             	text: "Logout",
-            	id: "logoutButton",
+            	id: "logoutButtonQ",
             },{
 	        	xtype: "spacer",
 	        }, {
@@ -141,7 +141,7 @@ Ext.define("ResTube.view.QuestionFeed", {
         },],
 
 		listeners: [{
-			delegate: "#logoutButton",
+			delegate: "#logoutButtonQ",
 			event: "tap",
 			fn: "onLogoutButtonTap",
 		},{
