@@ -195,10 +195,14 @@ Ext.define("ResTube.controller.QuestionController",{
 		        var jsondecoded = Ext.JSON.decode(response.responseText);
 		        console.log(jsondecoded);
 		        console.log(user);
-		        if (user.username == jsondecoded.posted_by.username) {
+
+		        var resolveButtonComponent = questionDetailView.getComponent('resolveButton');
+
+		        if (user.username == jsondecoded.posted_by.username && jsondecoded.status == "U") {
 		        	console.log("sweeeet");
-        			var resolveButtonComponent = questionDetailView.getComponent('resolveButton');
         			resolveButtonComponent.setHidden(false);
+		        } else {
+		        	resolveButtonComponent.setHidden(true);
 		        }
 		        questionDetailView.setData(jsondecoded);
 				Ext.Viewport.animateActiveItem(questionDetailView, { type: "slide", direction: "left" });
@@ -212,76 +216,50 @@ Ext.define("ResTube.controller.QuestionController",{
 		});
 	},
 
-	onMarkResolvedCommand: function(view, questionId, questionResourceUri) {
+	onMarkResolvedCommand: function(view, questionObj) {
 		console.log("checking off issue...");
-
-		//get user credentials
-		var loginStore = Ext.getStore("Logins");
-		var user = loginStore.data.all[0].data;
-		console.log(user);
 
 		//form
 		var questionDetailView = this.getQuestionDetail();
 
 		var selfref = this;
 
+		questionObj.status = "R";
+
 		var myRequest = Ext.Ajax.request({
-			url: 'http://restube.herokuapp.com/api/v1/question/'.concat(questionId),
-			method: 'PUT',
+			url: 'http://restube.herokuapp.com/api/v1/question/'.concat(questionObj.id).concat("/"),
+			method: 'PATCH',
 			disableCaching: false,
 			// withCredentials: true,
 			useDefaultXhrHeader: false,
 
-		    params: {
-		    },
-			// jsonData: {
-			// 	"status": "R",
-			// 	"answer_to": questionResourceUri,
-			// 	"posted_by": user.resource_uri,
-			// },
+			jsonData: {
+				"status": "R",
+			},
 
 			success: function(response) {
 				console.log(response);
 				console.log("Spiffing, everything worked!");
-		        var jsondecoded = Ext.JSON.decode(response.responseText);
-		        console.log(jsondecoded);
+		        console.log(response.statusText);
 
-				//create the delayed task instance with our callback
-				// var task = Ext.create('Ext.util.DelayedTask', function() {
-				//     console.log('callback!');
-				//     questionDetailView.setMasked({
-				// 	    xtype: 'loadmask',
-				// 	    message: 'Commenting',
-				// 	    indicator: true,
-				// 	});
-				// 	questionDetailView.setMasked(false);
+		        //create the delayed task instance with our callback
+				var task = Ext.create('Ext.util.DelayedTask', function() {
+				    console.log('callback!');
+				    questionDetailView.setMasked({
+					    xtype: 'loadmask',
+					    message: 'Marking as resolved...',
+					    indicator: true,
+					});
+					questionDetailView.setMasked(false);
 
-				// 	selfref.onQuestionInfoCommand(view, questionId);
-				// });
-				// task.delay(1000); //the callback function will now be called after 1000ms
+					selfref.onQuestionInfoCommand(view, questionObj.id);
+				});
+				task.delay(1000); //the callback function will now be called after 1000ms
 			},
 
 			failure: function(response) {
 				console.log(response);
 				console.log("Curses, something terrible happened when trying to mark resolved");
-
-				// questionDetailView.setMasked({
-				//     xtype: 'loadmask',
-				//     message: 'An error occurred. Please try commenting again :(',
-				//     indicator: false,
-				// });
-
-				// //create the delayed task instance with our callback
-				// var task = Ext.create('Ext.util.DelayedTask', function() {
-				//     console.log('callback!');
-				//     questionDetailView.setMasked({
-				// 	    xtype: 'loadmask',
-				// 	    message: 'Posting',
-				// 	    indicator: true,
-				// 	});
-				// 	questionDetailView.setMasked(false);
-				// });
-				// task.delay(2000); //the callback function will now be called after 1000ms
 			},
 		});
 	},

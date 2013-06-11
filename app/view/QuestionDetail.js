@@ -46,7 +46,8 @@ Ext.define('ResTube.view.QuestionDetail',{
 	        }]
 	    },{
 	        xtype: "button",
-	        text: "Mark Resolved",
+	        margin: '10px',
+	        text: "Mark as Resolved",
 	        ui: "action",
 	        hidden: true,
 	        itemId: "resolveButton"
@@ -94,6 +95,6 @@ Ext.define('ResTube.view.QuestionDetail',{
 		console.log("Issue resolved!");
 		var currentRecord = this.getData();
 		
-		this.fireEvent("markResolvedCommand", this, currentRecord.id, currentRecord.resource_uri);
+		this.fireEvent("markResolvedCommand", this, currentRecord);
 	},
 });
