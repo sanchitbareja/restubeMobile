@@ -112,6 +112,6 @@ Ext.define("ResTube.view.Contacts", {
 
 	onContactSearchButtonTap: function(){
 		console.log("contactSearchButton pressed!");
-		this.fireEvent("contactSearchCommand", Ext.getCmp('contactsearchfield')._value)
+		this.fireEvent("contactSearchCommand", Ext.getCmp('contactsearchfield').getValue())
 	},
 });

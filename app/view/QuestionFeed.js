@@ -158,11 +158,6 @@ Ext.define("ResTube.view.QuestionFeed", {
 			delegate: "#questionSearchButton",
 			event: "tap",
 			fn: "onQuestionSearchButtonTap",
-		}, {
-			event: "initialize",
-			fn: function() {
-				console.log("LOAD MORE DATA");
-			},
 		}],
 	},
 
@@ -189,6 +184,6 @@ Ext.define("ResTube.view.QuestionFeed", {
 
 	onQuestionSearchButtonTap: function(){
 		console.log("questionSearchButton pressed!");
-		this.fireEvent("questionSearchCommand",Ext.getCmp('questionsearchfield')._value);
+		this.fireEvent("questionSearchCommand",Ext.getCmp('questionsearchfield').getValue());
 	},
 });

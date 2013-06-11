@@ -95,7 +95,7 @@ Ext.define("ResTube.view.AddQuestionForm", {
 	onPostButtonTap: function() {
 		console.log("onPostButtonTap");
         this.setMasked(true);
-		this.fireEvent("postButtonCommand", this, Ext.getCmp('questionText')._value, Ext.getCmp('detailsText')._value, Ext.getCmp('mediaURL')._value);
+		this.fireEvent("postButtonCommand", this, Ext.getCmp('questionText').getValue(), Ext.getCmp('detailsText').getValue(), Ext.getCmp('mediaURL').getValue());
 	},
 
     onBackButtonTap: function() {

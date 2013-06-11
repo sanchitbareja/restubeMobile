@@ -247,6 +247,7 @@ strong {
 }
 
 #commentText {
+  height: 4em;
   width: 60%;
   padding: .2em 0em .25em;
   border: 1px solid #aaa;
@@ -264,7 +265,7 @@ strong {
   color: #fff;
   font-size: 100%;
   width: 40%;
-  height: 1.8em;
+  height: 4em;
   vertical-align: top;
   background-color: #ac0b02;
   padding: 0px;
