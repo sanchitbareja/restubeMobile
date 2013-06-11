@@ -28,7 +28,7 @@ Ext.define('ResTube.view.QuestionDetail',{
 						"<li id='question_detail_comment'>{comment}<i> by {posted_by.username}</i></li>"+
 					"</tpl>"+
 					"<li id='question_detail_add_comment'>"+
-						'<textarea rows="10" cols="30" name="comment" id="commentText"></textarea>'+
+						'<textarea rows="8" cols="30" name="comment" id="commentText"></textarea>'+
         				'<button type="submit" value="Comment" id="submitComment">Comment</button>'+
         			"</li>"+
         		"</ul>"+
