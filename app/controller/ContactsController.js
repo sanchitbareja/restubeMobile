@@ -27,6 +27,7 @@ Ext.define("ResTube.controller.ContactsController",{
 				//commands by feedDetail
 				backToContactsCommand: "onBackToContactsCommand",
 				osCheck: "onOsCheckCommand",
+				negVideoButtonCommand: "onNegVideoButtonCommand",
 			}
 		},
 	},
@@ -161,7 +162,7 @@ Ext.define("ResTube.controller.ContactsController",{
 		    },
 
 		    failure: function(response) {
-		        console.log("Curses, something terrible happened when trying to load Product Info");
+		        console.log("Curses, something terrible happened when trying to load Contact Info");
 		    },
 		});
 	},
@@ -220,37 +221,34 @@ Ext.define("ResTube.controller.ContactsController",{
 	},
 
 	onOsCheckCommand: function(view) {
-		var contactDetailView = this.getContactDetail();
 		console.log("initiating OS check");
 
-		if (Ext.os.is("Android")) {
+		var contactDetailView = this.getContactDetail();
+		contactData = contactDetailView.getData();
+		contactData.ios = true;
 
-			contactDetailView.setMasked({
-				xtype: "mask",
-        		message: "Sorry, video chat is not supported on Android quite yet.",
-        		indicator: true,
-			});
-
-			var task = Ext.create('Ext.util.DelayedTask', function() {
-				contactDetailView.setMasked(false);
-			});
-
-			task.delay(2000);
-			
-		} else if (!Ext.os.is("Android") && !Ext.os.is("iOS")) {
-
-			contactDetailView.setMasked({
-				xtype: "mask",
-        		message: "Sorry, video chat is not supported on your device quite yet.",
-        		indicator: true,
-			});
-
-			var task = Ext.create('Ext.util.DelayedTask', function() {
-				contactDetailView.setMasked(false);
-			});
-
-			task.delay(2000);
+		if (!Ext.os.is("iOS")) {
+			contactData.ios = false;
 		}
+
+		console.log(contactData);
+		contactDetailView.setData(contactData);
+	},
+
+	onNegVideoButtonCommand: function(view) {
+		var contactDetailView = this.getContactDetail();
+		
+		contactDetailView.setMasked({
+			xtype: "loadmask",
+    		message: "Sorry, video chat is not supported on your device quite yet.",
+    		indicator: true,
+		});
+
+		var task = Ext.create('Ext.util.DelayedTask', function() {
+			contactDetailView.setMasked(false);
+		});
+
+		task.delay(2000);
 	},
 
 	//helper functions

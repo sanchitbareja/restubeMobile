@@ -22,15 +22,12 @@ Ext.define('ResTube.view.ContactDetail', {
 					'<tpl if="values.user.email">'+
 	       				"<a href='mailto:{user.email}'><div class='actionButton'>Email</div></a>"+
 	       			"</tpl>"+
-					'<tpl if="values.skype_id && Ext.os.is("Android")">'+
-	       				'<a><div class="actionButton" id="videoChat">Video Chat</div></a>'+
+					'<tpl if="values.skype_id && !ios">'+
+	       				'<a id="negVideoChat"><div class="actionButton">Video Chat</div></a>'+
 	       			"</tpl>"+
-	       			'<tpl if="values.skype_id && Ext.os.is("iOS")">'+
-	       				'<a href="skype:{skype_id}?call&video=true"><div class="actionButton" id="videoChat">Video Chat</div></a>'+
-	       			"</tpl>"+
-	       			'<tpl if="values.skype_id && (!Ext.os.is("iOS") && !Ext.os.is("Android")">'+
-	       				'<a><div class="actionButton" id="videoChat">Video Chat</div></a>'+
-	       			"</tpl>"+						
+	       			'<tpl if="values.skype_id && ios">'+
+	       				'<a href="skype:{skype_id}?call&video=true"><div class="actionButton">Video Chat</div></a>'+
+	       			"</tpl>"+				
 				"</div>"+
 			"</div>"+
 			"<div class='row'>"+
@@ -58,9 +55,10 @@ Ext.define('ResTube.view.ContactDetail', {
 		}],
 
         listeners: [{
-        	delegate: "#videoChat",
+        	element: "element",
+        	delegate: "a#negVideoChat",
         	event: "tap",
-        	fn: "onVideoButtonTap",
+        	fn: "onNegVideoButtonTap",
         },{
 			delegate: "#backButton4",
 			event: "tap",
@@ -71,9 +69,9 @@ Ext.define('ResTube.view.ContactDetail', {
         }],
 	},
 
-	onVideoButtonTap: function() {
-		cnsole.log("Video chat button tapped!");
-		this.fireEvent("osCheck", this);
+	onNegVideoButtonTap: function() {
+		console.log("Unavailable video chat button tapped!");
+		this.fireEvent("negVideoButtonCommand", this);
 	},
 
 	onBackButtonTap4: function() {
@@ -82,6 +80,7 @@ Ext.define('ResTube.view.ContactDetail', {
 	},
 
 	onShow: function() {
+		this.fireEvent("osCheck",this);
 		var full_name = this.getData().user.first_name+" "+this.getData().user.last_name;
 		this.getDockedItems()[0].setTitle(full_name.slice(0,12)+"...");
 	},
