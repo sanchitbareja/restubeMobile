@@ -370,7 +370,7 @@ Ext.define("ResTube.controller.QuestionController",{
 				    console.log('callback!');
 				    questionDetailView.setMasked({
 					    xtype: 'loadmask',
-					    message: 'Posting',
+					    message: 'Commenting',
 					    indicator: true,
 					});
 					questionDetailView.setMasked(false);
