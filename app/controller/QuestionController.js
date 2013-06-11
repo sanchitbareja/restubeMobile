@@ -34,6 +34,7 @@ Ext.define("ResTube.controller.QuestionController",{
 				//commands by questionDetail
 				backToQuestionFeedCommand: "onBackToQuestionFeedCommand",
 				addCommentToQuestionCommand: "onAddCommentToQuestionCommand",
+				markResolvedCommand: "onMarkResolvedCommand",
 			},
 			questionForm: {
 				//commands by questionForm
@@ -176,6 +177,10 @@ Ext.define("ResTube.controller.QuestionController",{
 
 	//Commands fired by the view
 	onQuestionInfoCommand: function(view, questionId){
+		//get user credentials
+		var loginStore = Ext.getStore("Logins");
+		var user = loginStore.data.all[0].data;
+
 		console.log("onQuestionInfoCommand!");
 		console.log(questionId);
 
@@ -194,14 +199,73 @@ Ext.define("ResTube.controller.QuestionController",{
 		        console.log("Spiffing, everything worked");
 		        var jsondecoded = Ext.JSON.decode(response.responseText);
 		        console.log(jsondecoded);
+		        console.log(user);
+
+		        var resolveButtonComponent = questionDetailView.getComponent('resolveButton');
+
+		        if (user.username == jsondecoded.posted_by.username && jsondecoded.status == "U") {
+		        	console.log("sweeeet");
+        			resolveButtonComponent.setHidden(false);
+		        } else {
+		        	resolveButtonComponent.setHidden(true);
+		        }
 		        questionDetailView.setData(jsondecoded);
 				Ext.Viewport.animateActiveItem(questionDetailView, { type: "slide", direction: "left" });
 				view.setMasked(false);
+
 		    },
 
 		    failure: function(response) {
 		        console.log("Curses, something terrible happened when trying to load Question Info");
 		    },
+		});
+	},
+
+	onMarkResolvedCommand: function(view, questionObj) {
+		console.log("checking off issue...");
+
+		//form
+		var questionDetailView = this.getQuestionDetail();
+
+		var selfref = this;
+
+		questionObj.status = "R";
+
+		var myRequest = Ext.Ajax.request({
+			url: 'http://restube.herokuapp.com/api/v1/question/'.concat(questionObj.id).concat("/"),
+			method: 'PATCH',
+			disableCaching: false,
+			// withCredentials: true,
+			useDefaultXhrHeader: false,
+
+			jsonData: {
+				"status": "R",
+			},
+
+			success: function(response) {
+				console.log(response);
+				console.log("Spiffing, everything worked!");
+		        console.log(response.statusText);
+
+		        //create the delayed task instance with our callback
+				var task = Ext.create('Ext.util.DelayedTask', function() {
+				    console.log('callback!');
+				    questionDetailView.setMasked({
+					    xtype: 'loadmask',
+					    message: 'Marking as resolved...',
+					    indicator: true,
+					});
+					questionDetailView.setMasked(false);
+
+					selfref.onQuestionInfoCommand(view, questionObj.id);
+				});
+				task.delay(1000); //the callback function will now be called after 1000ms
+			},
+
+			failure: function(response) {
+				console.log(response);
+				console.log("Curses, something terrible happened when trying to mark resolved");
+			},
 		});
 	},
 
