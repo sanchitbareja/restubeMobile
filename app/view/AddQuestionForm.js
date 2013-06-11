@@ -31,7 +31,7 @@ Ext.define("ResTube.view.AddQuestionForm", {
                         id: 'questionText',
                     },
                     {
-                        xtype: 'textfield',
+                        xtype: 'textareafield',
                         placeHolder: 'Details (Optional)',
                         id: 'detailsText',
                     },
