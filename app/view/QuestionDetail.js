@@ -76,6 +76,12 @@ Ext.define('ResTube.view.QuestionDetail',{
 		var commentInput = root.querySelectorAll('textarea[name=comment]')[0].value;
 		var currentRecord = this.getData();
 
+		this.setMasked({
+		    xtype: 'loadmask',
+		    message: 'Commenting',
+		    indicator: true,
+		});
+
 		console.log(currentRecord.status);
 		this.fireEvent("addCommentToQuestionCommand", this, commentInput, currentRecord.id, currentRecord.resource_uri, currentRecord.status);
 	},
