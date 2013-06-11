@@ -421,25 +421,7 @@ Ext.define("ResTube.controller.QuestionController",{
 			success: function(response) {
 				console.log(response);
 				console.log("Spiffing, everything worked! Added a new question!");
-				questionDetailView.setMasked({
-				    xtype: 'loadmask',
-				    message: 'Successfully Commented!',
-				    indicator: false,
-				});
-
-				//create the delayed task instance with our callback
-				var task = Ext.create('Ext.util.DelayedTask', function() {
-				    console.log('callback!');
-				    questionDetailView.setMasked({
-					    xtype: 'loadmask',
-					    message: 'Commenting',
-					    indicator: true,
-					});
-					questionDetailView.setMasked(false);
-
-					selfref.onQuestionInfoCommand(view, questionId);
-				});
-				task.delay(1000); //the callback function will now be called after 1000ms
+				selfref.onQuestionInfoCommand(view, questionId);
 			},
 
 			failure: function(response) {
@@ -457,7 +439,7 @@ Ext.define("ResTube.controller.QuestionController",{
 				    console.log('callback!');
 				    questionDetailView.setMasked({
 					    xtype: 'loadmask',
-					    message: 'Posting',
+					    message: 'Commenting',
 					    indicator: true,
 					});
 					questionDetailView.setMasked(false);

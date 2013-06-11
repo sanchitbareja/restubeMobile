@@ -1,6 +1,6 @@
 Ext.define("ResTube.view.Login", {
 	extend: "Ext.form.Panel",
-	requires: "Ext.form.FieldSet",
+	requires: ["Ext.form.FieldSet","Ext.field.Password"],
 	alias: "widget.logincontainer",
 
 	config: {
@@ -65,6 +65,6 @@ Ext.define("ResTube.view.Login", {
             message: 'Logging In...',
             indicator: true,
         });
-		this.fireEvent("loginButtonCommand", this, Ext.getCmp('username_field')._value, Ext.getCmp('password_field')._value);
+		this.fireEvent("loginButtonCommand", this, Ext.getCmp('username_field').getValue(), Ext.getCmp('password_field').getValue());
 	},
 });
