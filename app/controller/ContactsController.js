@@ -26,6 +26,7 @@ Ext.define("ResTube.controller.ContactsController",{
 			contactDetail: {
 				//commands by feedDetail
 				backToContactsCommand: "onBackToContactsCommand",
+				osCheck: "onOsCheckCommand",
 			}
 		},
 	},
@@ -216,6 +217,40 @@ Ext.define("ResTube.controller.ContactsController",{
 	onBackToContactsCommand: function() {
 		console.log("onBackToContactsCommand");
 		this.activateContactsView();
+	},
+
+	onOsCheckCommand: function(view) {
+		var contactDetailView = this.getContactDetail();
+		console.log("initiating OS check");
+
+		if (Ext.os.is("Android")) {
+
+			contactDetailView.setMasked({
+				xtype: "mask",
+        		message: "Sorry, video chat is not supported on Android quite yet.",
+        		indicator: true,
+			});
+
+			var task = Ext.create('Ext.util.DelayedTask', function() {
+				contactDetailView.setMasked(false);
+			});
+
+			task.delay(2000);
+			
+		} else if (!Ext.os.is("Android") && !Ext.os.is("iOS")) {
+
+			contactDetailView.setMasked({
+				xtype: "mask",
+        		message: "Sorry, video chat is not supported on your device quite yet.",
+        		indicator: true,
+			});
+
+			var task = Ext.create('Ext.util.DelayedTask', function() {
+				contactDetailView.setMasked(false);
+			});
+
+			task.delay(2000);
+		}
 	},
 
 	//helper functions

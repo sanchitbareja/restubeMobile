@@ -22,8 +22,14 @@ Ext.define('ResTube.view.ContactDetail', {
 					'<tpl if="values.user.email">'+
 	       				"<a href='mailto:{user.email}'><div class='actionButton'>Email</div></a>"+
 	       			"</tpl>"+
-					'<tpl if="values.skype_id">'+
-	       				'<a href="skype:{skype_id}?call&video=true"><div class="actionButton">Video Chat</div></a>'+
+					'<tpl if="values.skype_id && Ext.os.is("Android")">'+
+	       				'<a><div class="actionButton" id="videoChat">Video Chat</div></a>'+
+	       			"</tpl>"+
+	       			'<tpl if="values.skype_id && Ext.os.is("iOS")">'+
+	       				'<a href="skype:{skype_id}?call&video=true"><div class="actionButton" id="videoChat">Video Chat</div></a>'+
+	       			"</tpl>"+
+	       			'<tpl if="values.skype_id && (!Ext.os.is("iOS") && !Ext.os.is("Android")">'+
+	       				'<a><div class="actionButton" id="videoChat">Video Chat</div></a>'+
 	       			"</tpl>"+						
 				"</div>"+
 			"</div>"+
@@ -52,6 +58,10 @@ Ext.define('ResTube.view.ContactDetail', {
 		}],
 
         listeners: [{
+        	delegate: "#videoChat",
+        	event: "tap",
+        	fn: "onVideoButtonTap",
+        },{
 			delegate: "#backButton4",
 			event: "tap",
 			fn: "onBackButtonTap4",
@@ -59,6 +69,11 @@ Ext.define('ResTube.view.ContactDetail', {
             event: "show",
             fn: "onShow",
         }],
+	},
+
+	onVideoButtonTap: function() {
+		cnsole.log("Video chat button tapped!");
+		this.fireEvent("osCheck", this);
 	},
 
 	onBackButtonTap4: function() {
