@@ -1,6 +1,7 @@
 Ext.define('ResTube.view.Main', {
     extend: 'Ext.tab.Panel',
     alias: "widget.maincontainer",
+    requires: ["Ext.plugin.PullRefresh", "Ext.plugin.ListPaging", "Ext.field.Search"],
     config: {
         fullscreen: true,
         tabBarPosition: 'bottom',

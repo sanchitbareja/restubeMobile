@@ -28,7 +28,7 @@ Ext.define('ResTube.view.QuestionDetail',{
 						"<li id='question_detail_comment'>{comment}<i> by {posted_by.username}</i></li>"+
 					"</tpl>"+
 					"<li id='question_detail_add_comment'>"+
-        				'<input type="text" name="comment" id="commentText">'+
+						'<textarea rows="10" cols="30" name="comment" id="commentText"></textarea>'+
         				'<button type="submit" value="Comment" id="submitComment">Comment</button>'+
         			"</li>"+
         		"</ul>"+
@@ -84,8 +84,14 @@ Ext.define('ResTube.view.QuestionDetail',{
 	onSubmitCommentTap: function() {
 		console.log("submit a comment!");
 		var root = this.element.dom;
-		var commentInput = root.querySelectorAll('input[name=comment]')[0].value;
+		var commentInput = root.querySelectorAll('textarea[name=comment]')[0].value;
 		var currentRecord = this.getData();
+
+		this.setMasked({
+		    xtype: 'loadmask',
+		    message: 'Commenting',
+		    indicator: true,
+		});
 
 		console.log(currentRecord.status);
 		this.fireEvent("addCommentToQuestionCommand", this, commentInput, currentRecord.id, currentRecord.resource_uri, currentRecord.status);

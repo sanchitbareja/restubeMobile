@@ -67,7 +67,7 @@ Ext.define("ResTube.view.Feedback", {
             message: 'Sending feedback...',
             indicator: true,
         });
-		this.fireEvent("feedbackButtonCommand", this, Ext.getCmp('feedbackText')._value);
+		this.fireEvent("feedbackButtonCommand", this, Ext.getCmp('feedbackText').getValue());
 	},
     
     onLogoutButtonTap: function(){
