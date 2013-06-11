@@ -299,16 +299,10 @@ strong {
   color: #fff;
   font-weight: lighter;
 }
+
 #uploadButton:active {
   background-color: #ac0b02;
   background-image: none;
-}
-
-.x-loading-spinner {
-  font-size: 100%;
-  height: 1em;
-  width: 1em;
-  right: 30px;
 }
 
 /**********************/

@@ -57,7 +57,6 @@ Ext.define("ResTube.view.AddQuestionForm", {
                             },
                             uploading: {
                                 text: 'Uploading...',
-                                loading: true// Enable loading spinner on button
                             }
                         }
                     }
