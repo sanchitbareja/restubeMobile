@@ -115,7 +115,12 @@ Ext.define("ResTube.controller.SearchController",{
 	},
 
 	onProductInfoCommand: function(view, productId) {
-
+		var searchResults = this.getSearchResults();
+		searchResults.setMasked({
+			xtype: 'loadmask',
+			message: 'Loading...',
+			indicator: true,
+		});
 		var productInfo = this.getRestubeProduct();
 
 		try{
@@ -153,13 +158,16 @@ Ext.define("ResTube.controller.SearchController",{
 					  before: function(){},   // Function: Before callback
 					  after: function(){}     // Function: After callback
 					});
+					searchResults.setMasked(false);
 			    },
 
 			    failure: function(response) {
 			        console.log("Curses, something terrible happened when trying to load Product Info");
+			        searchResults.setMasked(false);
 			    },
 			});
 		} catch(err){
+			searchResults.setMasked(false);
 			var restubeSearchView = this.getRestubeSearch();
 
 			productInfo.reset();
