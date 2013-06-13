@@ -37,6 +37,11 @@ Ext.define('ResTube.view.Main', {
                 iconCls: 'action',
 
                 xtype: 'restubefeedback',                
+            }, {  
+                title: 'Messages',
+                iconCls: 'compose',
+
+                xtype: 'whiteboardlist',                
             }
         ],
     },

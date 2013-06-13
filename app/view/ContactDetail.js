@@ -24,7 +24,8 @@ Ext.define('ResTube.view.ContactDetail', {
 	       			"</tpl>"+
 					'<tpl if="values.skype_id">'+
 	       				'<a href="skype:{skype_id}?call&video=true"><div class="actionButton">Video Chat</div></a>'+
-	       			"</tpl>"+						
+	       			"</tpl>"+
+	       			'<a href="javascript:;" id="startMessage"><div class="actionButton">Message (with whiteboarding)</div></a>'+
 				"</div>"+
 			"</div>"+
 			"<div class='row'>"+
@@ -58,7 +59,12 @@ Ext.define('ResTube.view.ContactDetail', {
 		},{
             event: "show",
             fn: "onShow",
-        }],
+        },{
+			element: "element",
+			delegate: "a#startMessage",
+			event: "tap",
+			fn: "onStartMessageTap",
+		},],
 	},
 
 	onBackButtonTap4: function() {
@@ -70,5 +76,10 @@ Ext.define('ResTube.view.ContactDetail', {
 		var full_name = this.getData().user.first_name+" "+this.getData().user.last_name;
 		this.getDockedItems()[0].setTitle(full_name.slice(0,12)+"...");
 	},
+
+	onStartMessageTap: function() {
+		var to_user_data = this.getData();
+		this.fireEvent("launchWhiteboard", to_user_data, '');
+	}
 
 });
