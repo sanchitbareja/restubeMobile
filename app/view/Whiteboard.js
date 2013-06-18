@@ -8,7 +8,7 @@ Ext.define('ResTube.view.Whiteboard', {
         scrollable: null,
         tpl:"<div>To: {user.first_name}</div>"+
         	"<div id='canvasDiv'></div>"+
-			'<textarea rows="1" cols="30" name="message" id="messageText"></textarea><br />',
+			'<textarea rows="4" cols="30" name="message" id="messageText"></textarea><br />',
 
 		items: [{
 			xtype: "toolbar",

@@ -35,18 +35,17 @@ Ext.define("ResTube.view.WhiteboardList", {
 	    ],
 
 		itemTpl:'<div class="row contactrow">'+
-					'<div class="small-2 columns">'+
-						'<img src="{from_user.user_image}" class="thumbnail_photo_list">'+
+					'<div class="small-12 columns">'+
+						'<b>{from_user.first_name}</b> &#8680; <b>{to_user.first_name}</b> &nbsp;'+
+						'<tpl if="media_url.length">'+
+							'<img src="resources/icons/photo3.png" width="16px"/>'+
+						'</tpl>'+
+						'<br/>'+
+						'<text class="message">{text}</text>'+
 					'</div>'+
-					'<div class="small-2 columns">'+
-						'<img src="{to_user.user_image}" class="thumbnail_photo_list">'+
-					'</div>'+
-					'<div class="small-6 columns">'+
-						'<p>{text}</p>'+
-					'</div>'+
-					'<div class="small-2 columns">'+
-						'<img src="{media_url}" class="thumbnail_photo_list">'+
-					'</div>'+
+					// '<div class="small-2 columns">'+
+					// 	'<img src="{media_url}" class="thumbnail_photo_list">'+
+					// '</div>'+
 				'</div>',
 
 		items: [{

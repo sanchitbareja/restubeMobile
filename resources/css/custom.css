@@ -206,6 +206,17 @@ strong {
   font-weight: bold;
 }
 
+#messageSearchButton {
+  margin: 0% -10% 0% 0%;
+  padding: 0% 7% 0% 6%;
+  border: none;
+  background-color: #fff;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  font-size: 135%;
+  font-weight: bold;
+}
+
 /* Query Results View */
 
 .row .columns .modelnum {
@@ -874,6 +885,9 @@ strong {
   font-weight: lighter;
   position: relative;
   top: -2px;
+  white-space: nowrap; 
+  overflow: scroll;
+  text-overflow: ellipsis;
 }
 .subsubtitle {
   font-size: 70%;
@@ -881,6 +895,27 @@ strong {
   color: #999;
   position: relative;
   top: -2px;
+}
+
+/* Messages List */
+
+.subject {
+  font-size: 90%;
+  font-weight: lighter;
+  position: relative;
+  top: -4px;
+  white-space: nowrap; 
+  overflow: scroll;
+  text-overflow: ellipsis;
+}
+.message {
+  font-size: 90%;
+  font-weight: lighter;
+  color: #999;
+  position: relative;
+  top: -4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Labels */
