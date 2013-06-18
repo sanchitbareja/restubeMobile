@@ -40,6 +40,7 @@ Ext.define("ResTube.controller.WhiteboardController",{
 				messageInfoCommand: 'onMessageInfoCommand',
 				messageSearchCommand: 'onMessageSearchCommand',
 				loadNextPageCommand: 'onLoadNextPageCommand',
+				messageButtonCommand: 'onMessageButtonCommand',
 			},
             browseFileBtn: {
                 loadsuccess: 'onFileLoadSuccess',
@@ -64,7 +65,8 @@ Ext.define("ResTube.controller.WhiteboardController",{
     	console.log('onLaunchWhiteboard');
     	console.log(to_user_data);
     	if(media_url != ''){
-    		dataToLoad['user'] = to_user_data['to_user'];
+    		console.log("media_url is NOT empty");
+    		dataToLoad['user'] = to_user_data['from_user'];
 	    	dataToLoad['media_url'] = media_url;
 
 	    	whiteboardView.setData(dataToLoad);
@@ -74,7 +76,12 @@ Ext.define("ResTube.controller.WhiteboardController",{
 			this.onFileLoadSuccess(media_url, '');
 
     	} else {
-    		dataToLoad['user'] = to_user_data['user'];
+    		console.log("media_url is empty");
+    		if(to_user_data['user']) {
+	    		dataToLoad['user'] = to_user_data['user'];
+	    	} else {
+	    		dataToLoad['user'] = to_user_data['from_user'];
+	    	}
     		dataToLoad['media_url'] = '';
 
     		whiteboardView.setData(dataToLoad);
@@ -83,8 +90,29 @@ Ext.define("ResTube.controller.WhiteboardController",{
     	}
     },
 
+    onMessageButtonCommand: function(view){
+    	console.log("onMessageButtonCommand");
+    	view.setMasked({
+		    xtype: 'loadmask',
+		    message: 'Select someone to message in the contacts list.',
+		    indicator: false,
+		});
+
+		// create the delayed task instance with our callback
+		var task = Ext.create('Ext.util.DelayedTask', function() {
+		    console.log('callback!');
+		    view.setMasked({
+			    xtype: 'loadmask',
+			    message: 'Messaging',
+			    indicator: true,
+			});
+			view.setMasked(false);
+		});
+		task.delay(2000); //the callback function will now be called after 1000ms
+    },
+
     onBackToMessagesCommand: function(view) {
-    	console.log("onBackToMessagesCommand")
+    	console.log("onBackToMessagesCommand");
     	this.activateMessagesView();
     },
 
@@ -96,77 +124,101 @@ Ext.define("ResTube.controller.WhiteboardController",{
 	activateMessagesView: function () {
 		Ext.Viewport.animateActiveItem(this.getMainContainer(), { type: "slide", direction: "right" });
 	},
+
+	createCanvas: function(imgURL, imgMemorySize){
+		console.log("Create canvas");
+		var bgImage = new Image();
+		console.log(imgMemorySize);
+		if(imgURL.substr(0,4) == "http"){
+			bgImage.crossOrigin = 'Anonymous';
+		}
+		bgImage.src = imgURL;
+		console.log("checkpoint 1");
+
+		// add the listeners and respective handlers as soon as image loads
+		bgImage.onload = function() {
+			var fittedWidth = 200*bgImage.width/bgImage.height;
+			var fittedHeight = 200;
+			console.log("checkpoint 2");
+
+			// create canvas and add it to the dom
+	        var canvasDict = {};
+	        canvasDict.node = document.createElement('canvas');
+	        canvasDict.node.id = 'canvasSignature';
+	        canvasDict.context = canvasDict.node.getContext('2d');
+	        canvasDict.node.width = fittedWidth;
+	        canvasDict.node.height = fittedHeight;
+	        canvasDict.node.style.border = '2px solid #000'; 
+	        canvasDict.node.style.background = '#FFF';
+	        //remove any children before adding
+	        $("#canvasDiv").empty();
+	        document.getElementById('canvasDiv').appendChild(canvasDict.node);
+	        console.log("checkpoint 3");
+
+	        // create important variables
+			var canvas = document.getElementById('canvasSignature');
+			var ctx = canvas.getContext('2d');
+			var drag = false;
+			console.log("checkpoint 4");
+
+			function touchHandler(event) {
+			  if (event.targetTouches.length == 1) { //one finger touche
+			    var touch = event.targetTouches[0];
+
+			    if (event.type == "touchstart") {
+			      drag = true;
+			    } else if (event.type == "touchmove") {
+			      if (drag) {
+			        x = touch.pageX - canvas.offsetLeft;
+			        y = touch.pageY - canvas.offsetTop - 50;
+			        draw(x, y);
+			      }
+			    } else if (event.type == "touchend" || event.type == "touchcancel") {
+			      drag = false;
+			    }
+			  }
+			}
+
+			function draw(x, y) {
+	            ctx.fillStyle = '#ff0000';
+	            ctx.beginPath();
+	            ctx.moveTo(x, y);
+	            ctx.arc(x, y, 3, 0, Math.PI * 2, false);
+	            ctx.fill();
+			}
+
+			canvas.addEventListener("touchstart", touchHandler, false);
+			canvas.addEventListener("touchmove", touchHandler, false);
+	  		canvas.addEventListener("touchend", touchHandler, false);
+	  		console.log(bgImage);
+			console.log("checkpoint 5");
+			if(imgMemorySize > 1000000) {
+		  		ctx.drawImage(bgImage, 0, 0, bgImage.width, bgImage.height, 0 , 0, fittedWidth, fittedHeight*4);
+		  	} else {
+		  		ctx.drawImage(bgImage, 0, 0, fittedWidth, fittedHeight);
+		  	}
+	  		console.log("checkpoint 6");
+	  	};
+	},
     
     // set up canvas as soon as image is loaded
     onFileLoadSuccess: function(dataurl, e) {
     	// general stuff
         var whiteboard = this.getWhiteboard();
         console.log(whiteboard);
-
+        console.log(dataurl);
+        img = new Image();
+        img.src = dataurl;
+        var me = this
         //set the background picture as the one just selected from the library
-		var bgImage = new Image();
-		bgImage.crossOrigin = 'Anonymous';
-		bgImage.src = dataurl;
-		console.log("checkpoint 1");
-
-		var fittedWidth = 150;
-		var fittedHeight = 150;
-		console.log("checkpoint 2");
-
-		// create canvas and add it to the dom
-        var canvasDict = {};
-        canvasDict.node = document.createElement('canvas');
-        canvasDict.node.id = 'canvasSignature';
-        canvasDict.context = canvasDict.node.getContext('2d');
-        canvasDict.node.width = fittedWidth;
-        canvasDict.node.height = fittedHeight;
-        canvasDict.node.style.border = '2px solid #000'; 
-        canvasDict.node.style.background = '#FFF';
-        //remove any children before adding
-        $("#canvasDiv").empty();
-        document.getElementById('canvasDiv').appendChild(canvasDict.node);
-        console.log("checkpoint 3");
-
-        // create important variables
-		var canvas = document.getElementById('canvasSignature');
-		var ctx = canvas.getContext('2d');
-		var drag = false;
-		console.log("checkpoint 4");
-
-		function touchHandler(event) {
-		  if (event.targetTouches.length == 1) { //one finger touche
-		    var touch = event.targetTouches[0];
-
-		    if (event.type == "touchstart") {
-		      drag = true;
-		    } else if (event.type == "touchmove") {
-		      if (drag) {
-		        x = touch.pageX - canvas.offsetLeft;
-		        y = touch.pageY - canvas.offsetTop - 50;
-		        draw(x, y);
-		      }
-		    } else if (event.type == "touchend" || event.type == "touchcancel") {
-		      drag = false;
-		    }
-		  }
+        img.onload = function() {
+	        if(dataurl.substr(0,4) == "http"){
+	        	me.createCanvas(dataurl, img.height*img.width);
+	        } else {
+	        	me.createCanvas(dataurl, img.height*img.width);
+				// this.doUpload(dataurl.replace("data:image/jpeg;base64,", ""), 'http://restube.herokuapp.com/upload/canvas/', '', '', false);
+			}
 		}
-
-		function draw(x, y) {
-            ctx.fillStyle = '#ff0000';
-            ctx.beginPath();
-            ctx.moveTo(x, y);
-            ctx.arc(x, y, 3, 0, Math.PI * 2, false);
-            ctx.fill();
-		}
-		console.log("checkpoint 5");
-		// add the listeners and respective handlers as soon as image loads
-		bgImage.onload = function() {
-			canvas.addEventListener("touchstart", touchHandler, false);
-			canvas.addEventListener("touchmove", touchHandler, false);
-	  		canvas.addEventListener("touchend", touchHandler, false);
-	  		ctx.drawImage(bgImage, 0, 0, fittedWidth, fittedHeight);
-	  		console.log("checkpoint 6");
-	  	}
     },
     
     onFileLoadFailure: function(message) {
@@ -182,7 +234,11 @@ Ext.define("ResTube.controller.WhiteboardController",{
     	console.log(canvasImage);
     	console.log(canvasImageUrl);
 
-		uploadResponse = this.doUpload(canvasImageUrl, 'http://restube.herokuapp.com/upload/canvas/', to_user_data, messageText);
+    	if(canvasImage == '' || canvasImageUrl == ''){
+    		this.submitDrawing('', to_user_data, messageText);
+    	} else {
+			uploadResponse = this.doUpload(canvasImageUrl, 'http://restube.herokuapp.com/upload/canvas/', to_user_data, messageText, true);
+		}
     },
 
     submitDrawing: function(media_url, to_user_data, messageText) {
@@ -265,11 +321,12 @@ Ext.define("ResTube.controller.WhiteboardController",{
 		});
     },
 
-    doUpload: function(file, url, to_user_data, messageText) {
+    doUpload: function(file, url, to_user_data, messageText, submitForm) {
     	console.log(file);
     	console.log(url);
         var http = new XMLHttpRequest();
         var me = this;
+        var imgMemorySize = 0;
         
         if (http.upload && http.upload.addEventListener) {
             
@@ -277,6 +334,7 @@ Ext.define("ResTube.controller.WhiteboardController",{
             http.upload.onprogress = function(e) {
                 if (e.lengthComputable) {
                     var percentComplete = (e.loaded / e.total) * 100; 
+                    imgMemorySize = e.total;
                     console.log(percentComplete);
                 }
             };
@@ -286,13 +344,20 @@ Ext.define("ResTube.controller.WhiteboardController",{
                 if (this.readyState == 4) {
                     if(this.status == 200) {
                         
-                        var response = Ext.decode(this.responseText, true)
+                        var response = Ext.decode(this.responseText, true);
                         
                         if (response && response.success) {
                             // Success
                             // me.fireEvent('success', response, this, e);
+                            console.log(e);
                             console.log(response);
-                            me.submitDrawing(response.url, to_user_data, messageText)
+                            if(submitForm){
+                            	console.log(response);
+	                            me.submitDrawing(response.url, to_user_data, messageText);
+                            } else {
+                            	console.log(response);
+                            	me.createCanvas(response.url, imgMemorySize);
+                            }
                             return response;
                         } else if (response && response.message) {
                             // Failure
@@ -344,6 +409,17 @@ Ext.define("ResTube.controller.WhiteboardController",{
 
 		var messages_list = this.getWhiteboardList();
 		var messages_store = messages_list.getStore();
+
+		//get user data
+		var loginStore = Ext.getStore("Logins");
+		var user = loginStore.data.all[0].data;
+
+		messages_list.setMasked({
+		    xtype: 'loadmask',
+		    message: 'Loading',
+		    indicator: true,
+		});
+
 		try{
 			var myRequest = Ext.Ajax.request({
 			    url: 'http://restube.herokuapp.com/api/v1/messagewhiteboard/?format=json',
@@ -352,6 +428,7 @@ Ext.define("ResTube.controller.WhiteboardController",{
 			    // withCredentials: true,
 			    useDefaultXhrHeader: false,
 			    params: {
+			    	'including_user': user.username,
 			    },
 
 			    success: function(response) {
@@ -368,10 +445,22 @@ Ext.define("ResTube.controller.WhiteboardController",{
 			    failure: function(response) {
 			    	console.log(response);
 			        console.log("Curses, something terrible happened");
+			        messages_list.setMasked({
+					    xtype: 'loadmask',
+					    message: 'Oops, something went wrong! Please try again..',
+					    indicator: false,
+					});
+
+					// create the delayed task instance with our callback
+					var task = Ext.create('Ext.util.DelayedTask', function() {
+					    console.log('callback!');
+						messages_list.setMasked(false);
+					});
+					task.delay(2000); //the callback function will now be called after 1000ms
 			    },
 			});
 		} catch(err) {
-
+			messages_list.setMasked(false);
 		}
 	},
 
@@ -382,6 +471,10 @@ Ext.define("ResTube.controller.WhiteboardController",{
 		var messages_list_offset = messages_list.getStore().getCount();
 		var messages_store = messages_list.getStore();
 
+		//get user data
+		var loginStore = Ext.getStore("Logins");
+		var user = loginStore.data.all[0].data;
+
 		try{
 			var myRequest = Ext.Ajax.request({
 			    url: 'http://restube.herokuapp.com/api/v1/messagewhiteboard/?format=json&offset='.concat(messages_list_offset),
@@ -390,6 +483,7 @@ Ext.define("ResTube.controller.WhiteboardController",{
 			    // withCredentials: true,
 			    useDefaultXhrHeader: false,
 			    params: {
+			    	'including_user': user.username,
 			    },
 
 			    success: function(response) {
@@ -427,7 +521,14 @@ Ext.define("ResTube.controller.WhiteboardController",{
 		console.log(messageId);
 
 		var messageDetailView = this.getMessageDetail();
+		var messages_list = this.getWhiteboardList();
 		var requestURL = 'http://restube.herokuapp.com/api/v1/messagewhiteboard/'+messageId+'/?format=json';
+
+        messages_list.setMasked({
+		    xtype: 'loadmask',
+		    message: 'Loading',
+		    indicator: true,
+		});
 
 		var myRequest = Ext.Ajax.request({
 		    url: requestURL,
@@ -446,11 +547,24 @@ Ext.define("ResTube.controller.WhiteboardController",{
 		        messageDetailView.setData(jsondecoded);
 				Ext.Viewport.animateActiveItem(messageDetailView, { type: "slide", direction: "left" });
 				messageDetailView.setMasked(false);
-
+				messages_list.setMasked(false);
 		    },
 
 		    failure: function(response) {
 		        console.log("Curses, something terrible happened when trying to load Question Info");
+
+		        messages_list.setMasked({
+				    xtype: 'loadmask',
+				    message: 'Oops, something went wrong! Please try again..',
+				    indicator: false,
+				});
+
+				// create the delayed task instance with our callback
+				var task = Ext.create('Ext.util.DelayedTask', function() {
+				    console.log('callback!');
+					messages_list.setMasked(false);
+				});
+				task.delay(2000); //the callback function will now be called after 1000ms
 		    },
 		});
 	},

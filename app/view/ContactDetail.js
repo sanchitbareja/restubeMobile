@@ -17,13 +17,13 @@ Ext.define('ResTube.view.ContactDetail', {
     		"<div class='row'>"+
 				"<div class='small-12 columns'>"+
 					'<tpl if="values.phone_no">'+
-	       				"<a href='tel:{phone_no}'><div class='actionButton'>Call</div></a>"+
+	       				"<a href='tel:{phone_no}' id='startCall'><div class='actionButton'>Call</div></a>"+
 	       			"</tpl>"+
 					'<tpl if="values.user.email">'+
-	       				"<a href='mailto:{user.email}'><div class='actionButton'>Email</div></a>"+
+	       				"<a href='mailto:{user.email}' id='startEmail'><div class='actionButton'>Email</div></a>"+
 	       			"</tpl>"+
 					'<tpl if="values.skype_id">'+
-	       				'<a href="skype:{skype_id}?call&video=true"><div class="actionButton">Video Chat</div></a>'+
+	       				'<a href="skype:{skype_id}?call&video=true" id="startSkype"><div class="actionButton">Video Chat</div></a>'+
 	       			"</tpl>"+
 	       			'<a href="javascript:;" id="startMessage"><div class="actionButton">Message (with whiteboarding)</div></a>'+
 				"</div>"+
@@ -64,7 +64,22 @@ Ext.define('ResTube.view.ContactDetail', {
 			delegate: "a#startMessage",
 			event: "tap",
 			fn: "onStartMessageTap",
-		},],
+		},{
+			element: "element",
+			delegate: "a#startCall",
+			event: "tap",
+			fn: "onStartCallTap",
+		},{
+			element: "element",
+			delegate: "a#startEmail",
+			event: "tap",
+			fn: "onStartEmailTap",
+		},{
+			element: "element",
+			delegate: "a#startSkype",
+			event: "tap",
+			fn: "onStartSkypeTap",
+		}],
 	},
 
 	onBackButtonTap4: function() {
@@ -80,6 +95,22 @@ Ext.define('ResTube.view.ContactDetail', {
 	onStartMessageTap: function() {
 		var to_user_data = this.getData();
 		this.fireEvent("launchWhiteboard", to_user_data, '');
-	}
+		this.fireEvent("addStatistic", to_user_data, 'message');
+	},
+
+	onStartCallTap: function() {
+		var to_user_data = this.getData();
+		this.fireEvent("addStatistic", to_user_data, 'call');
+	}, 
+
+	onStartEmailTap: function() {
+		var to_user_data = this.getData();
+		this.fireEvent("addStatistic", to_user_data, 'email');
+	},
+
+	onStartSkypeTap: function() {
+		var to_user_data = this.getData();
+		this.fireEvent("addStatistic", to_user_data, 'skype');
+	},
 
 });

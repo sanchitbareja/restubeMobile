@@ -61,9 +61,16 @@ Ext.define('ResTube.view.Whiteboard', {
 
 	onSaveCanvas: function() {
 		console.log("save canvas now!");
-		var canvas = document.getElementById('canvasSignature');
-		var canvasImage = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height);
-		var canvasImageUrl = canvas.toDataURL("image/png").replace("data:image/png;base64,", "");
+		var canvas = '';
+		var canvasImage = '';
+		var canvasImageUrl = '';
+		try {
+			canvas = document.getElementById('canvasSignature');
+			canvasImage = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height);
+			canvasImageUrl = canvas.toDataURL("image/png").replace("data:image/png;base64,", "");
+		} catch(err) {
+			// do nothing
+		}
 		var to_user_data = this.getData();
 
 		var root = this.element.dom;
