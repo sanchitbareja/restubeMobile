@@ -57,6 +57,13 @@ Ext.define("ResTube.view.WhiteboardList", {
                     ui: "action",
                     text: "Logout",
                     id: "logoutButtonM",
+                }, {
+                	xtype: "spacer",
+                }, {
+                	xtype: "button",
+                	ui: "action",
+                	text: "Message",
+                	id: "messageButton",
                 }],
 		},{
             xtype: 'toolbar',
@@ -82,6 +89,10 @@ Ext.define("ResTube.view.WhiteboardList", {
 			delegate: "#logoutButtonM",
             event: "tap",
             fn: "onLogoutButtonTap",
+        }, {
+        	delegate: "#messageButton",
+        	event: "tap",
+        	fn: "onMessageButtonTap",
         },{
 			event: "show",
 			fn: "onShow",
@@ -99,9 +110,15 @@ Ext.define("ResTube.view.WhiteboardList", {
 		console.log("An item was tapped!");
 		this.fireEvent("messageInfoCommand", this, record.data.id);
 	},
+
 	onLogoutButtonTap: function(){
         console.log("Logout button pressed!");
         this.fireEvent('logoutCommand');
+    },
+
+    onMessageButtonTap: function(){
+    	console.log("On message button tap");
+    	this.fireEvent('messageButtonCommand', this);
     },
 
 	onShow: function(){

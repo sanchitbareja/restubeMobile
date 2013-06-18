@@ -18,29 +18,32 @@ Ext.define('ResTube.view.Main', {
             //     xtype: 'restubefeed',
             // },
             {  
-                title: 'Search',
-                iconCls: 'search',
-
-                xtype: 'restubesearch',                
-            }, {
-                title: 'Questions',
-                iconMask: true,
-                iconCls: 'chat',
-
-                xtype: 'restubequestionfeed'
-            }, {
-                title: 'Contacts',
-                iconMask: true,
-                iconCls: 'address_book',
-
-                xtype: 'restubecontacts',
-            }, {  
                 title: 'Messages',
                 iconMask: true,
                 iconCls: 'mail',
 
                 xtype: 'whiteboardlist',
-            }, {  
+            },
+            {  
+                title: 'Search',
+                iconCls: 'search',
+
+                xtype: 'restubesearch',                
+            },
+            // {
+            //     title: 'Questions',
+            //     iconMask: true,
+            //     iconCls: 'chat',
+            //     xtype: 'restubequestionfeed'
+            // }, 
+            {
+                title: 'Contacts',
+                iconMask: true,
+                iconCls: 'address_book',
+
+                xtype: 'restubecontacts',
+            },
+            {  
                 title: 'Feedback',
                 iconMask: true,
                 iconCls: 'quote1',
