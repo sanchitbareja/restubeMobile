@@ -544,6 +544,14 @@ Ext.define("ResTube.controller.WhiteboardController",{
 		        console.log(jsondecoded);
 		        console.log(user);
 
+		        // check if viewer is sender
+		        var replyButtonComponent = Ext.getCmp('replyMessage');
+		        console.log(replyButtonComponent);
+		        if (jsondecoded.from_user.id == user.id) {
+		        	console.log('not so fast, sender!');
+		        	replyButtonComponent.setHidden(true);
+		        }
+
 		        messageDetailView.setData(jsondecoded);
 				Ext.Viewport.animateActiveItem(messageDetailView, { type: "slide", direction: "left" });
 				messageDetailView.setMasked(false);

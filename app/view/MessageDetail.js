@@ -90,6 +90,7 @@ Ext.define('ResTube.view.MessageDetail', {
 	        	xtype: "button",
 	        	ui: "action",
 	        	text: "Reply",
+	        	hidden: false,
 	        	id: "replyMessage",
 	        }],
 	    }],
