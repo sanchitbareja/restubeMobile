@@ -333,6 +333,33 @@ strong {
   float: right;
 }
 
+/* Compose Message */
+
+#saveCanvasButton {
+  color: #fff;
+  font-size: 120%;
+  width: 100%;
+  height: 1.85em;
+  vertical-align: top;
+  background-color: #ac0b02;
+  padding: 0px;
+  border:1px solid #000;
+  border-radius: .3em;
+  -moz-border-radius: .3em;
+  -khtml-border-radius: .3em;
+  -webkit-border-radius: .3em;
+}
+#saveCanvasButton:active {
+  color: #fff;
+  background-color: #777;
+}
+#messageText {
+  width: 100%;
+}
+.up {
+  margin-top: -3em;
+}
+
 /**********************/
 /* Grid HTML Classes */
 /**********************/
