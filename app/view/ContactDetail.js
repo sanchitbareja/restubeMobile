@@ -16,25 +16,25 @@ Ext.define('ResTube.view.ContactDetail', {
     		"</div>"+
     		"<div class='row'>"+
 				"<div class='small-12 columns'>"+
+					'<a href="javascript:;" id="startMessage"><div class="actionButton">ResTube Message</div></a>'+
+					'<tpl if="values.skype_id && !ios">'+
+	       				'<a id="negVideoChat"><div class="actionButton">Video Call</div></a>'+
+	       			"</tpl>"+
+	       			'<tpl if="values.skype_id && ios">'+
+	       				'<a href="skype:{skype_id}?call&video=true" id="startSkype"><div class="actionButton">Video Call</div></a>'+
+	       			"</tpl>"+
 					'<tpl if="values.phone_no">'+
-	       				"<a href='tel:{phone_no}' id='startCall'><div class='actionButton'>Call</div></a>"+
+	       				"<a href='tel:{phone_no}' id='startCall'><div class='actionButton'>Phone Call</div></a>"+
 	       			"</tpl>"+
 					'<tpl if="values.user.email">'+
 	       				"<a href='mailto:{user.email}' id='startEmail'><div class='actionButton'>Email</div></a>"+
 	       			"</tpl>"+
-					'<tpl if="values.skype_id && !ios">'+
-	       				'<a id="negVideoChat"><div class="actionButton">Video Chat</div></a>'+
-	       			"</tpl>"+
-	       			'<tpl if="values.skype_id && ios">'+
-	       				'<a href="skype:{skype_id}?call&video=true" id="startSkype"><div class="actionButton">Video Chat</div></a>'+
-	       			"</tpl>"+				
-	       			'<a href="javascript:;" id="startMessage"><div class="actionButton">Message (with whiteboarding)</div></a>'+
 				"</div>"+
 			"</div>"+
 			"<div class='row'>"+
 				"<div class='small-12 columns'>"+
 					'<tpl if="skills.length">'+
-						'<span class="header" id="specialties">Specialties:</span>'+
+						'<span class="header" id="specialties">Areas of Expertise:</span>'+
 						'<br/>'+
 						"<tpl for='skills'>"+
 							"<span class='label left'><i>{name}</i></span>"+
@@ -93,6 +93,8 @@ Ext.define('ResTube.view.ContactDetail', {
 	onNegVideoButtonTap: function() {
 		console.log("Unavailable video chat button tapped!");
 		this.fireEvent("negVideoButtonCommand", this);
+		var to_user_data = this.getData();
+		this.fireEvent("addStatistic", to_user_data, 'skype_fail');
 	},
 
 	onBackButtonTap4: function() {
