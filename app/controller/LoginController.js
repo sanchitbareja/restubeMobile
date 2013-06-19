@@ -9,6 +9,7 @@ Ext.define("ResTube.controller.LoginController",{
 			restubeSearch: "restubesearch",
 			restubeContacts: "restubecontacts",
 			restubeFeedback: "restubefeedback",
+			whiteboardlist: "whiteboardlist",
 		},
 		control: {
 			loginContainer: {
@@ -26,6 +27,9 @@ Ext.define("ResTube.controller.LoginController",{
 				logoutCommand: "onLogoutButtonCommand",
 			},
 			restubeFeedback: {
+				logoutCommand: "onLogoutButtonCommand",
+			},
+			whiteboardlist: {
 				logoutCommand: "onLogoutButtonCommand",
 			}
 		}
