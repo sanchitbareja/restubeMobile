@@ -22,9 +22,12 @@ Ext.define('ResTube.view.ContactDetail', {
 					'<tpl if="values.user.email">'+
 	       				"<a href='mailto:{user.email}' id='startEmail'><div class='actionButton'>Email</div></a>"+
 	       			"</tpl>"+
-					'<tpl if="values.skype_id">'+
-	       				'<a href="skype:{skype_id}?call&video=true" id="startSkype"><div class="actionButton">Video Chat</div></a>'+
+					'<tpl if="values.skype_id && !ios">'+
+	       				'<a id="negVideoChat"><div class="actionButton">Video Chat</div></a>'+
 	       			"</tpl>"+
+	       			'<tpl if="values.skype_id && ios">'+
+	       				'<a href="skype:{skype_id}?call&video=true" id="startSkype"><div class="actionButton">Video Chat</div></a>'+
+	       			"</tpl>"+				
 	       			'<a href="javascript:;" id="startMessage"><div class="actionButton">Message (with whiteboarding)</div></a>'+
 				"</div>"+
 			"</div>"+
@@ -53,6 +56,11 @@ Ext.define('ResTube.view.ContactDetail', {
 		}],
 
         listeners: [{
+        	element: "element",
+        	delegate: "a#negVideoChat",
+        	event: "tap",
+        	fn: "onNegVideoButtonTap",
+        },{
 			delegate: "#backButton4",
 			event: "tap",
 			fn: "onBackButtonTap4",
@@ -82,12 +90,18 @@ Ext.define('ResTube.view.ContactDetail', {
 		}],
 	},
 
+	onNegVideoButtonTap: function() {
+		console.log("Unavailable video chat button tapped!");
+		this.fireEvent("negVideoButtonCommand", this);
+	},
+
 	onBackButtonTap4: function() {
 		console.log("onBackButtonTapped4!");
 		this.fireEvent("backToContactsCommand", this);
 	},
 
 	onShow: function() {
+		this.fireEvent("osCheck",this);
 		var full_name = this.getData().user.first_name+" "+this.getData().user.last_name;
 		this.getDockedItems()[0].setTitle(full_name.slice(0,12)+"...");
 	},
