@@ -238,6 +238,14 @@ Ext.define("ResTube.controller.WhiteboardController",{
     	console.log(canvasImage);
     	console.log(canvasImageUrl);
 
+    	var whiteboard = this.getWhiteboard();
+
+    	whiteboard.setMasked({
+		    xtype: 'loadmask',
+		    message: 'Sending',
+		    indicator: true,
+		});
+
     	if(canvasImage == '' || canvasImageUrl == ''){
     		this.submitDrawing('', to_user_data, messageText);
     	} else {
@@ -281,6 +289,8 @@ Ext.define("ResTube.controller.WhiteboardController",{
 			success: function(response) {
 				console.log(response);
 				console.log("Spiffing, everything worked! Added a new message!");
+
+				whiteboard.setMasked(false);
 
 				Ext.Viewport.animateActiveItem(mainContainerView, { type: "slide", direction: "right" });
 				messages_list.setMasked({
@@ -553,6 +563,8 @@ Ext.define("ResTube.controller.WhiteboardController",{
 		        if (jsondecoded.from_user.id == user.id) {
 		        	console.log('not so fast, sender!');
 		        	replyButtonComponent.setHidden(true);
+		        } else {
+		        	replyButtonComponent.setHidden(false);
 		        }
 
 		        messageDetailView.setData(jsondecoded);
