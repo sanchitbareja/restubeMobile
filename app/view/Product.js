@@ -24,6 +24,7 @@ Ext.define('ResTube.view.Product',{
         	"</div>"+
         	"<div class='row'>"+
 				"<div class='small-12 columns'>"+
+					"<tpl if='values.multiple_data_link'>{multiple_data_link}</tpl>"+
 					"<tpl if='values.iom_link'><a class='actionButton' href='{iom_link}' target='_blank'>IOM</a><br /></tpl>"+
 					"<tpl if='values.service_bulletin_link'><a class='actionButton' href='{service_bulletin_link}' target='_blank'>Service Bulletin</a><br /></tpl>"+
 					"<tpl if='values.electrical_link'><a class='actionButton' href='{electrical_link}' target='_blank'>Electrical Schematic</a><br /></tpl>"+

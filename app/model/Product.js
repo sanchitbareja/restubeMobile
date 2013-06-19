@@ -13,6 +13,7 @@ Ext.define('ResTube.model.Product', {
             { name: 'serial_no', type: 'string' },
             { name: 'service_bulletin_link', type: 'string' },
             { name: 'service_history_link', type: 'string' },
+            { name: 'multiple_data_link', type: 'string' },
             { name: 'resource_uri', type: 'string' },
     	],
         hasMany: {
