@@ -64,9 +64,11 @@ Ext.define("ResTube.controller.WhiteboardController",{
     	var dataToLoad = {};
     	console.log('onLaunchWhiteboard');
     	console.log(to_user_data);
+
     	if(media_url != ''){
     		console.log("media_url is NOT empty");
-    		dataToLoad['user'] = to_user_data['from_user'];
+    		dataToLoad['to_user'] = to_user_data['from_user'];
+    		dataToLoad['from_user'] = to_user_data['to_user'];
 	    	dataToLoad['media_url'] = media_url;
 
 	    	whiteboardView.setData(dataToLoad);
@@ -78,9 +80,11 @@ Ext.define("ResTube.controller.WhiteboardController",{
     	} else {
     		console.log("media_url is empty");
     		if(to_user_data['user']) {
-	    		dataToLoad['user'] = to_user_data['user'];
+	    		dataToLoad['to_user'] = to_user_data['user'];
+	    		dataToLoad['from_user'] = to_user_data['user'];
 	    	} else {
-	    		dataToLoad['user'] = to_user_data['from_user'];
+	    		dataToLoad['to_user'] = to_user_data['from_user'];
+	    		dataToLoad['from_user'] = to_user_data['to_user'];
 	    	}
     		dataToLoad['media_url'] = '';
 
@@ -169,8 +173,8 @@ Ext.define("ResTube.controller.WhiteboardController",{
 			      drag = true;
 			    } else if (event.type == "touchmove") {
 			      if (drag) {
-			        x = touch.pageX - canvas.offsetLeft;
-			        y = touch.pageY - canvas.offsetTop - 50;
+			        x = touch.pageX - canvas.offsetLeft - 5;
+			        y = touch.pageY - canvas.offsetTop - 200;
 			        draw(x, y);
 			      }
 			    } else if (event.type == "touchend" || event.type == "touchcancel") {
@@ -234,6 +238,14 @@ Ext.define("ResTube.controller.WhiteboardController",{
     	console.log(canvasImage);
     	console.log(canvasImageUrl);
 
+    	var whiteboard = this.getWhiteboard();
+
+    	whiteboard.setMasked({
+		    xtype: 'loadmask',
+		    message: 'Sending',
+		    indicator: true,
+		});
+
     	if(canvasImage == '' || canvasImageUrl == ''){
     		this.submitDrawing('', to_user_data, messageText);
     	} else {
@@ -253,7 +265,7 @@ Ext.define("ResTube.controller.WhiteboardController",{
 
 	    console.log(media_url);
 	    console.log(user.resource_uri);
-	    console.log(to_user_data.user.resource_uri);
+	    console.log(to_user_data.to_user.resource_uri);
 	    console.log(messageText);
 
     	var myRequest = Ext.Ajax.request({
@@ -269,7 +281,7 @@ Ext.define("ResTube.controller.WhiteboardController",{
 
 			jsonData: {
 				"from_user": user.resource_uri,
-				"to_user": to_user_data.user.resource_uri, // need to fill this up!!
+				"to_user": to_user_data.to_user.resource_uri, // need to fill this up!!
 				"text": messageText,
 				"media_url": media_url,
 			},
@@ -277,6 +289,8 @@ Ext.define("ResTube.controller.WhiteboardController",{
 			success: function(response) {
 				console.log(response);
 				console.log("Spiffing, everything worked! Added a new message!");
+
+				whiteboard.setMasked(false);
 
 				Ext.Viewport.animateActiveItem(mainContainerView, { type: "slide", direction: "right" });
 				messages_list.setMasked({
@@ -543,6 +557,15 @@ Ext.define("ResTube.controller.WhiteboardController",{
 		        var jsondecoded = Ext.JSON.decode(response.responseText);
 		        console.log(jsondecoded);
 		        console.log(user);
+
+		        // check if viewer is sender
+		        var replyButtonComponent = Ext.getCmp('replyMessage');
+		        if (jsondecoded.from_user.id == user.id) {
+		        	console.log('not so fast, sender!');
+		        	replyButtonComponent.setHidden(true);
+		        } else {
+		        	replyButtonComponent.setHidden(false);
+		        }
 
 		        messageDetailView.setData(jsondecoded);
 				Ext.Viewport.animateActiveItem(messageDetailView, { type: "slide", direction: "left" });
