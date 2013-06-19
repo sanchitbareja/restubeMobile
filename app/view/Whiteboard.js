@@ -6,7 +6,7 @@ Ext.define('ResTube.view.Whiteboard', {
 	config: {
 		styleHtmlContent: true,
         scrollable: null,
-        tpl:"<div class='message_card up'>"+
+        tpl:"<div class='message_card'>"+
         		'<div class="row">'+
 					'<div class="small-12 columns">'+
 						"<b>From:</b> {from_user.first_name} {from_user.last_name}<br/>"+
@@ -18,11 +18,7 @@ Ext.define('ResTube.view.Whiteboard', {
 						'<textarea rows="3" name="message" id="messageText"></textarea>'+
 					'</div>'+
 				'</div>'+
-				'<div class="row">'+
-					'<div class="small-12 columns">'+
-						"<div id='canvasDiv'></div>"+
-					'</div>'+
-				'</div>'+
+				"<div id='canvasDiv'></div>"+
 				'<div class="row">'+
 					'<div class="small-6 columns"></div>'+
 					'<div class="small-6 columns">'+
@@ -59,7 +55,8 @@ Ext.define('ResTube.view.Whiteboard', {
 				  "-moz-border-radius: .3em;"+
 				  "-khtml-border-radius: .3em;"+
 				  "-webkit-border-radius: .3em;"+
-				  "top: 90.1%;",
+				  "position: absolute;"+
+				  "top: 88%;",
 	        states: {
 	            browse: {
 	                text: 'Add Picture'
@@ -85,7 +82,27 @@ Ext.define('ResTube.view.Whiteboard', {
         	delegate: "#cancelButton",
         	event: "tap",
         	fn: "onCancelTap",
+        }, {
+            event: "show",
+            fn: "onShow",
         }],
+	},
+
+	onShow: function() {
+		if($("#canvasSignature").length == 0){
+			console.log("true");
+			var top_distance = $('#saveCanvasButton').offset();
+			$("#browseFileBtn").offset({top:top_distance.top});
+		} else {
+			console.log("false");
+			var top_distance = $('#saveCanvasButton').offset();
+			$("#browseFileBtn").offset({top:top_distance.top + 204});
+		}
+		$("#canvasDiv").bind("DOMSubtreeModified", function() {
+		    console.log("tree changed");
+		    var top_distance = $('#saveCanvasButton').offset();
+			$("#browseFileBtn").offset({top:top_distance.top});
+		});
 	},
 
 	onSaveCanvas: function() {

@@ -174,7 +174,7 @@ Ext.define("ResTube.controller.WhiteboardController",{
 			    } else if (event.type == "touchmove") {
 			      if (drag) {
 			        x = touch.pageX - canvas.offsetLeft - 5;
-			        y = touch.pageY - canvas.offsetTop - 200;
+			        y = touch.pageY - canvas.offsetTop - 50;
 			        draw(x, y);
 			      }
 			    } else if (event.type == "touchend" || event.type == "touchcancel") {
