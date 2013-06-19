@@ -32,6 +32,12 @@ $tabs-dark-active-color: #444444;
 @include sencha-list-pullrefresh;
 @include sencha-loading-spinner;
 
+// Add desired icons
+@include pictos-iconmask(chat);
+@include pictos-iconmask(address_book);
+@include pictos-iconmask(mail);
+@include pictos-iconmask(quote1);
+
 // Your custom code goes here...
 
 @include sencha-button-ui('action', #940800);
