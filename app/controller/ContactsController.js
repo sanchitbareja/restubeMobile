@@ -28,6 +28,7 @@ Ext.define("ResTube.controller.ContactsController",{
 				backToContactsCommand: "onBackToContactsCommand",
 				osCheck: "onOsCheckCommand",
 				negVideoButtonCommand: "onNegVideoButtonCommand",
+				addStatistic: "onAddStatistic",
 			}
 		},
 	},
@@ -213,6 +214,41 @@ Ext.define("ResTube.controller.ContactsController",{
 			    },
 			});
 		}
+	},
+
+	onAddStatistic: function(to_user_data, deal_type) {
+		//get user credentials
+		var loginStore = Ext.getStore("Logins");
+		var user = loginStore.data.all[0].data;
+		console.log(user);
+
+		var myRequest = Ext.Ajax.request({
+			url: 'http://restube.herokuapp.com/api/v1/dealing/',
+			method: 'POST',
+			disableCaching: false,
+			// withCredentials: true,
+			useDefaultXhrHeader: false,
+
+			headers: {
+		    	"Content-Type": "application/json",
+		    },
+
+			jsonData: {
+				"from_user": user.resource_uri,
+				"to_user": to_user_data.user.resource_uri, // need to fill this up!!
+				"deal_type": deal_type,
+			},
+
+			success: function(response) {
+				console.log(response);
+				console.log("Spiffing, everything worked! Added a new message!");
+
+			},
+
+			failure: function(response) {
+
+			},
+		});
 	},
 
 	onBackToContactsCommand: function() {
