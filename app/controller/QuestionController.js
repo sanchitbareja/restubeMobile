@@ -204,9 +204,10 @@ Ext.define("ResTube.controller.QuestionController",{
 		        var resolveButtonComponent = questionDetailView.getComponent('resolveButton');
 
 		        if (user.username == jsondecoded.posted_by.username && jsondecoded.status == "U") {
-		        	console.log("sweeeet");
+		        	console.log('unresolved');
         			resolveButtonComponent.setHidden(false);
 		        } else {
+		        	console.log('resolved');
 		        	resolveButtonComponent.setHidden(true);
 		        }
 		        questionDetailView.setData(jsondecoded);
