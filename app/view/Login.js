@@ -38,6 +38,10 @@ Ext.define("ResTube.view.Login", {
                 ui: "action",
                 itemId: "loginButton",
                 id: 'login_button'
+            }, {
+                xtype: 'panel',
+                style: 'font-size: 10pt; float: right; margin-right: 10px;',
+                html: "For help, <a href='mailto:sanchit@resolutiontube.com' id='startEmail'>email us!</a>",
             }
         ],
 		listeners: [{
