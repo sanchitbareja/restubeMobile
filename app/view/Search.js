@@ -10,7 +10,7 @@ Ext.define("ResTube.view.Search", {
             
         },
 
-        scrollable: null,
+        scrollable: true,
 
         items:[{
                 xtype: "toolbar",
@@ -28,7 +28,7 @@ Ext.define("ResTube.view.Search", {
                 items: [
                     {
                         xtype: 'textfield',
-                        placeHolder: 'product name, model number',
+                        placeHolder: 'model number',
                         id: 'searchText',
                         autoCapitalize: false,
 
@@ -40,17 +40,18 @@ Ext.define("ResTube.view.Search", {
                 text: "Search",
                 ui: "action",
                 itemId: "searchButton",
+                id: "searchButton",
             }, {
 
             }, {
                 xtype: 'panel',
-                margin: "10px",
-                html:   '<a class="actionButton" href="https://www.comfortsite.com/ebiz/application/TechSupport/HVACKCLogin.asp?Source=PI">HVAC Knowledge Centre</a><br />'+
-                        '<a class="actionButton" href="https://www.comfortsite.com/ebiz/application/productinfo/elibrary.asp">elibrary</a><br />'+
-                        '<a class="actionButton" href="https://www.comfortsite.com/ebiz/FQA/default.aspx">Field Quality Alert</a><br />'+
-                        '<a class="actionButton" href="https://www.comfortsite.com/EBiz/Application/ProductInfo/PerformanceData/default.asp">Performance Data</a><br />'+
-                        '<a class="actionButton" href="https://www.comfortsite.com/EBiz/webcats/default.aspx">WebCATS</a><br />'+
-                        '<a class="actionButton" href="https://www.comfortsite.com/EBiz/home/Home.asp?StartPage=%2fEBiz%2fhome%2fHomeSplash.asp">Model Number Lookup</a><br />',
+                margin: '0 10px 0 10px',
+                html:   '<div class="actionButton"><a href="https://www.comfortsite.com/ebiz/application/TechSupport/HVACKCLogin.asp?Source=PI">HVAC Knowledge Center</a></div>'+
+                        '<div class="actionButton"><a href="https://www.comfortsite.com/ebiz/application/productinfo/elibrary.asp">eLibrary</a></div>'+
+                        '<div class="actionButton"><a href="https://www.comfortsite.com/ebiz/FQA/default.aspx">Field Quality Alert</a></div>'+
+                        '<div class="actionButton"><a href="https://www.comfortsite.com/EBiz/Application/ProductInfo/PerformanceData/default.asp">Performance Data</a></div>'+
+                        '<div class="actionButton"><a href="https://www.comfortsite.com/EBiz/webcats/default.aspx">WebCATS</a></div>'+
+                        '<div class="actionButton"><a href="https://www.comfortsite.com/EBiz/home/Home.asp?StartPage=%2fEBiz%2fhome%2fHomeSplash.asp">Model Number Lookup</a></div>',
             },
         ],
 		listeners: [{
