@@ -145,8 +145,13 @@ strong {
   text-overflow: ellipsis;
 }
 /* Contact Details */
+.actionButton a {
+  text-decoration: none;
+  color: #000;
+}
 
 .actionButton {
+  width: 100%;
   text-decoration: none;
   text-align: center;
   font-weight: lighter;
@@ -220,6 +225,11 @@ strong {
 }
 
 /* Query Results View */
+
+#searchButton {
+  background-color: #ac0b02;
+  color: #fff;
+}
 
 .row .columns .modelnum {
   font-size: 80%;
