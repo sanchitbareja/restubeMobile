@@ -80,8 +80,15 @@ Ext.define("ResTube.controller.WhiteboardController",{
     	} else {
     		console.log("media_url is empty");
     		if(to_user_data['user']) {
+
+    			//get user credentials
+				var loginStore = Ext.getStore("Logins");
+				var loggedinUser = loginStore.data.all[0].data;
+				loggedinUser['first_name'] = 'Myself';
+				console.log(loggedinUser);
+
 	    		dataToLoad['to_user'] = to_user_data['user'];
-	    		dataToLoad['from_user'] = to_user_data['user'];
+	    		dataToLoad['from_user'] = loggedinUser;
 	    	} else {
 	    		dataToLoad['to_user'] = to_user_data['from_user'];
 	    		dataToLoad['from_user'] = to_user_data['to_user'];

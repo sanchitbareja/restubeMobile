@@ -110,6 +110,7 @@ Ext.define('ResTube.view.ContactDetail', {
 
 	onStartMessageTap: function() {
 		var to_user_data = this.getData();
+		console.log(to_user_data);
 		this.fireEvent("launchWhiteboard", to_user_data, '');
 		this.fireEvent("addStatistic", to_user_data, 'message');
 	},
