@@ -22,15 +22,17 @@ Ext.define('ResTube.view.MessageDetail', {
 	    		"</div>"+
 				"<div class='row'>"+
 					"<div class='small-12 columns'>"+
-						'<p>{text}</p>'+
+						'<p class="text">{text}</p>'+
 					"</div>"+
 				"</div>"+
+				"<tpl if='media_url.length'>"+
 				"<hr class='message_divider'/>"+
 				"<div class='row'>"+
 					"<div class='small-12 columns'>"+
 	        			"<img src='{media_url}' class='message_pic'>"+
 					"</div>"+
 				"</div>"+
+				"</tpl>"+
 			"</div>",
 			{
 				convertDate: function(json_date){

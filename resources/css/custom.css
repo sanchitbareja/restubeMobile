@@ -341,6 +341,9 @@ strong {
 .message_divider {
   width: 90%;
 }
+.message_card p.text{
+  margin: 0;
+}
 .right {
   float: right;
 }
@@ -987,6 +990,8 @@ strong {
   position: relative;
   top: -4px;
   overflow: hidden;
+  height: 2.2em;
+  width: 100%;
   text-overflow: ellipsis;
 }
 

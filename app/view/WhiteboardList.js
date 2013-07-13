@@ -4,7 +4,7 @@ Ext.define("ResTube.view.WhiteboardList", {
 
 	config: {
 		loadingText: "Loading messages...",
-		emptyText: '<pre><div>No messages :(</div></pre>',
+		emptyText: '<div>You have not initiated any conversations yet!<br/>Go to the contacts page and select a</br>contact to begin a conversation.</div>',
 		store: { xclass: 'ResTube.store.Messages' },
         plugins: [
 	        {
@@ -41,7 +41,7 @@ Ext.define("ResTube.view.WhiteboardList", {
 							'<img src="resources/icons/photo3.png" width="16px"/>'+
 						'</tpl>'+
 						'<br/>'+
-						'<text class="message">{text}</text>'+
+						'<div class="message">{text}</div>'+
 					'</div>'+
 					// '<div class="small-2 columns">'+
 					// 	'<img src="{media_url}" class="thumbnail_photo_list">'+
