@@ -97,11 +97,9 @@ Ext.define("ResTube.view.Contacts", {
 	},
 
 	listItemTap: function(nestedList, index, target, record, e, eOpts){
-		console.log("An item was tapped!");
 		this.fireEvent("contactInfoCommand", this, record.data.id);
 	},
 	onLogoutButtonTap: function(){
-        console.log("Logout button pressed!");
         this.fireEvent('logoutCommand');
     },
 

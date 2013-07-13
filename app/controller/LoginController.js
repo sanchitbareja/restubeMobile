@@ -43,9 +43,6 @@ Ext.define("ResTube.controller.LoginController",{
 
 	//Commands fired by the view
 	onLoginCommand: function(view, username, password) {
-		console.log(username);
-		console.log(password);
-		console.log("onLoginCommand");
 
 		var encoded_authorization = this.base64_encode(username+":"+password);
 		console.log(encoded_authorization);
@@ -139,6 +136,7 @@ Ext.define("ResTube.controller.LoginController",{
 		Ext.getStore("Logins").sync();
 		Ext.Viewport.removeAll();
         Ext.Viewport.add([{xtype:'logincontainer'}]);
+        document.location.reload(true);
 		// Ext.Viewport.animateActiveItem(, { type: "slide", direction: "left" });
 	},
 
