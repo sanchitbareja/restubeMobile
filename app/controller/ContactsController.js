@@ -67,11 +67,26 @@ Ext.define("ResTube.controller.ContactsController",{
 			        console.log(jsondecoded);
 			        console.log(contactsList);
 			        contactStore.removeAll();
-
-			        for (var i = 0; i < jsondecoded.objects.length; i++) {
-			        	var contact_object = Ext.create('ResTube.model.UserProfile', jsondecoded.objects[i]);
-			        	contact_object.set('user', jsondecoded.objects[i].user);
-			        	contact_object.set('skills', jsondecoded.objects[i].skills);
+			        var contacts = [];
+			        var name = [];
+			        for (var contact in jsondecoded.objects) {
+			        	contacts = contacts.concat(jsondecoded.objects[contact]["user"]["first_name"]);
+			        };
+			        contacts = contacts.sort();
+			        var sortedIndecies = [];
+			        for (var contact in contacts) {
+			        	for (var user in jsondecoded.objects) {
+			        		if (contacts[contact] == jsondecoded.objects[user]["user"]["first_name"]) {
+			        			sortedIndecies = sortedIndecies.concat(user);
+			        		}
+			        	};
+			        };
+			        var j = [];
+			        for (var i in jsondecoded.objects) {
+			        	j = parseInt(sortedIndecies[i],10);
+			        	var contact_object = Ext.create('ResTube.model.UserProfile', jsondecoded.objects[j]);
+			        	contact_object.set('user', jsondecoded.objects[j].user);
+			        	contact_object.set('skills', jsondecoded.objects[j].skills);
 			        	contactStore.add(contact_object);
 			        };
 
@@ -197,13 +212,29 @@ Ext.define("ResTube.controller.ContactsController",{
 			        console.log(jsondecoded);
 			        console.log(contactsList);
 			        contactStore.removeAll();
-			        // question_store.add(jsondecoded.objects);
-			        for (var i = 0; i < jsondecoded.objects.length; i++) {
-			        	var contact_object = Ext.create('ResTube.model.UserProfile', jsondecoded.objects[i]);
-			        	contact_object.set('posted_by', jsondecoded.objects[i].posted_by);
-			        	contact_object.set('comments', jsondecoded.objects[i].comments);
+			        var contacts = [];
+			        var name = [];
+			        for (var contact in jsondecoded.objects) {
+			        	contacts = contacts.concat(jsondecoded.objects[contact]["user"]["first_name"]);
+			        };
+			        contacts = contacts.sort();
+			        var sortedIndecies = [];
+			        for (var contact in contacts) {
+			        	for (var user in jsondecoded.objects) {
+			        		if (contacts[contact] == jsondecoded.objects[user]["user"]["first_name"]) {
+			        			sortedIndecies = sortedIndecies.concat(user);
+			        		}
+			        	};
+			        };
+			        var j = [];
+			        for (var i in jsondecoded.objects) {
+			        	j = parseInt(sortedIndecies[i],10);
+			        	var contact_object = Ext.create('ResTube.model.UserProfile', jsondecoded.objects[j]);
+			        	contact_object.set('user', jsondecoded.objects[j].user);
+			        	contact_object.set('skills', jsondecoded.objects[j].skills);
 			        	contactStore.add(contact_object);
 			        };
+			        // question_store.add(jsondecoded.objects);
 			    	contactsList.setMasked(false);
 			    },
 
@@ -291,4 +322,11 @@ Ext.define("ResTube.controller.ContactsController",{
 	activateContactsView: function () {
 		Ext.Viewport.animateActiveItem(this.getMainContainer(), { type: "slide", direction: "right" });
 	},
+	// alphabetize: function(contactObjects) {
+	// 	for (var contact in contactObjects) {
+ //        	console.log(contact);
+ //        	console.log(contactObjects[contact]["user"]["first_name"]);
+ //        	// contacts.concat(contactObjects.contact["user"]["first_name"]);
+ //        };
+	// },
 });
