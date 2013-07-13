@@ -15,7 +15,7 @@ Ext.define("ResTube.view.Contacts", {
 	            },
 	        },{
 	            xclass: 'Ext.plugin.ListPaging',
-	            loadMoreText: "Fetching more contacts...",
+	            loadMoreText: "",
 	            autoPaging: true,
 	            // loadMoreCmp is a private config method. not recommended to use and new solution needs to be found
 	            loadMoreCmp: {
