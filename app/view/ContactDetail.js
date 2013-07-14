@@ -105,7 +105,12 @@ Ext.define('ResTube.view.ContactDetail', {
 	onShow: function() {
 		this.fireEvent("osCheck",this);
 		var full_name = this.getData().user.first_name+" "+this.getData().user.last_name;
-		this.getDockedItems()[0].setTitle(full_name.slice(0,12)+"...");
+		if (full_name.length>15) {
+			this.getDockedItems()[0].setTitle(full_name.slice(0,12)+"...");
+		} else {
+			this.getDockedItems()[0].setTitle(full_name);
+		}
+		
 	},
 
 	onStartMessageTap: function() {

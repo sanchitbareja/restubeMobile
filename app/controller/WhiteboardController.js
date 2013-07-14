@@ -433,7 +433,9 @@ Ext.define("ResTube.controller.WhiteboardController",{
 
 		//get user data
 		var loginStore = Ext.getStore("Logins");
-		var user = loginStore.data.all[0].data;
+		if (loginStore.data.all.length) {
+			var user = loginStore.data.all[0].data;
+		}
 
 		messages_list.setMasked({
 		    xtype: 'loadmask',

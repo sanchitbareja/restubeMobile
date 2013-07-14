@@ -138,8 +138,11 @@ Ext.define("ResTube.controller.SearchController",{
 			        productInfo.setData(jsondecoded);
 			        console.log(productInfo.getData());
 					Ext.Viewport.animateActiveItem(productInfo, { type: "slide", direction: "left" });
-
-					productInfo.getDockedItems()[0].setTitle(jsondecoded.name.slice(0,12)+"...");
+					if (jsondecoded.name.length>15) {
+						productInfo.getDockedItems()[0].setTitle(jsondecoded.name.slice(0,12)+"...");
+					} else {
+						productInfo.getDockedItems()[0].setTitle(jsondecoded.name);
+					}
 					$(".rslides").responsiveSlides({
 					  auto: false,             // Boolean: Animate automatically, true or false
 					  speed: 500,            // Integer: Speed of the transition, in milliseconds
