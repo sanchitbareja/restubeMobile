@@ -139,7 +139,7 @@ Ext.define("ResTube.controller.SearchController",{
 			        console.log(productInfo.getData());
 					Ext.Viewport.animateActiveItem(productInfo, { type: "slide", direction: "left" });
 
-					productInfo.getDockedItems()[0].setTitle(jsondecoded.name.slice(0,12)+"...");
+					productInfo.getDockedItems()[0].setTitle(jsondecoded.name.slice(0,12));
 					$(".rslides").responsiveSlides({
 					  auto: false,             // Boolean: Animate automatically, true or false
 					  speed: 500,            // Integer: Speed of the transition, in milliseconds
