@@ -237,10 +237,18 @@ div.actionButton:active a{
   background-color: #ac0b02;
   color: #fff;
 }
-
 .row .columns .modelnum {
   font-size: 80%;
   font-weight: lighter;
+}
+.search_result_row {
+  margin: 0px !important;
+  max-width: none !important;
+  height: 3em;
+  border-bottom: 1px solid #bbb;
+  background-color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Product Detail View */
