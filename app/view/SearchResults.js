@@ -8,20 +8,31 @@ Ext.define("ResTube.view.SearchResults", {
 
 		store: { xclass: 'ResTube.store.Products' },
 
-		itemTpl:'<div class="row contactrow">'+
-					'<div class="small-3 columns">'+
-					'<tpl for="media">'+
-						'<tpl if="[xindex] == \'1\'">'+
-							'<img src="{url}" class="thumbnail_photo_list">'+
-						'</tpl>'+
-    				'</tpl>'+						
+		itemTpl:'<tpl if="media.length">'+
+					'<div class="row contactrow">'+
+						'<div class="small-3 columns">'+
+						'<tpl for="media">'+
+							'<tpl if="[xindex] == \'1\'">'+
+								'<img src="{url}" class="thumbnail_photo_list">'+
+							'</tpl>'+
+	    				'</tpl>'+						
+						'</div>'+
+						'<div class="small-9 columns">'+
+							'<strong>{name}</strong>'+
+							'<br />'+
+							'<i class="modelnum">MN: {model_no}</i>'+
+						'</div>'+
 					'</div>'+
-					'<div class="small-9 columns">'+
-						'<strong>{name}</strong>'+
-						'<br />'+
-						'<i class="modelnum">MN: {model_no}</i>'+
+				'</tpl>'+
+				'<tpl if="!media.length">'+
+					'<div class="row search_result_row">'+
+						'<div class="small-12 columns">'+
+							'<strong>{name}</strong>'+
+							'<br />'+
+							'<i class="modelnum">MN: {model_no}</i>'+
+						'</div>'+	
 					'</div>'+
-				'</div>',
+				'</tpl>',
 
 		items: [{
 			xtype: "toolbar",
