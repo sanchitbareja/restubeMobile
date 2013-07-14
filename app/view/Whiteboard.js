@@ -103,6 +103,14 @@ Ext.define('ResTube.view.Whiteboard', {
 		    var top_distance = $('#saveCanvasButton').offset();
 			$("#browseFileBtn").offset({top:top_distance.top});
 		});
+		$(document).ready(function(){
+			$("#browseFileBtn").width($("#saveCanvasButton").width()); //set width equal to save button
+			$("#browseFileBtn").offset({left:$("#messageText").offset().left}) // align with message text field
+			$(window).resize(function() {
+				$("#browseFileBtn").width($("#saveCanvasButton").width()); //set width equal to save button
+				$("#browseFileBtn").offset({left:$("#messageText").offset().left}) // align with message text field
+			});
+		});
 	},
 
 	onSaveCanvas: function() {
