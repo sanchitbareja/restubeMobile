@@ -1009,9 +1009,9 @@ div.small-12.columns.pdf_links {
   font-weight: lighter;
   color: #999;
   position: relative;
-  top: -4px;
+  top: -2px;
   overflow: hidden;
-  height: 2.2em;
+  height: 2.5em;
   width: 100%;
   text-overflow: ellipsis;
 }
