@@ -26,7 +26,7 @@ Ext.define("ResTube.view.Feedback", {
                 items: [
                     {
                         xtype: 'textareafield',
-                        placeHolder: 'There was an error.',
+                        placeHolder: 'Let us know what you think!',
                         style: { 'height': '7em', 'text-wrap': 'normal' },
                         id: 'feedbackText',
                     }
