@@ -136,6 +136,25 @@ Ext.define("ResTube.controller.WhiteboardController",{
 		Ext.Viewport.animateActiveItem(this.getMainContainer(), { type: "slide", direction: "right" });
 	},
 
+	getBase64Image: function (img) {
+    // Create an empty canvas element
+	    var canvas = document.createElement("canvas");
+	    canvas.width = img.width;
+	    canvas.height = img.height;
+
+	    // Copy the image contents to the canvas
+	    var ctx = canvas.getContext("2d");
+	    ctx.drawImage(img, 0, 0);
+
+	    // Get the data-URL formatted image
+	    // Firefox supports PNG and JPEG. You could check img.src to
+	    // guess the original format, but be aware the using "image/jpg"
+	    // will re-encode the image.
+	    var dataURL = canvas.toDataURL("image/png");
+
+	    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+	},
+
 	createCanvas: function(imgURL, imgMemorySize){
 		console.log("Create canvas");
 		var bgImage = new Image();
@@ -146,19 +165,20 @@ Ext.define("ResTube.controller.WhiteboardController",{
 		bgImage.src = imgURL;
 		console.log("checkpoint 1");
 
+		var me = this;
+
 		// add the listeners and respective handlers as soon as image loads
 		bgImage.onload = function() {
-			var fittedWidth = 200*bgImage.width/bgImage.height;
-			var fittedHeight = 200;
 			console.log("checkpoint 2");
+
+			// MegaPixImage constructor accepts File/Blob object.
+	    	var mpImg = new MegaPixImage(bgImage);
 
 			// create canvas and add it to the dom
 	        var canvasDict = {};
 	        canvasDict.node = document.createElement('canvas');
 	        canvasDict.node.id = 'canvasSignature';
 	        canvasDict.context = canvasDict.node.getContext('2d');
-	        canvasDict.node.width = fittedWidth;
-	        canvasDict.node.height = fittedHeight;
 	        canvasDict.node.style.border = '2px solid #000'; 
 	        canvasDict.node.style.background = '#FFF';
 	        //remove any children before adding
@@ -203,11 +223,10 @@ Ext.define("ResTube.controller.WhiteboardController",{
 	  		canvas.addEventListener("touchend", touchHandler, false);
 	  		console.log(bgImage);
 			console.log("checkpoint 5");
-			if(imgMemorySize > 1000000) {
-		  		ctx.drawImage(bgImage, 0, 0, bgImage.width, bgImage.height, 0 , 0, fittedWidth, fittedHeight*4);
-		  	} else {
-		  		ctx.drawImage(bgImage, 0, 0, fittedWidth, fittedHeight);
-		  	}
+			
+			// Render resized image into canvas element.
+    		mpImg.render(canvas, { maxWidth: 200, maxHeight: 200 });
+
 	  		console.log("checkpoint 6");
 	  	};
 	},
