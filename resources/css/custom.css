@@ -154,7 +154,7 @@ strong {
   color: #fff;
 }
 
-.actionButton, a.actionButton, a.actionButton:hover{
+.actionButton, a.actionButton, a.actionButton:hover, a.actionButton:visited {
   width: 100%;
   text-decoration: none;
   text-align: center;
